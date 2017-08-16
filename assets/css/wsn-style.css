@@ -1,0 +1,184 @@
+/**
+* Wocommerce In-Stock Notifier CSS
+* @author Govind Kumar <gkprmr@gmail.com>
+* @version 1.0.0
+*/
+
+.wc-metaboxes-wrapper .wc-metabox table{
+	width :70%;
+}
+#wsn_callback .dashicons {
+	font-size: 18px;
+}
+
+.wsn-usertable a, ._archive_userlist a{
+	color: #5D5D5D;
+	text-decoration: none;
+}
+
+a.close_archived{
+	text-decoration: none;
+}
+
+.wsn-usertable a:hover , ._archive_userlist a:hover{
+	color: #0073aa;
+}
+
+.wsn-usertable table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.wsn-usertable td, .wsn-usertable th {
+	text-align: left;
+	padding: 5px 0px 5px 0px !important;
+}
+
+.wsn-usertable th {
+	background-color: #4CAF50;
+	color: white;
+}
+.wsn-usertable a {
+	color: #555564;
+}
+.wsn_waitlist_form {
+	display: inline-block;
+	margin-bottom: 12px;
+}
+
+.wsn_title {
+	font-weight: 100;
+}
+
+.wsn_button {
+	float: none !important;
+}
+
+.wsn_form {
+	padding: 18px 0;
+}
+
+.wsn_product_container {
+	position: relative;
+}
+
+.archived_data_panel {
+	left: 0;
+	bottom: 0;
+	top: 0;
+	display: none;
+	right: 0;
+	background: white;
+	z-index: 999;
+}
+
+#show_archived{
+	float: right;
+}
+
+.close_archived {
+	float: right;
+}
+
+.add_user_btn {
+	margin-left: 12px !important;
+}
+
+.waitlist_data a {
+	padding-right: 5px;
+	text-decoration: none;
+}
+
+.unclickable {
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+#wsn_product .inside {
+	padding: 0px;
+	margin: 0px;
+}
+
+#wsn_product .inside .wsn-action-col {
+	text-align: center;
+}
+
+#wsn_product .inside .wsn-email-col {
+	text-align: center;
+
+}
+
+#wsn_product .wsn-empty {
+	padding: 16px 0px;
+}
+
+#wsn_product .wrap {
+	margin: 0px;
+}
+
+#wsn_product .wsn-usertable {
+	border-top: none;
+	padding: 0px;
+	border-bottom: solid 1px #EFEFEF;
+	margin-bottom: 9px;
+}
+
+.postbox .inside .woocommerce_options_panel {
+	min-height: auto !important;
+}
+
+.no_product {
+	padding: 12px;
+}
+
+.archive_table th {
+	text-align: left;
+}
+
+.wc-metaboxes-wrapper .wc-metabox table {
+	padding: 4px !important;
+	border-top: 0px !important;
+}
+
+.add_new_user_form {
+	border-bottom: solid 1px #f0f0f0;
+	padding-bottom: 12px !important;
+}
+
+.add_new_user_form .usrEmail {
+	width: 35%;
+}
+
+.add_new_user_form #wsn_add_btn {
+	margin-left: 12px;
+}
+
+._archive_userlist th {
+	text-align: left;
+}
+
+._archive_userlist #r_archived {
+	text-align: center;
+}
+
+._archive_userlist #restore_archived {
+	text-align: center;
+}
+
+#archive_table_head {
+	font-weight: bold;
+}
+
+.archived_head_text {
+	padding: 10px 5px;
+	font-size: 15px;
+	border-bottom: solid 1px #EFEFEF;
+}
+
+.wsn-user-email-col {
+	width: 70%;
+}
+
+td.index_col {
+	width: 5%;
+}
