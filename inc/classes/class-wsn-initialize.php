@@ -331,10 +331,10 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 			wp_enqueue_script( 'jquery' );
 
 			// Add the plugin style file.
-			wp_enqueue_style( 'wsn_style', WSN_ASSEST_PATH . 'css/wsn-style.css' );
+			wp_enqueue_style( 'wsn_style', WSN_ASSEST_PATH . '/css/wsn-style.css' );
 
 			// Add plugin js script.
-			wp_enqueue_script( 'wsn_scripts', WSN_ASSEST_PATH . 'js/wsn-script.js' );
+			wp_enqueue_script( 'wsn_scripts', WSN_ASSEST_PATH . '/js/wsn-script.js' );
 		}
 
 		/**
