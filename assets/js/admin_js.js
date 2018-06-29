@@ -1,19 +1,19 @@
 /**
-* Wocommerce In-Stock Notifier JavaScript
-* @author Govind Kumar <gkprmr@gmail.com>
-* @version 1.0.0
-*/
+ * Wocommerce In-Stock Notifier JavaScript
+ * @author Govind Kumar <gkprmr@gmail.com>
+ * @version 1.0.0
+ */
 
 jQuery(document).ready(function ($) {
 
     var total = 0;
 
-    jQuery('a#show_archived').on('click',function (e) {
+    jQuery('a#show_archived').on('click', function (e) {
 
         e.preventDefault();
 
-        var current     = jQuery(this),
-            product_id  = current.data('product_id');
+        var current = jQuery(this),
+            product_id = current.data('product_id');
 
         $.ajax({
             url: _wsn_waitlist.ajax_url,
@@ -38,8 +38,8 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
 
         var current_obj = $(this),
-            user_email  = current_obj.data('uid'),
-            product_id  = current_obj.data('pid');
+            user_email = current_obj.data('uid'),
+            product_id = current_obj.data('pid');
 
         var data = {
             action: 'archive_function',
@@ -57,8 +57,8 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
 
         var current_obj = $(this),
-            user_email  = current_obj.data('uid'),
-            product_id  = current_obj.data('pid');
+            user_email = current_obj.data('uid'),
+            product_id = current_obj.data('pid');
 
         var data = {
             action: 'archive_function',
@@ -76,7 +76,7 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
 
         var current_obj = $(this),
-            product_id  = current_obj.attr('id');
+            product_id = current_obj.attr('id');
 
         jQuery('#form' + product_id).hide();
 
@@ -91,12 +91,12 @@ jQuery(document).ready(function ($) {
 
         var current_obj = $(this);
 
-        var product_id  = current_obj.data('product_id'),
-            email       = current_obj.data('email'),
-            uid         = current_obj.data('uid'),
-            total       = current_obj.data('total'),
-            nonce       = current_obj.data('wp_nonce'),
-            action      = current_obj.data('action');
+        var product_id = current_obj.data('product_id'),
+            email = current_obj.data('email'),
+            uid = current_obj.data('uid'),
+            total = current_obj.data('total'),
+            nonce = current_obj.data('wp_nonce'),
+            action = current_obj.data('action');
 
         var data = {
             'action': 'removeUser',
@@ -119,7 +119,7 @@ jQuery(document).ready(function ($) {
         var formid = jQuery(this).data('product_id');
 
         jQuery('#form' + formid).toggle();
-        jQuery(this).parent().find('.usrEmail#'+formid).focus();
+        jQuery(this).parent().find('.usrEmail#' + formid).focus();
     });
 
     jQuery('button#wsn_add_btn').on('click', function (e) {
@@ -128,14 +128,14 @@ jQuery(document).ready(function ($) {
 
         var current_obj = $(this);
 
-        var form_id     = current_obj.data('product_id'),
-            email       = current_obj.parent().find('.usrEmail#' + form_id).val(),
-            total       = current_obj.data('total'),
-            uid         = total+1,
-            nonce       = current_obj.data('nonce');
+        var form_id = current_obj.data('product_id'),
+            email = current_obj.parent().find('.usrEmail#' + form_id).val(),
+            total = current_obj.data('total'),
+            uid = total + 1,
+            nonce = current_obj.data('nonce');
 
-            current_obj.parent().find('.usrEmail#' + form_id).val('');
-            current_obj.parent().find('.wsn-empty').hide();
+        current_obj.parent().find('.usrEmail#' + form_id).val('');
+        current_obj.parent().find('.wsn-empty').hide();
 
         var data = {
             'action': 'addNewUser',
@@ -145,7 +145,7 @@ jQuery(document).ready(function ($) {
             'email': email
         };
 
-        if( ! email ){
+        if (!email) {
 
             alert('Please enter email address.');
             return false;
@@ -153,30 +153,29 @@ jQuery(document).ready(function ($) {
 
         var email_pattern = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-        if ( ! email_pattern.test( email ) ) {
+        if (!email_pattern.test(email)) {
 
-            alert( 'Please enter valid email address' );
-            current_obj.parent( ).find( '.usrEmail#' + form_id ).focus();
+            alert('Please enter valid email address');
+            current_obj.parent().find('.usrEmail#' + form_id).focus();
 
             return false;
         }
 
 
+        jQuery.post(ajaxurl, data, function (data) {
 
-        jQuery.post(ajaxurl, data, function ( data ) {
+            var outputData = JSON.parse(data);
 
-            var outputData = JSON.parse( data );
-
-            if ( outputData.status == 'success' ) {
+            if (outputData.status == 'success') {
                 total += 1;
-                current_obj.data('total',total);
-                current_obj.parents().find('.no_user#'+form_id).hide();
+                current_obj.data('total', total);
+                current_obj.parents().find('.no_user#' + form_id).hide();
                 $('table#waitlists' + form_id).append('<tr id="row-' + outputData.currentId + '-' + form_id + '"><td >' + outputData.email + '</td><td class="wsn-email-col">' + outputData.emailLink + '</td><td class="wsn-action-col">' + outputData.removeLink + '</td></tr>');
                 $('table#waitlists' + form_id + " tr:last").animate({backgroundColor: "rgb(247, 255, 176)"}, 'slow').animate({backgroundColor: "#fff"}, 'slow');
-                    current_obj.parent().find('.usrEmail#' + form_id).focus();
-            } else if( outputData.status == 'exists' ){
+                current_obj.parent().find('.usrEmail#' + form_id).focus();
+            } else if (outputData.status == 'exists') {
 
-                alert( email + ' is already exist! ' );
+                alert(email + ' is already exist! ');
             }
 
         });
