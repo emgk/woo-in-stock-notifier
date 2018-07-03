@@ -26,26 +26,38 @@ namespace InStockNotifier;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-spl_autoload_register( __NAMESPACE__ . '\\_autoload_classes' );
+/**
+ * Auto load the plugin's classes.
+ */
+spl_autoload_register( __NAMESPACE__ . '\\wsn_autoload_classes' );
 
-function _autoload_classes( $class ) {
+/**
+ * Auto load the plugin classes.
+ *
+ * @since 1.0
+ *
+ * @param string $class Name of the class.
+ *
+ * @return bool|mixed
+ */
+function wsn_autoload_classes( $class ) {
 
+	// Get the name of the namespace and check if it is what we are looking for?
 	if ( 0 !== strpos( $class, 'InStockNotifier\\', 0 ) )
-		return;
+		return false;
 
 	static $loaded = array();
 
 	if ( isset( $loaded[ $class ] ) )
 		return $loaded[ $class ];
 	
-	$path = WSN_CLASS_PATH;
 	$extension = '.php';
 
 	$_class = strtolower( str_replace( 'InStockNotifier\\', '', $class ) );
 	$_class = str_replace( '_', '-', $_class );
 	$_class = 'class-' . $_class;
 
-	if ( file_exists( $path . $_class . $extension ) ) {
-		return $loaded[ $class ] = (bool) require_once( $path . $_class . $extension );
+	if ( file_exists( WSN_CLASS_PATH . $_class . $extension ) ) {
+		return $loaded[ $class ] = (bool) require_once( WSN_CLASS_PATH . $_class . $extension );
 	}
 }
