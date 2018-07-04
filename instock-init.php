@@ -13,7 +13,7 @@
  *
  **/
 
-ini_set('display_errors', 1);
+ini_set( 'display_errors', 1 );
 /**
  * In-Stock Notifier - WooCommerce Plugin
  * Copyright (C) 2017 Govind Kumar <gkprmr@gmail.com>
@@ -48,26 +48,39 @@ define( 'WSN_EMAIL_TEMPLATE_PATH', WSN_PATH . 'templates' . DIRECTORY_SEPARATOR 
 define( 'WSN_USERS_META_KEY', 'wsn_waitlist_users' );
 define( 'WSN_NUM_META', 'wsn_total_num_waitlist' );
 
+// Deactivate the plugin of woocommerce isn't activated.
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
-
 	add_action( 'plugins_loaded', 'wsn_pre_load' );
 	load_plugin_textdomain( 'in-stock-notifier', false, dirname( plugin_basename( __FILE__ ) ) . '/language/' );
 } else {
-
 	deactivate_plugins( plugin_basename( __FILE__ ) );
 	add_action( 'admin_notices', 'wsn_woocommerce_dependecies_check' );
 }
 
+/**
+ * If WooCommerce isn't activated then show the admin the notice to activate
+ * the WooCommerce plugin order to make this plugin runnable.
+ *
+ * @since 1.0
+ */
 function wsn_woocommerce_dependecies_check() {
 	?>
-	<div class="error">
-		<p><?php echo esc_attr_e( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'in-stock-notifier' ); ?></p>
-	</div>
+    <div class="error">
+        <p>
+			<?php echo esc_htmk( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'in-stock-notifier' ); ?>
+        </p>
+    </div>
 	<?php
 }
 
+/**
+ * Make the plugin's main class globally accessible.
+ *
+ * @since 1.0
+ */
 function wsn_pre_load() {
 
+	// Loader files.
 	require( 'load.php' );
 
 	// Include the all of the functions.
