@@ -308,7 +308,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		public function instockalert_product_setup() {
 
 			// Registering the admin js scrip.
-			wp_enqueue_script( 'wsn_admin_scripts', WSN_ASSEST_PATH . 'js/admin_js.js' );
+			wp_enqueue_script( 'wsn_admin_scripts', WSN_ASSEST_PATH . 'js/wsn-admin.js' );
 
 			// Localize the ajax url for form submit.
 			wp_localize_script( 'jquery', '_wsn_waitlist', array(

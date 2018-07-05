@@ -365,7 +365,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 		 * Add admin js to backend.
 		 */
 		public function add_admin_script() {
-			wp_enqueue_script( 'wsn_scripts', wsn_ASSETS_URL . '/js/admin_js.js' );
+			wp_enqueue_script( 'wsn_scripts', wsn_ASSETS_URL . '/js/wsn-admin.js' );
 		}
 
 		/**
