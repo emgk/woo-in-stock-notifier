@@ -241,8 +241,8 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 		 */
 		public function enqueue_scripts() {
 
-			// Add metabox.js in backend.
-			wp_enqueue_script( 'wsn-waitlist-metabox', WSN_ASSEST_PATH . 'js/metabox.js', array( 'jquery' ) );
+			// Add wsn-metabox.js in backend.
+			wp_enqueue_script( 'wsn-waitlist-metabox', WSN_ASSEST_PATH . 'js/wsn-metabox.js', array( 'jquery' ) );
 
 			// Localize ajax script in backend.
 			wp_localize_script( 'wsn_waitlist_meta', 'wsn_waitlist_meta', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
