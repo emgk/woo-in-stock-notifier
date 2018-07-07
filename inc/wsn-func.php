@@ -19,23 +19,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return mixed return the array of user email .
  */
 function wsn_get_waitlist( $product_id ) {
-
-	$product_id = intval( $product_id );
-
 	// Return list of the user email.
-	return get_post_meta( $product_id, WSN_USERS_META_KEY, true );
+	return get_post_meta( absint( $product_id ), WSN_USERS_META_KEY, true );
 }
 
 /**
  * Check if the user is already exists or not.
  *
  * @param string $user User Email.
- * @param array $waitlist array of the waitlist user.
+ * @param array $waitlist array of the waitli`st user.
  *
  * @return bool
  */
 function wsn_check_register( $user, $waitlist ) {
-
 	// Return true if email found.
 	return in_array( $user, $waitlist, true );
 }
@@ -47,21 +43,18 @@ function wsn_check_register( $user, $waitlist ) {
  * @param array $waitlist of the current product.
  */
 function wsn_store_user( $id, $waitlist ) {
-
-	$id = intval( $id );
-
 	// Store email into waitlist.
-	update_post_meta( $id, WSN_USERS_META_KEY, $waitlist );
-
+	update_post_meta( absint( $id ), WSN_USERS_META_KEY, $waitlist );
 }
 
 /**
  * Get the total number of waitlist user.
  *
  * @param integer $product_id Product id.
+ *
+ * @return int return the number of waitlist.
  */
 function wsn_total_waitlist( $product_id ) {
-
 	$total_num = get_post_meta( $product_id, WSN_NUM_META, true );
 
 	return $total_num;
@@ -120,7 +113,10 @@ function wsn_leave_user( $user, $id ) {
 	// Get the waitlist of the current product.
 	$waitlist = wsn_get_waitlist( $id );
 
-	if ( is_array( $waitlist ) && wsn_check_register( $user, $waitlist ) ) {
+	if (
+		is_array( $waitlist )
+		&& wsn_check_register( $user, $waitlist )
+	) {
 
 		$waitlist = array_diff( $waitlist, array( $user ) );
 
@@ -139,7 +135,6 @@ function wsn_leave_user( $user, $id ) {
  * @param integer $id Product id.
  */
 function wsn_waitlist_empty( $id ) {
-
 	// Make empty waitlist.
 	update_post_meta( $id, WSN_USERS_META_KEY, array() );
 }
@@ -152,10 +147,7 @@ function wsn_waitlist_empty( $id ) {
  * @return mixed
  */
 function wsn_get_archived_users( $id ) {
-
-	$id = intval( $id );
-
-	return get_post_meta( $id, wsn_ARCHIVED_META, true );
+	return get_post_meta( absint( $id ), 'wsn_archived_users', true );
 }
 
 /**
@@ -171,7 +163,10 @@ function wsn_store_email_into_archive( $email, $product_id ) {
 	// Get all emails from the archived list.
 	$archived_data = wsn_get_archived_users( $product_id );
 
-	if ( is_array( $archived_data ) && wsn_archive_is_register( $email, $archived_data ) ) {
+	if (
+		is_array( $archived_data )
+		&& wsn_archive_is_register( $email, $archived_data )
+	) {
 		return false;
 	}
 
@@ -206,12 +201,19 @@ function wsn_archive_is_register( $user, $archived_users ) {
  */
 function wsn_remove_form_archive( $email, $product_id ) {
 
+	// Get the archive user list.
 	$archive_list = wsn_get_archived_users( $product_id );
 
-	if ( is_array( $archive_list ) && wsn_archive_is_register( $email, $archive_list ) ) {
+	// If archive list isn't blank and email is archived.
+	if (
+		is_array( $archive_list )
+		&& wsn_archive_is_register( $email, $archive_list )
+	) {
 
+		// Get the updated archived.
 		$updated_archived = array_diff( $archive_list, array( $email ) );
 
+		// Update the difference.
 		wsn_save_archive( $product_id, $updated_archived );
 
 		return true;
@@ -227,9 +229,7 @@ function wsn_remove_form_archive( $email, $product_id ) {
  * @param array $waitlist pass the archived list of the product.
  */
 function wsn_save_archive( $id, $waitlist ) {
-
-	$id = intval( $id );
-	update_post_meta( $id, 'wsn_archived_users', $waitlist );
+	update_post_meta( absint( $id ), 'wsn_archived_users', $waitlist );
 }
 
 

@@ -602,7 +602,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                                                        data-wp_nonce="<?php echo wp_create_nonce( 'action_waitlist' ); ?>"
                                                        data-uid="<?php echo intval( $inc ); ?>"
                                                        data-total="<?php echo $total_waitlist_user; ?>"
-                                                       data-email="<?php $data; ?>" data-action="leave"
+                                                       data-email="<?php echo esc_attr( $data ); ?>" data-action="leave"
                                                        href="javascript:void(0);"
                                                        title="<?php echo __( 'Remove User', 'wsn_waitilist' ); ?>"
                                                        class="removeUser"><span
