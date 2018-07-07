@@ -101,8 +101,9 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 			if ( ! isset( $_REQUEST['product'] ) ) {
 				return;
 			}
+
 			// Product id .
-			$product_id = intval( $_REQUEST['product'] );
+			$product_id = absint( $_REQUEST['product'] );
 
 			if ( isset( $_REQUEST['user_id'] ) ) {
 
@@ -316,7 +317,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 		public function add_woocommerce_emails( $emails ) {
 
 			// Include the InStockNotifier\Email Class.
-			$emails['wsn_email'] = new Email();
+			$emails['wsn_email'] = new WSN_Email();
 
 			return $emails;
 		}
