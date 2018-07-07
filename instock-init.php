@@ -4,7 +4,7 @@
  * Version: 1.0.0
  * Plugin URI:http://blog.govindkumar.me
  * Author: Govind Kumar
- * Author URI:http://govindkumar.me
+ * Author URI:http://emgk.github.io
  * Description: Customers can build a waiting list of products those are out of stock. They will be notified automatically via email, when products come back in stock.
  * Text Domain:in-stock-notifier
  * Domain Path: /language/
