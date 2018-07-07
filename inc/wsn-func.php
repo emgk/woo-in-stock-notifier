@@ -30,7 +30,7 @@ function wsn_get_waitlist( $product_id ) {
  * Check if the user is already exists or not.
  *
  * @param string $user User Email.
- * @param array  $waitlist array of the waitlist user.
+ * @param array $waitlist array of the waitlist user.
  *
  * @return bool
  */
@@ -43,7 +43,7 @@ function wsn_check_register( $user, $waitlist ) {
 /**
  * Store the email to waitlist.
  *
- * @param int   $id Product id.
+ * @param int $id Product id.
  * @param array $waitlist of the current product.
  */
 function wsn_store_user( $id, $waitlist ) {
@@ -72,7 +72,7 @@ function wsn_total_waitlist( $product_id ) {
  * Update total number of waitlist user.
  *
  * @param integer $num Number of total waitlist user.
- * @param integer $id  Product id.
+ * @param integer $id Product id.
  */
 function wsn_udpate_num( $num, $id ) {
 	update_post_meta( $id, WSN_NUM_META, $num );
@@ -82,7 +82,7 @@ function wsn_udpate_num( $num, $id ) {
  * Register the user into waitlist.
  *
  * @param string $user User Email.
- * @param int    $id Product Id .
+ * @param int $id Product Id .
  *
  * @return bool
  */
@@ -95,7 +95,11 @@ function wsn_register_user( $user, $id ) {
 		return false;
 	}
 
-	$waitlist[] = $user;
+	if ( is_array( $waitlist ) ) {
+		$waitlist[] = $user;
+	} else {
+		$waitlist = array( $user );
+	}
 
 	// Store email id to waitlist for the product.
 	wsn_store_user( $id, $waitlist );
@@ -106,7 +110,7 @@ function wsn_register_user( $user, $id ) {
 /**
  * Remove user from the product waitlist .
  *
- * @param string  $user User Email.
+ * @param string $user User Email.
  * @param integer $id Product id.
  *
  * @return bool
@@ -157,7 +161,7 @@ function wsn_get_archived_users( $id ) {
 /**
  * Store email into the archived.
  *
- * @param   string  $email User email .
+ * @param   string $email User email .
  * @param   integer $product_id product id .
  *
  * @return  bool
@@ -182,7 +186,7 @@ function wsn_store_email_into_archive( $email, $product_id ) {
  * Check if user is already in archived list .
  *
  * @param string $user User email.
- * @param array  $archived_users current archived user list of particular product.
+ * @param array $archived_users current archived user list of particular product.
  *
  * @return bool
  */
@@ -195,7 +199,7 @@ function wsn_archive_is_register( $user, $archived_users ) {
 /**
  * Remove user email id from the archived list.
  *
- * @param string  $email User email id.
+ * @param string $email User email id.
  * @param integer $product_id product id of archived list.
  *
  * @return bool
@@ -220,7 +224,7 @@ function wsn_remove_form_archive( $email, $product_id ) {
  * Store the email id to product archived list.
  *
  * @param integer $id Product id.
- * @param array   $waitlist pass the archived list of the product.
+ * @param array $waitlist pass the archived list of the product.
  */
 function wsn_save_archive( $id, $waitlist ) {
 
