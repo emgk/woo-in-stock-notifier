@@ -28,7 +28,7 @@ namespace InStockNotifier;
 
 defined( 'ABSPATH' ) or die;
 
-if ( ! class_exists( 'Email' ) ) {
+if ( ! class_exists( 'WSN_Email' ) ) {
 
 	/**
 	 * Class Email

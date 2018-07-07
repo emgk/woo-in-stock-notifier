@@ -30,13 +30,13 @@ defined( 'ABSPATH' ) or die;
 
 if ( ! class_exists( 'WSN_Initialize' ) ) {
 
-    /**
+	/**
 	 * Class InStockNotifier/WSN_Initialize
-     * 
+	 *
 	 * This class set up the backend for the plugin
-     * 
-     * @since 1.0.0
-     * @author Govind Kumar 
+	 *
+	 * @since 1.0.0
+	 * @author Govind Kumar
 	 */
 	class WSN_Initialize {
 
@@ -87,12 +87,15 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		 */
 		public function sort_column_by_waitlist( $vars ) {
 
-			if ( isset( $vars['orderby'] ) && 'wsn_waitlist' === $vars['orderby'] ) {
+			if (
+				isset( $vars['orderby'] )
+				&& 'wsn_waitlist' === $vars['orderby']
+			) {
 
 				$vars = array_merge( $vars, array(
-						'meta_key' => 'total_num_waitlist',
-						'orderby'  => 'meta_value_num',
-				));
+					'meta_key' => 'total_num_waitlist',
+					'orderby'  => 'meta_value_num',
+				) );
 			}
 
 			return $vars;
@@ -106,8 +109,12 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		 * @return array
 		 */
 		public function instockalert_add_column( $columns ) {
+
 			$waitlist_col = array(
-					'wsn_waitlist' => '<span class = "parent-tips" data-tip = "' . esc_attr__( 'Waitlist', 'in-stock-notifier' ) . '"><i class = "fa fa-clock-o"></i></span>',
+				'wsn_waitlist' => sprintf(
+					'<span class="parent-tips" data-tip="%s$1"><i class="fa fa-clock-o"></i></span>',
+					__( 'Waitlist', 'in-stock-notifier' )
+				),
 			);
 
 			return wp_parse_args( $waitlist_col, $columns );
@@ -138,22 +145,8 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 
 			global $post;
 
-			switch ( $column ) {
-
-				case 'wsn_waitlist':
-
-					$total_waitlist = wsn_total_waitlist( intval( $post->ID ) );
-
-					if ( 0 === $total_waitlist ) {
-
-						echo '-';
-
-					} else {
-
-						echo intval( $total_waitlist );
-					}
-
-					break;
+			if ( 'wsn_waitlist' === $column ) {
+				echo 0 === wsn_total_waitlist( intval( $post->ID ) ) ? '-' : absint( wsn_total_waitlist( intval( $post->ID ) ) );
 			}
 		}
 
@@ -163,23 +156,28 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		 * @access public
 		 */
 		public function wsn_recount_num() {
-
 			global $wpdb;
 
+			// Get the current user ID.
 			$userid = get_current_user_id();
 
+			// Get the user data.
 			$user = get_userdata( $userid );
 
-			$products = wp_cache_get( $user->ID , 'wsn_recount_num' );
+			// Get the recount num from wp cache.
+			$products = wp_cache_get( $user->ID, 'wsn_recount_num' );
 
+			// If cache is empty.
 			if ( ! $products ) {
 
 				// Fetching row from the sql query.
-				$products = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE  post_type='product_variation' OR post_type='%s' AND post_status='publish' " , 'product' ) );
+				$products = $wpdb->get_results(
+					$wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE post_type='%s' OR post_type='%s' AND post_status='%s' ", 'product_variation', 'product', 'publish' ) );
+
+				// Store result to the wp cache.
 				wp_cache_add( $user->ID, 'wsn_recount_num' );
 			}
 
-			$ii = 0 ;
 			foreach ( $products as $key => $row ) {
 
 				if ( 0 === $row->post_parent ) {
@@ -190,40 +188,23 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 					// Get list of waitlist.
 					$array_waitlist = wsn_get_waitlist( $product_id );
 
-					if ( is_array( $array_waitlist ) ) {
+					// Get the number of waiting list.
+					$waitlist_num = is_array( $array_waitlist ) ? count( array_filter( $array_waitlist ) ) : 0;
 
-						$waitlist_num = array_filter( $array_waitlist );
+					// Update the number of waitlist of particular product.
+					wsn_udpate_num( $waitlist_num, $product_id );
 
-						// Update the total number of the waitlist.
-						wsn_udpate_num( count( $waitlist_num ), $product_id );
-
-					} else {
-
-						// Set 0 if the waitlist array is blank.
-						wsn_udpate_num( 0, $product_id );
-
-					}
 				} elseif ( 0 !== $row->post_parent ) {
-
-					$total_waitlist_num = 0;
-
-					$product_id = $row->post_parent;
-
 					if ( 'product_variation' === $row->post_type ) {
 
+						/** @var array|int $array_waitlist Get the waiting list in array if available */
 						$array_waitlist = wsn_get_waitlist( $row->ID );
 
-						if ( is_array( $array_waitlist ) ) {
+						// Add the number of waitlist to previous number.
+						$total_waitlist_num = is_array( $array_waitlist ) ? count( $array_waitlist ) : 0;
 
-							$total_waitlist_num += count( $array_waitlist );
-
-						} else {
-
-							$total_waitlist_num += 0;
-						}
-
-						wsn_udpate_num( $total_waitlist_num, $product_id );
-
+						// Update waitlist number.
+						wsn_udpate_num( $total_waitlist_num, $row->post_parent );
 					}
 				}
 			}
@@ -246,17 +227,18 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 
 			if ( ! $stop_auto_sending ) {
 
-                // Fetching row from the sql query.
-                $products = $wpdb->get_results( $wpdb->prepare( "SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key = '%s' " ,WSN_USERS_META_KEY ) );
+				// Fetching row from the sql query.
+				$products = $wpdb->get_results( $wpdb->prepare( "SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key = '%s' ", WSN_USERS_META_KEY ) );
 
 				foreach ( $products as $key => $row ) {
 
-					$p_id    = $row->post_id;
+					$p_id = $row->post_id;
 
-					if ( ! empty( get_post( $p_id ) ) || ! is_product( $p_id ) )
-					    continue;
+					if ( ! empty( get_post( $p_id ) ) || ! is_product( $p_id ) ) {
+						continue;
+					}
 
-                    $product = new \WC_Product( $p_id );
+					$product = new \WC_Product( $p_id );
 
 					// Check if product is in stock.
 					if ( $product->is_in_stock() ) {
@@ -313,7 +295,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 			// Localize the ajax url for form submit.
 			wp_localize_script( 'jquery', '_wsn_waitlist', array(
 
-					'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
 			) );
 
 		}
@@ -368,9 +350,9 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 				'In-Stock Notifier',
 				'manage_options',
 				'in-stock-notifier-option',
-				array( __CLASS__,'wsn_waitlist_option_page' ),
+				array( __CLASS__, 'wsn_waitlist_option_page' ),
 				'dashicons-list-view',
-			59 );
+				59 );
 		}
 
 		/**
@@ -380,62 +362,62 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		 */
 		public static function wsn_waitlist_option_page() {
 			?>
-			<div class="wrap">
+            <div class="wrap">
 
-				<h2><?php echo esc_attr__( 'In-Stock Notifier','in-stock-notifier' );?></h2>
-				<hr/>
-				<form method="post" action="options.php">
+                <h2><?php echo esc_attr__( 'In-Stock Notifier', 'in-stock-notifier' ); ?></h2>
+                <hr/>
+                <form method="post" action="options.php">
 
 					<?php settings_fields( 'wsn_setting_fields' ); ?>
 
 					<?php do_settings_sections( 'wsn_setting' ); ?>
-					<table class="form-table">
-						<tr valign="top">
-							<th scope="row"><?php echo esc_attr__( 'Enable Waitlist', 'in-stock-notifier' ); ?></th>
-							<td><input type="checkbox" name="is_enabled"
-									   value="1" <?php checked( 1, get_option( 'is_enabled', true ), true ); ?> /></td>
-						</tr>
+                    <table class="form-table">
+                        <tr valign="top">
+                            <th scope="row"><?php echo esc_attr__( 'Enable Waitlist', 'in-stock-notifier' ); ?></th>
+                            <td><input type="checkbox" name="is_enabled"
+                                       value="1" <?php checked( 1, get_option( 'is_enabled', true ), true ); ?> /></td>
+                        </tr>
 
-						<tr valign="top">
-							<th scope="row"><?php echo esc_attr__( 'Join Button label', 'in-stock-notifier' ); ?></th>
-							<td><input type="text" name="join_btn_label"
-									   value="<?php echo get_option( 'join_btn_label' ) ? esc_attr( get_option( 'join_btn_label' ) ) : esc_attr__( 'Join Waitlist', 'in-stock-notifier' ); ?>"/>
-							</td>
-						</tr>
+                        <tr valign="top">
+                            <th scope="row"><?php echo esc_attr__( 'Join Button label', 'in-stock-notifier' ); ?></th>
+                            <td><input type="text" name="join_btn_label"
+                                       value="<?php echo get_option( 'join_btn_label' ) ? esc_attr( get_option( 'join_btn_label' ) ) : esc_attr__( 'Join Waitlist', 'in-stock-notifier' ); ?>"/>
+                            </td>
+                        </tr>
 
-						<tr valign="top">
-							<th scope="row"><?php echo esc_attr__( 'Leave Button label', 'in-stock-notifier' ); ?></th>
-							<td><input type="text" name="leave_btn_label"
-									   value="<?php echo get_option( 'leave_btn_label' ) ? esc_attr( get_option( 'leave_btn_label' ) ) : esc_attr__( 'Leave Waitlist', 'in-stock-notifier' ); ?>"/>
-							</td>
-						</tr>
+                        <tr valign="top">
+                            <th scope="row"><?php echo esc_attr__( 'Leave Button label', 'in-stock-notifier' ); ?></th>
+                            <td><input type="text" name="leave_btn_label"
+                                       value="<?php echo get_option( 'leave_btn_label' ) ? esc_attr( get_option( 'leave_btn_label' ) ) : esc_attr__( 'Leave Waitlist', 'in-stock-notifier' ); ?>"/>
+                            </td>
+                        </tr>
 
-						<tr valign="top">
-							<th scope="row"><?php echo esc_attr__( 'Additional Options', 'in-stock-notifier' ); ?></th>
-							<td><input type="checkbox" name="remove_after_email"
-									   value="1" <?php checked( 1, get_option( 'remove_after_email' ), true ); ?> /> <?php echo esc_attr__( 'Remove user after email sent.', 'in-stock-notifier' ); ?>
-							</td>
-						</tr>
+                        <tr valign="top">
+                            <th scope="row"><?php echo esc_attr__( 'Additional Options', 'in-stock-notifier' ); ?></th>
+                            <td><input type="checkbox" name="remove_after_email"
+                                       value="1" <?php checked( 1, get_option( 'remove_after_email' ), true ); ?> /> <?php echo esc_attr__( 'Remove user after email sent.', 'in-stock-notifier' ); ?>
+                            </td>
+                        </tr>
 
-						<tr valign="top">
-							<th scope="row"></th>
-							<td><input type="checkbox" name="unregistered_can_join"
-									   value="1" <?php checked( 1, get_option( 'unregistered_can_join', true ), true ); ?> />
+                        <tr valign="top">
+                            <th scope="row"></th>
+                            <td><input type="checkbox" name="unregistered_can_join"
+                                       value="1" <?php checked( 1, get_option( 'unregistered_can_join', true ), true ); ?> />
 								<?php echo esc_attr__( 'Allow guest to join.', 'in-stock-notifier' ); ?>
-							</td>
-						</tr>
+                            </td>
+                        </tr>
 
-						<tr valign="top">
-							<th scope="row"></th>
-							<td><input title="Archived user " type="checkbox" name="archive"
-									   value="1" <?php checked( 1, get_option( 'archive', true ), true ); ?> /> <?php echo esc_attr__( 'Archive user after email sent.', 'in-stock-notifier' ); ?>
-							</td>
-						</tr>
+                        <tr valign="top">
+                            <th scope="row"></th>
+                            <td><input title="Archived user " type="checkbox" name="archive"
+                                       value="1" <?php checked( 1, get_option( 'archive', true ), true ); ?> /> <?php echo esc_attr__( 'Archive user after email sent.', 'in-stock-notifier' ); ?>
+                            </td>
+                        </tr>
 
-					</table>
+                    </table>
 					<?php submit_button(); ?>
-				</form>
-			</div>
+                </form>
+            </div>
 			<?php
 		}
 	}
