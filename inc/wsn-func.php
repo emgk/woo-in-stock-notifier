@@ -170,6 +170,8 @@ function wsn_store_email_into_archive( $email, $product_id ) {
 		return false;
 	}
 
+	$archived_data = ! is_array( $archived_data ) ? array() : $archived_data;
+
 	$archived_data[] = $email;
 
 	wsn_save_archive( $product_id, $archived_data );
