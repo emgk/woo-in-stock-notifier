@@ -8,11 +8,11 @@ jQuery(document).ready(function ($) {
 
     var total = 0;
 
-    jQuery('a#show_archived').on('click', function (e) {
+    $('a#show_archived').on('click', function (e) {
 
         e.preventDefault();
 
-        var current = jQuery(this),
+        var current = $(this),
             product_id = current.data('product_id');
 
         $.ajax({
@@ -33,7 +33,7 @@ jQuery(document).ready(function ($) {
             }
         });
     });
-    jQuery('.archived_data_panel').on('click', 'a.removeArchivedUser', function (e) {
+    $('.archived_data_panel').on('click', 'a.removeArchivedUser', function (e) {
 
         e.preventDefault();
 
@@ -47,12 +47,12 @@ jQuery(document).ready(function ($) {
             user_id: user_email,
             type: '_remove'
         };
-        jQuery.post(ajaxurl, data, function () {
+        $.post(ajaxurl, data, function () {
             current_obj.parent().closest('tr').fadeOut(400);
         });
     });
 
-    jQuery('.archived_data_panel').on('click', 'a.restoreEmail', function (e) {
+    $('.archived_data_panel').on('click', 'a.restoreEmail', function (e) {
 
         e.preventDefault();
 
@@ -66,26 +66,26 @@ jQuery(document).ready(function ($) {
             user_id: user_email,
             type: '_restore',
         };
-        jQuery.post(ajaxurl, data, function (data) {
+        $.post(ajaxurl, data, function (data) {
             current_obj.parent().closest('tr').fadeOut(1000);
         });
     });
 
-    jQuery('a.close_archived').click(function (e) {
+    $('a.close_archived').click(function (e) {
 
         e.preventDefault();
 
         var current_obj = $(this),
             product_id = current_obj.attr('id');
 
-        jQuery('#form' + product_id).hide();
+        $('#form' + product_id).hide();
 
         current_obj.parents().find('.waitlist_data#' + product_id).show();
         current_obj.parents().find('.archived_data_panel#' + product_id).find('._archive_userlist').html('');
         current_obj.parents().find('.archived_data_panel#' + product_id).hide();
     });
 
-    jQuery('.wsn-usertable').on('click', 'a.removeUser', function (e) {
+    $('.wsn-usertable').on('click', 'a.removeUser', function (e) {
 
         e.preventDefault();
 
@@ -107,22 +107,22 @@ jQuery(document).ready(function ($) {
             'wp_action': action
         };
 
-        jQuery.post(ajaxurl, data, function () {
-            jQuery("#row-" + uid + "-" + product_id).fadeOut(1000);
+        $.post(ajaxurl, data, function () {
+            $("#row-" + uid + "-" + product_id).fadeOut(1000);
         });
     });
 
-    jQuery("a#wsn_add_new_user").on('click', function (e) {
+    $("a#wsn_add_new_user").on('click', function (e) {
 
         e.preventDefault();
 
-        var formid = jQuery(this).data('product_id');
+        var formid = $(this).data('product_id');
 
-        jQuery('#form' + formid).toggle();
-        jQuery(this).parent().find('.usrEmail#' + formid).focus();
+        $('#form' + formid).toggle();
+        $(this).parent().find('.usrEmail#' + formid).focus();
     });
 
-    jQuery('button#wsn_add_btn').on('click', function (e) {
+    $('button#wsn_add_btn').on('click', function (e) {
 
         e.preventDefault();
 
@@ -162,7 +162,7 @@ jQuery(document).ready(function ($) {
         }
 
 
-        jQuery.post(ajaxurl, data, function (data) {
+        $.post(ajaxurl, data, function (data) {
 
             var outputData = JSON.parse(data);
 
