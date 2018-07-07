@@ -161,12 +161,11 @@ jQuery(document).ready(function ($) {
             return false;
         }
 
+        $.post(ajaxurl, data, function (res) {
 
-        $.post(ajaxurl, data, function (data) {
+            var outputData = JSON.parse(res);
 
-            var outputData = JSON.parse(data);
-
-            if (outputData.status == 'success') {
+            if ('success' === outputData.status) {
                 total += 1;
                 current_obj.data('total', total);
                 current_obj.parents().find('.no_user#' + form_id).hide();

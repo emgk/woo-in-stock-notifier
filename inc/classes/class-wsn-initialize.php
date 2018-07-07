@@ -217,10 +217,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		 * @access public
 		 */
 		public function send_in_stock_email() {
-
 			global $wpdb;
-
-			$user = wp_get_current_user();
 
 			// Getting the filter value of the auto mail sending.
 			$stop_auto_sending = apply_filters( 'wsn_automatic_mailouts_are_disabled', false );
