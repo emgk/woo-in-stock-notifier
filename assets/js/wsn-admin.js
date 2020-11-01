@@ -1,19 +1,19 @@
 /**
- * Wocommerce In-Stock Notifier JavaScript
- * @author Govind Kumar <gkprmr@gmail.com>
- * @version 1.0.0
- */
+* Wocommerce In-Stock Notifier JavaScript
+* @author Govind Kumar <gkprmr@gmail.com>
+* @version 1.0.0
+*/
 
 jQuery(document).ready(function ($) {
 
     var total = 0;
 
-    $('a#show_archived').on('click', function (e) {
+    jQuery('a#show_archived').on('click',function (e) {
 
         e.preventDefault();
 
-        var current = $(this),
-            product_id = current.data('product_id');
+        var current     = jQuery(this),
+            product_id  = current.data('product_id');
 
         $.ajax({
             url: _wsn_waitlist.ajax_url,
@@ -33,13 +33,13 @@ jQuery(document).ready(function ($) {
             }
         });
     });
-    $('.archived_data_panel').on('click', 'a.removeArchivedUser', function (e) {
+    jQuery('.archived_data_panel').on('click', 'a.removeArchivedUser', function (e) {
 
         e.preventDefault();
 
         var current_obj = $(this),
-            user_email = current_obj.data('uid'),
-            product_id = current_obj.data('pid');
+            user_email  = current_obj.data('uid'),
+            product_id  = current_obj.data('pid');
 
         var data = {
             action: 'archive_function',
@@ -47,18 +47,18 @@ jQuery(document).ready(function ($) {
             user_id: user_email,
             type: '_remove'
         };
-        $.post(ajaxurl, data, function () {
+        jQuery.post(ajaxurl, data, function () {
             current_obj.parent().closest('tr').fadeOut(400);
         });
     });
 
-    $('.archived_data_panel').on('click', 'a.restoreEmail', function (e) {
+    jQuery('.archived_data_panel').on('click', 'a.restoreEmail', function (e) {
 
         e.preventDefault();
 
         var current_obj = $(this),
-            user_email = current_obj.data('uid'),
-            product_id = current_obj.data('pid');
+            user_email  = current_obj.data('uid'),
+            product_id  = current_obj.data('pid');
 
         var data = {
             action: 'archive_function',
@@ -66,37 +66,37 @@ jQuery(document).ready(function ($) {
             user_id: user_email,
             type: '_restore',
         };
-        $.post(ajaxurl, data, function (data) {
+        jQuery.post(ajaxurl, data, function (data) {
             current_obj.parent().closest('tr').fadeOut(1000);
         });
     });
 
-    $('a.close_archived').click(function (e) {
+    jQuery('a.close_archived').click(function (e) {
 
         e.preventDefault();
 
         var current_obj = $(this),
-            product_id = current_obj.attr('id');
+            product_id  = current_obj.attr('id');
 
-        $('#form' + product_id).hide();
+        jQuery('#form' + product_id).hide();
 
         current_obj.parents().find('.waitlist_data#' + product_id).show();
         current_obj.parents().find('.archived_data_panel#' + product_id).find('._archive_userlist').html('');
         current_obj.parents().find('.archived_data_panel#' + product_id).hide();
     });
 
-    $('.wsn-usertable').on('click', 'a.removeUser', function (e) {
+    jQuery('.wsn-usertable').on('click', 'a.removeUser', function (e) {
 
         e.preventDefault();
 
         var current_obj = $(this);
 
-        var product_id = current_obj.data('product_id'),
-            email = current_obj.data('email'),
-            uid = current_obj.data('uid'),
-            total = current_obj.data('total'),
-            nonce = current_obj.data('wp_nonce'),
-            action = current_obj.data('action');
+        var product_id  = current_obj.data('product_id'),
+            email       = current_obj.data('email'),
+            uid         = current_obj.data('uid'),
+            total       = current_obj.data('total'),
+            nonce       = current_obj.data('wp_nonce'),
+            action      = current_obj.data('action');
 
         var data = {
             'action': 'removeUser',
@@ -107,35 +107,35 @@ jQuery(document).ready(function ($) {
             'wp_action': action
         };
 
-        $.post(ajaxurl, data, function () {
-            $("#row-" + uid + "-" + product_id).fadeOut(1000);
+        jQuery.post(ajaxurl, data, function () {
+            jQuery("#row-" + uid + "-" + product_id).fadeOut(1000);
         });
     });
 
-    $("a#wsn_add_new_user").on('click', function (e) {
+    jQuery("a#wsn_add_new_user").on('click', function (e) {
 
         e.preventDefault();
 
-        var formid = $(this).data('product_id');
+        var formid = jQuery(this).data('product_id');
 
-        $('#form' + formid).toggle();
-        $(this).parent().find('.usrEmail#' + formid).focus();
+        jQuery('#form' + formid).toggle();
+        jQuery(this).parent().find('.usrEmail#'+formid).focus();
     });
 
-    $('button#wsn_add_btn').on('click', function (e) {
+    jQuery('button#wsn_add_btn').on('click', function (e) {
 
         e.preventDefault();
 
         var current_obj = $(this);
 
-        var form_id = current_obj.data('product_id'),
-            email = current_obj.parent().find('.usrEmail#' + form_id).val(),
-            total = current_obj.data('total'),
-            uid = total + 1,
-            nonce = current_obj.data('nonce');
+        var form_id     = current_obj.data('product_id'),
+            email       = current_obj.parent().find('.usrEmail#' + form_id).val(),
+            total       = current_obj.data('total'),
+            uid         = total+1,
+            nonce       = current_obj.data('nonce');
 
-        current_obj.parent().find('.usrEmail#' + form_id).val('');
-        current_obj.parent().find('.wsn-empty').hide();
+            current_obj.parent().find('.usrEmail#' + form_id).val('');
+            current_obj.parent().find('.wsn-empty').hide();
 
         var data = {
             'action': 'addNewUser',
@@ -145,7 +145,7 @@ jQuery(document).ready(function ($) {
             'email': email
         };
 
-        if (!email) {
+        if( ! email ){
 
             alert('Please enter email address.');
             return false;
@@ -153,28 +153,30 @@ jQuery(document).ready(function ($) {
 
         var email_pattern = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-        if (!email_pattern.test(email)) {
+        if ( ! email_pattern.test( email ) ) {
 
-            alert('Please enter valid email address');
-            current_obj.parent().find('.usrEmail#' + form_id).focus();
+            alert( 'Please enter valid email address' );
+            current_obj.parent( ).find( '.usrEmail#' + form_id ).focus();
 
             return false;
         }
 
-        $.post(ajaxurl, data, function (res) {
 
-            var outputData = JSON.parse(res);
 
-            if ('success' === outputData.status) {
+        jQuery.post(ajaxurl, data, function ( data ) {
+
+            var outputData = JSON.parse( data );
+
+            if ( outputData.status == 'success' ) {
                 total += 1;
-                current_obj.data('total', total);
-                current_obj.parents().find('.no_user#' + form_id).hide();
+                current_obj.data('total',total);
+                current_obj.parents().find('.no_user#'+form_id).hide();
                 $('table#waitlists' + form_id).append('<tr id="row-' + outputData.currentId + '-' + form_id + '"><td >' + outputData.email + '</td><td class="wsn-email-col">' + outputData.emailLink + '</td><td class="wsn-action-col">' + outputData.removeLink + '</td></tr>');
                 $('table#waitlists' + form_id + " tr:last").animate({backgroundColor: "rgb(247, 255, 176)"}, 'slow').animate({backgroundColor: "#fff"}, 'slow');
-                current_obj.parent().find('.usrEmail#' + form_id).focus();
-            } else if (outputData.status == 'exists') {
+                    current_obj.parent().find('.usrEmail#' + form_id).focus();
+            } else if( outputData.status == 'exists' ){
 
-                alert(email + ' is already exist! ');
+                alert( email + ' is already exist! ' );
             }
 
         });
