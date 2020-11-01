@@ -55,40 +55,53 @@ if ( ! class_exists( 'WSN_Email' ) ) {
 			// Add action to send the email.
 			add_action( 'send_wsn_email_mailout', array( $this, 'trigger' ), 10, 2 );
 
+			// this sets the recipient to the settings defined below in init_form_fields()
+			$this->recipient = $this->get_option( 'recipient' );
+
+			// if none was entered, just use the WP admin email as a fallback
+			if ( ! $this->recipient ) {
+				$this->recipient = get_option( 'admin_email' );
+			}
+
 			// WC_Email Constructor.
 			parent::__construct();
 		}
 
 		/**
-		 * Trigger Function
+		 * Trigger Email function
 		 *
 		 * @access public
-		 * @since 1.0.0
 		 *
-		 * @param mixed   $users Waitlist users array.
+		 * @param mixed $users Waitlist users array.
 		 * @param integer $product_id Product id.
 		 *
 		 * @return void
+		 * @since 1.0.0
+		 *
 		 */
 		public function trigger( $users, $product_id ) {
 
+			// get the product
 			$this->product = wc_get_product( $product_id );
 
-			if ( ! $this->product ) {
+			// return
+			if ( ! $this->product || ! $this->is_enabled() || ! $this->get_recipient() ) {
 				return;
 			}
 
-			// Find product_title in email template.
-			$this->find[] = '{product_title}';
+			// Replace product_title in email template.
+			$this->placeholders = array(
+				'{product_title}' => $this->product->get_formatted_name()
+			);
 
-			// Replace text.
-			$this->replace[] = $this->product->get_formatted_name();
-			$response        = true;
-			$header          = $this->get_headers() . 'BCC: ' . implode( ',', $users ) . "\r\n";
-			$response        = $this->send( '', $this->get_subject(), $this->get_content(), $header, $this->get_attachments() );
+			// build header
+			$header = $this->get_headers() . 'BCC: ' . implode( ',', $users ) . "\r\n";
 
+			// send email
+			$response = $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $header, $this->get_attachments() );
+
+			// Return true in wsn_email_send_response.
 			if ( $response ) {
-				// Return true in wsn_email_send_response.
 				add_filter( 'wsn_email_send_response', '__return_true' );
 			}
 		}
@@ -97,8 +110,8 @@ if ( ! class_exists( 'WSN_Email' ) ) {
 		 * Get the html content of the email.
 		 *
 		 * @access public
-		 * @since 1.0.0
 		 * @return string
+		 * @since 1.0.0
 		 */
 		public function get_content_html() {
 
@@ -123,17 +136,17 @@ if ( ! class_exists( 'WSN_Email' ) ) {
 		 * Get the plain content of the email.
 		 *
 		 * @access public
-		 * @since 1.0.0
 		 * @return string
+		 * @since 1.0.0
 		 */
 		public function get_content_plain() {
 
 			ob_start();
 
-			wc_get_template($this->template_plain, array(
+			wc_get_template( $this->template_plain, array(
 				'order'         => $this->object,
 				'email_heading' => $this->get_heading(),
-			));
+			) );
 
 			return ob_get_clean();
 		}
