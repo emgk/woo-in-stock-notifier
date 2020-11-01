@@ -287,14 +287,13 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		public function instockalert_product_setup() {
 
 			// Registering the admin js scrip.
-			wp_enqueue_script( 'wsn_admin_scripts', WSN_ASSEST_PATH . 'js/wsn-admin.js' );
+			wp_enqueue_script( 'wsn_admin_scripts', WSN_ASSEST_PATH . 'js/admin.min.js' );
+			wp_enqueue_style( 'wsn_admin_styles', WSN_ASSEST_PATH . 'css/admin.min.css' );
 
 			// Localize the ajax url for form submit.
 			wp_localize_script( 'jquery', '_wsn_waitlist', array(
-
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 			) );
-
 		}
 
 		/**
@@ -359,62 +358,62 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		 */
 		public static function wsn_waitlist_option_page() {
 			?>
-            <div class="wrap">
+			<div class="wrap">
 
-                <h2><?php echo esc_attr__( 'In-Stock Notifier', 'in-stock-notifier' ); ?></h2>
-                <hr/>
-                <form method="post" action="options.php">
+				<h2><?php echo esc_attr__( 'In-Stock Notifier', 'in-stock-notifier' ); ?></h2>
+				<hr/>
+				<form method="post" action="options.php">
 
 					<?php settings_fields( 'wsn_setting_fields' ); ?>
 
 					<?php do_settings_sections( 'wsn_setting' ); ?>
-                    <table class="form-table">
-                        <tr valign="top">
-                            <th scope="row"><?php echo esc_attr__( 'Enable Waitlist', 'in-stock-notifier' ); ?></th>
-                            <td><input type="checkbox" name="is_enabled"
-                                       value="1" <?php checked( 1, get_option( 'is_enabled', true ), true ); ?> /></td>
-                        </tr>
+					<table class="form-table">
+						<tr valign="top">
+							<th scope="row"><?php echo esc_attr__( 'Enable Waitlist', 'in-stock-notifier' ); ?></th>
+							<td><input type="checkbox" name="is_enabled"
+							           value="1" <?php checked( 1, get_option( 'is_enabled', true ), true ); ?> /></td>
+						</tr>
 
-                        <tr valign="top">
-                            <th scope="row"><?php echo esc_attr__( 'Join Button label', 'in-stock-notifier' ); ?></th>
-                            <td><input type="text" name="join_btn_label"
-                                       value="<?php echo get_option( 'join_btn_label' ) ? esc_attr( get_option( 'join_btn_label' ) ) : esc_attr__( 'Join Waitlist', 'in-stock-notifier' ); ?>"/>
-                            </td>
-                        </tr>
+						<tr valign="top">
+							<th scope="row"><?php echo esc_attr__( 'Join Button label', 'in-stock-notifier' ); ?></th>
+							<td><input type="text" name="join_btn_label"
+							           value="<?php echo get_option( 'join_btn_label' ) ? esc_attr( get_option( 'join_btn_label' ) ) : esc_attr__( 'Join Waitlist', 'in-stock-notifier' ); ?>"/>
+							</td>
+						</tr>
 
-                        <tr valign="top">
-                            <th scope="row"><?php echo esc_attr__( 'Leave Button label', 'in-stock-notifier' ); ?></th>
-                            <td><input type="text" name="leave_btn_label"
-                                       value="<?php echo get_option( 'leave_btn_label' ) ? esc_attr( get_option( 'leave_btn_label' ) ) : esc_attr__( 'Leave Waitlist', 'in-stock-notifier' ); ?>"/>
-                            </td>
-                        </tr>
+						<tr valign="top">
+							<th scope="row"><?php echo esc_attr__( 'Leave Button label', 'in-stock-notifier' ); ?></th>
+							<td><input type="text" name="leave_btn_label"
+							           value="<?php echo get_option( 'leave_btn_label' ) ? esc_attr( get_option( 'leave_btn_label' ) ) : esc_attr__( 'Leave Waitlist', 'in-stock-notifier' ); ?>"/>
+							</td>
+						</tr>
 
-                        <tr valign="top">
-                            <th scope="row"><?php echo esc_attr__( 'Additional Options', 'in-stock-notifier' ); ?></th>
-                            <td><input type="checkbox" name="remove_after_email"
-                                       value="1" <?php checked( 1, get_option( 'remove_after_email' ), true ); ?> /> <?php echo esc_attr__( 'Remove user after email sent.', 'in-stock-notifier' ); ?>
-                            </td>
-                        </tr>
+						<tr valign="top">
+							<th scope="row"><?php echo esc_attr__( 'Additional Options', 'in-stock-notifier' ); ?></th>
+							<td><input type="checkbox" name="remove_after_email"
+							           value="1" <?php checked( 1, get_option( 'remove_after_email' ), true ); ?> /> <?php echo esc_attr__( 'Remove user after email sent.', 'in-stock-notifier' ); ?>
+							</td>
+						</tr>
 
-                        <tr valign="top">
-                            <th scope="row"></th>
-                            <td><input type="checkbox" name="unregistered_can_join"
-                                       value="1" <?php checked( 1, get_option( 'unregistered_can_join', true ), true ); ?> />
+						<tr valign="top">
+							<th scope="row"></th>
+							<td><input type="checkbox" name="unregistered_can_join"
+							           value="1" <?php checked( 1, get_option( 'unregistered_can_join', true ), true ); ?> />
 								<?php echo esc_attr__( 'Allow guest to join.', 'in-stock-notifier' ); ?>
-                            </td>
-                        </tr>
+							</td>
+						</tr>
 
-                        <tr valign="top">
-                            <th scope="row"></th>
-                            <td><input title="Archived user " type="checkbox" name="archive"
-                                       value="1" <?php checked( 1, get_option( 'archive', true ), true ); ?> /> <?php echo esc_attr__( 'Archive user after email sent.', 'in-stock-notifier' ); ?>
-                            </td>
-                        </tr>
+						<tr valign="top">
+							<th scope="row"></th>
+							<td><input title="Archived user " type="checkbox" name="archive"
+							           value="1" <?php checked( 1, get_option( 'archive', true ), true ); ?> /> <?php echo esc_attr__( 'Archive user after email sent.', 'in-stock-notifier' ); ?>
+							</td>
+						</tr>
 
-                    </table>
+					</table>
 					<?php submit_button(); ?>
-                </form>
-            </div>
+				</form>
+			</div>
 			<?php
 		}
 	}

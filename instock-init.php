@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Woo In-Stock Notifier
  * Version: 1.0.1
- * Plugin URI:http://blog.govindkumar.me
+ * Plugin URI: http://emgk.github.io/
  * Author: Govind Kumar
  * Author URI:http://emgk.github.io
  * Description: Customers can build a waiting list of products those are out of stock. They will be notified automatically via email, when products come back in stock.
@@ -13,7 +13,6 @@
  *
  **/
 
-ini_set( 'display_errors', 1 );
 /**
  * In-Stock Notifier - WooCommerce Plugin
  * Copyright (C) 2017 Govind Kumar <gkprmr@gmail.com>
@@ -39,9 +38,10 @@ if ( ! function_exists( 'wp_get_current_user' ) ) {
 	include( ABSPATH . 'wp-includes/pluggable.php' );
 }
 
+// defines
 define( 'WSN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WSN_INCLUDE_PATH', WSN_PATH . 'inc' . DIRECTORY_SEPARATOR );
-define( 'WSN_ASSEST_PATH', plugin_dir_url( __FILE__ ) . 'assets' . DIRECTORY_SEPARATOR );
+define( 'WSN_ASSEST_PATH', plugin_dir_url( __FILE__ ) . 'build' . DIRECTORY_SEPARATOR );
 define( 'WSN_CLASS_PATH', WSN_PATH . 'inc' . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR );
 define( 'WSN_EMAIL_TEMPLATE_PATH', WSN_PATH . 'templates' . DIRECTORY_SEPARATOR . 'email' . DIRECTORY_SEPARATOR );
 
@@ -54,7 +54,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	load_plugin_textdomain( 'in-stock-notifier', false, dirname( plugin_basename( __FILE__ ) ) . '/language/' );
 } else {
 	deactivate_plugins( plugin_basename( __FILE__ ) );
-	add_action( 'admin_notices', 'wsn_woocommerce_dependecies_check' );
+	add_action( 'admin_notices', 'wsc_woo_requires' );
 }
 
 /**
@@ -63,7 +63,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
  *
  * @since 1.0
  */
-function wsn_woocommerce_dependecies_check() {
+function wsc_woo_requires() {
 	?>
     <div class="error">
         <p>
@@ -90,5 +90,3 @@ function wsn_pre_load() {
 	$GLOBALS['instock_alert'] = new \InStockNotifier\WSN_Bootstrap();
 
 }
-
-

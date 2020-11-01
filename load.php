@@ -34,23 +34,25 @@ spl_autoload_register( __NAMESPACE__ . '\\wsn_autoload_classes' );
 /**
  * Auto load the plugin classes.
  *
- * @since 1.0
- *
  * @param string $class Name of the class.
  *
  * @return bool|mixed
+ * @since 1.0
+ *
  */
 function wsn_autoload_classes( $class ) {
 
 	// Get the name of the namespace and check if it is what we are looking for?
-	if ( 0 !== strpos( $class, 'InStockNotifier\\', 0 ) )
+	if ( 0 !== strpos( $class, 'InStockNotifier\\', 0 ) ) {
 		return false;
+	}
 
 	static $loaded = array();
 
-	if ( isset( $loaded[ $class ] ) )
+	if ( isset( $loaded[ $class ] ) ) {
 		return $loaded[ $class ];
-	
+	}
+
 	$extension = '.php';
 
 	$_class = strtolower( str_replace( 'InStockNotifier\\', '', $class ) );

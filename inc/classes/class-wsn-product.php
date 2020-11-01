@@ -73,8 +73,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 
 			// Add form to woo commerce stock html.
 			add_action( 'woocommerce_before_main_content', array( $this, 'get_output_form' ) );
-			add_action( 'wp', array( $this, 'wsn_handle_submmit' ) );
-
+			add_action( 'wp', array( $this, 'wsn_handle_submit' ) );
 		}
 
 		/**
@@ -286,7 +285,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 		 *
 		 * @access public
 		 */
-		public function wsn_handle_submmit() {
+		public function wsn_handle_submit() {
 
 			if ( ! isset( $_REQUEST['_wpnonce'] ) || ! isset( $_REQUEST[ WSN_USERS_META_KEY . '-action' ] ) || ! isset( $_REQUEST['wsn_email'] ) ) {
 				return;

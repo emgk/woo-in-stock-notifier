@@ -153,8 +153,8 @@ function wsn_get_archived_users( $id ) {
 /**
  * Store email into the archived.
  *
- * @param   string $email User email .
- * @param   integer $product_id product id .
+ * @param string $email User email .
+ * @param integer $product_id product id .
  *
  * @return  bool
  */
