@@ -55,7 +55,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 			add_filter( 'manage_edit-product_columns', array( $this, 'instockalert_add_column' ) );
 
 			// Enqueue Scripts for admin.
-			add_action( 'admin_init', array( $this, 'instockalert_product_setup' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'instockalert_product_setup' ) );
 
 			// This function will fire when any product stock status change.
 			add_action( 'admin_init', array( $this, 'send_in_stock_email' ) );
@@ -67,7 +67,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 			add_filter( 'manage_edit-product_sortable_columns', array( $this, 'wsn_sortable_tab' ) );
 
 			// Enqueue scripts of plugin.
-			add_action( 'init', array( $this, 'wsn_enqueue_assets' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'wsn_enqueue_assets' ) );
 
 			// Register plugin setting fields.
 			add_action( 'init', array( $this, 'wsn_register_settings' ) );

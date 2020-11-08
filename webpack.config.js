@@ -14,7 +14,7 @@ module.exports = {
 	},
 	output: {
 		filename: 'js/[name].min.js',
-		path: path.resolve( __dirname, './build' ),
+		path: path.resolve( __dirname, './assets' ),
 	},
 	module: {
 		rules: [

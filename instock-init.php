@@ -42,7 +42,7 @@ if ( ! function_exists( 'wp_get_current_user' ) ) {
 // defines
 define( 'WSN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WSN_INCLUDE_PATH', WSN_PATH . 'inc' . DIRECTORY_SEPARATOR );
-define( 'WSN_ASSEST_PATH', plugin_dir_url( __FILE__ ) . 'build' . DIRECTORY_SEPARATOR );
+define( 'WSN_ASSEST_PATH', plugin_dir_url( __FILE__ ) . 'assets' . DIRECTORY_SEPARATOR );
 define( 'WSN_CLASS_PATH', WSN_PATH . 'inc' . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR );
 define( 'WSN_EMAIL_TEMPLATE_PATH', WSN_PATH . 'templates' . DIRECTORY_SEPARATOR . 'email' . DIRECTORY_SEPARATOR );
 

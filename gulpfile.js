@@ -11,7 +11,7 @@ const webpackStream = require( 'webpack-stream' );
 const
 	sourceFiles = 'src/',
 	sourceJsFiles = sourceFiles + '**/**/*.js',
-	outputDir = 'build';
+	outputDir = 'assets';
 
 function watchFiles() {
 	const webpackConfig = require( './webpack.config.js' );
@@ -30,7 +30,7 @@ gulp.task( 'plugin-pot', function() {
 		.pipe( wpPot( {
 			domain: 'in-stock-notifier',
 		} ) )
-		.pipe( gulp.dest( 'i18n/languages/in-stock-notifier.pot' ) );
+		.pipe( gulp.dest( 'languages/in-stock-notifier.pot' ) );
 } );
 
 gulp.task( 'plugin-zip-cleanup', function( done ) {
@@ -76,7 +76,7 @@ gulp.task( 'watch', series( watchFiles, gulp.parallel( watchAllFiles ) ) );
 gulp.task( 'build', gulp.series( [ 'production-env' ], gulp.parallel( watchFiles ) ) );
 gulp.task( 'default', gulp.series( [ 'build' ] ) );
 
-gulp.task( 'release', gulp.series(
+gulp.task( 'publish', gulp.series(
 	[ 'production-env' ],
 	[ 'build' ],
 	[ 'plugin-pot' ],

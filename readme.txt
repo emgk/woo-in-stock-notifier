@@ -2,8 +2,9 @@
 Contributors: gk.loveweb
 Donate link: http://emgk.github.io
 Tags: woocommerce plugin, woocommerce,in-stock, out-of-stock, stock management, notify user, userlist, waitlist, notify.
-Requires at least: 3.3
+Requires at least: 5.3
 Tested up to: 5.5.3
+Requires PHP: 7.0
 Stable tag: woo-in-stock-notifier
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -51,3 +52,8 @@ When the email is sent to the sent to the user, this plugin allows you to move t
 
 = 1.0 =
 * Initial release.
+
+== Upgrade Notice ==
+
+= 1.0.2 =
+1.0.2 has brand new UI/UX, please check if compatible with your environment, [report issues here](https://github.com/emgk/woo-in-stock-notifier/issues)
