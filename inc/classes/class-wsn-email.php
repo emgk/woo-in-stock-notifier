@@ -51,17 +51,10 @@ if ( ! class_exists( 'WSN_Email' ) ) {
 			$this->template_base  = WSN_EMAIL_TEMPLATE_PATH;
 			$this->template_html  = 'wsn-email-template.php';
 			$this->template_plain = 'plain/wsn-email-template.php';
+			$this->customer_email = true;
 
 			// Add action to send the email.
 			add_action( 'send_wsn_email_mailout', array( $this, 'trigger' ), 10, 2 );
-
-			// this sets the recipient to the settings defined below in init_form_fields()
-			$this->recipient = $this->get_option( 'recipient' );
-
-			// if none was entered, just use the WP admin email as a fallback
-			if ( ! $this->recipient ) {
-				$this->recipient = get_option( 'admin_email' );
-			}
 
 			// WC_Email Constructor.
 			parent::__construct();
@@ -85,7 +78,7 @@ if ( ! class_exists( 'WSN_Email' ) ) {
 			$this->product = wc_get_product( $product_id );
 
 			// return
-			if ( ! $this->product || ! $this->is_enabled() || ! $this->get_recipient() ) {
+			if ( ! $this->product || ! $this->is_enabled() ) {
 				return;
 			}
 

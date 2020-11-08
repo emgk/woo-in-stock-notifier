@@ -231,11 +231,22 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 
 					$p_id = $row->post_id;
 
-					if ( ! empty( get_post( $p_id ) ) || ! is_product( $p_id ) ) {
+					/** @var \WP_Post $post */
+					$post = get_post( $p_id );
+
+					if ( empty( get_post( $p_id ) ) || ! in_array( $post->post_type, array(
+							'product',
+							'product_variation'
+						), true ) ) {
 						continue;
 					}
 
-					$product = new \WC_Product( $p_id );
+					if ( 'product_variation' === $post->post_type ) {
+						/** @var \WC_Product_Variation $variation product */
+						$product = new \WC_Product_Variation( $p_id );
+					} else {
+						$product = new \WC_Product( $p_id );
+					}
 
 					// Check if product is in stock.
 					if ( $product->is_in_stock() ) {
@@ -262,7 +273,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 									wsn_store_email_into_archive( $arc, $p_id );
 								}
 							}
-							$response      = apply_filters( 'wsn_email_send_response', false );
+							$response = apply_filters( 'wsn_email_send_response', false );
 							$do_not_remove = apply_filters( 'wsn_persistent_waitlists_are_disabled', false );
 
 							if ( $response ) {
@@ -347,7 +358,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 				'manage_options',
 				'in-stock-notifier-option',
 				array( __CLASS__, 'wsn_waitlist_option_page' ),
-                59
+				59
 			);
 		}
 

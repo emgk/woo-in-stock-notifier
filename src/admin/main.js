@@ -163,6 +163,9 @@ jQuery( document ).ready( function( $ ) {
 		// get email field
 		const emailField = currentEl.closest( '.wsn-form' ).find( '#user-email-field-' + formID );
 
+		emailField.addClass( 'disabled' );
+		currentEl.addClass( 'disabled' );
+
 		// get the close button
 		const closeButton = currentEl.closest( '.wsn-form' ).find( '#wsn_hide_add_new_user' );
 
@@ -200,6 +203,9 @@ jQuery( document ).ready( function( $ ) {
 
 		jQuery.post( ajaxurl, data, function( data ) {
 			const outputData = JSON.parse( data );
+
+			emailField.removeClass( 'disabled' );
+			currentEl.removeClass( 'disabled' );
 
 			switch ( outputData.status ) {
 				case 'success':

@@ -236,8 +236,8 @@ if ( ! class_exists( 'WSN_Product' ) ) {
                                 </div>
                                 <div class="wsn-form-message-item">
 									<?php echo $joined ?
-										esc_html( apply_filters( 'wsn_leave_waitlist_message_text', esc_attr__( 'Click on Leave button to leave waitlist', 'in-stock-notifier' ), $is_loggedin ) ) :
-										esc_html( apply_filters( 'wsn_join_waitlist_message_text', esc_attr__( 'Click on Join Waitlist Button to Join Waitlist', 'in-stock-notifier' ), $is_loggedin ) );
+										esc_html( apply_filters( 'wsn_leave_waitlist_message_text', esc_attr__( 'We\'ll notify you as soon as item is back in stock.', 'in-stock-notifier' ), $is_loggedin ) ) :
+										esc_html( apply_filters( 'wsn_join_waitlist_message_text', esc_attr__( 'Join the waitlist, so we can notify you as soon as the item is back in stock.', 'in-stock-notifier' ), $is_loggedin ) );
 									?>
                                 </div>
                             </div>

@@ -205,7 +205,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 						$this->render_notice( __( 'Failed!' ), __( 'Failed to send email to all users.' ), 'dashicons-no' );
 					}
 					$msg = ob_get_clean();
-					exit;
+					break;
 				default:
 					if ( $response ) {
 						$msg = '<span class="dashicons dashicons-yes"></span>';

@@ -29,7 +29,7 @@ coverage
 .lock-wscript
 
 # Compiled JS directory
-build
+assets
 
 # Optional JetBrains IDE directory
 *.iml
