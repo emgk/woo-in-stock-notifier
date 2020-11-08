@@ -39,6 +39,11 @@ To disable the plugin, Go to ‘WooCommerce > In-Stock Notifier’ you will get 
 When the email is sent to the sent to the user, this plugin allows you to move that email address to archive(in case you don’t want to lose the current wait list). You can restore or remove the email address from the archive list.
 
 == Changelog ==
+
+= 1.0.3 =
+* Fix WC_Email issues
+* Trigger email when stock status changes.
+
 = 1.0.2 =
 * Made compatible with newest version of Woocommerce
 * Re-build UI/UX

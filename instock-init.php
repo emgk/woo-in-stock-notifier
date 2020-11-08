@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Woo In-Stock Notifier
- * Version: 1.0.2
+ * Version: 1.0.3
  * Plugin URI: http://emgk.github.io/
  * Author: Govind Kumar
  * Author URI:http://emgk.github.io
