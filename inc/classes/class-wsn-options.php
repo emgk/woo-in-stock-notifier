@@ -45,9 +45,6 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 			add_action( 'woocommerce_init', array( $this, 'load_wc_mailer' ) );
 			add_filter( 'woocommerce_email_classes', array( $this, 'add_woocommerce_emails' ) );
 
-			// Ajax form for plugin backend.
-			add_action( 'admin_footer', array( $this, 'add_admin_script' ) );
-
 			// Add Ajax form for add new user in waitlist.
 			add_action( 'wp_ajax_addNewUser', array( $this, 'add_new_user_ajax' ) );
 
@@ -59,9 +56,6 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 
 			// Ajax action form for retrieve all archived user.
 			add_action( 'wp_ajax_archive_function', array( $this, 'wsn_archive_function' ) );
-
-			// Adding css and js in backend.
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 			// Add email action to woo commerce.
 			add_action( 'woocommerce_email_actions', array( $this, 'kia_ajax_email_action' ) );
@@ -93,45 +87,34 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 		 */
 		public function wsn_archive_function() {
 
-			// Getting the product type.
-			if ( isset( $_REQUEST['type'] ) ) {
-				$action_type = sanitize_text_field( wp_unslash( $_REQUEST['type'] ) );
-			}
-
-			if ( ! isset( $_REQUEST['product'] ) ) {
+			if ( ! isset( $_REQUEST['product'], $_REQUEST['type'], $_REQUEST['user_id'] ) ) {
 				return;
 			}
+
+			// Getting the product type.
+			$action_type = sanitize_text_field( wp_unslash( $_REQUEST['type'] ) );
 
 			// Product id .
 			$product_id = absint( $_REQUEST['product'] );
 
-			if ( isset( $_REQUEST['user_id'] ) ) {
+			// Get the user's email.
+			$user_email = sanitize_email( wp_unslash( $_REQUEST['user_id'] ) );
 
-				// Get the user's email.
-				$user_email = sanitize_email( wp_unslash( $_REQUEST['user_id'] ) );
-			}
-
-			if ( '_show' === $action_type ) {
-
-				// Retrieve all user email from archived list.
-				$users = wsn_get_archived_users( $product_id );
-				wp_die( wp_json_encode( $users ) );
-
-			} elseif ( '_remove' === $action_type ) {
-
-				// Remove user from the archive.
-				if ( wsn_remove_form_archive( $user_email, $product_id ) ) {
-					wp_die( wp_json_encode( array( 'remove' => true ) ) );
-				}
-			} elseif ( '_restore' === $action_type ) {
-
-				if ( wsn_register_user( $user_email, $product_id ) ) {
-
+			switch ( $action_type ) {
+				case '_remove' :
+					// Remove user from the archive.
 					if ( wsn_remove_form_archive( $user_email, $product_id ) ) {
 						wp_die( wp_json_encode( array( 'remove' => true ) ) );
 					}
-				}
+					break;
+				case '_restore':
+					// Restore user email archive
+					if ( wsn_register_user( $user_email, $product_id ) && wsn_remove_form_archive( $user_email, $product_id ) ) {
+						wp_die( wp_json_encode( array( 'remove' => true ) ) );
+					}
+					break;
 			}
+
 			wp_die();
 		}
 
@@ -156,7 +139,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 		 */
 		public function wsn_waitlist_send_mail_ajax() {
 
-			if ( ! isset( $_REQUEST['product'] ) && ! isset( $_REQUEST['type'] ) || ! isset( $_REQUEST['email'] ) ) {
+			if ( ! isset( $_REQUEST['product'] ) && ! isset( $_REQUEST['type'] ) ) {
 				wp_die();
 			}
 
@@ -166,8 +149,14 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 			// Get the type.
 			$type = sanitize_text_field( wp_unslash( $_REQUEST['type'] ) );
 
+			if ( 'all' !== $type && ! isset( $_REQUEST['email'] ) ) {
+				wp_die();
+			}
+
 			// Is we need to empty the list after email sent?
 			$do_empty = get_option( 'remove_after_email' );
+
+			$is_archived = false;
 
 			// Load woo commerce mailer class.
 			WC()->mailer();
@@ -191,34 +180,43 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 				// Get the value of the archive setting field.
 				$is_archived = get_option( 'archive' );
 
-				// Getting the email of user.
-				$user_email = sanitize_email( wp_unslash( $_REQUEST['email'] ) );
-
 				if ( $is_archived ) {
+					foreach ( $users as $user_email ) {
+						// remove user from the list after archive
+						wsn_leave_user( $user_email, $product_id );
 
-					// Store email into archived after email sent.
-					wsn_store_email_into_archive( $user_email, $product_id );
+						// Store email into archived after email sent.
+						if ( ! empty( $user_email ) ) {
+							wsn_store_email_into_archive( $user_email, $product_id );
+						}
+					}
 				}
 			}
 
 			$response = apply_filters( 'wsn_email_send_response', false );
 
-			// Check response.
-			if ( $response ) {
 
-				if ( 'all' === $type ) {
-					$msg = '<span class="dashicons dashicons-yes"></span> ' . esc_attr__( 'Message successfully sent to all user', 'in-stock-notifier' );
-				} else {
-					$msg = '<span class="dashicons dashicons-yes"></span>';
-				}
-				$send = true;
-			} else {
-				$msg  = '<span class="dashicons dashicons-no"></span>';
-				$send = false;
+			switch ( $type ) {
+				case 'all':
+					ob_start();
+					if ( $response ) {
+						$this->render_notice( __( 'Email sent!' ), __( 'Email successfully sent to all users.' ), 'dashicons-yes' );
+					} else {
+						$this->render_notice( __( 'Failed!' ), __( 'Failed to send email to all users.' ), 'dashicons-no' );
+					}
+					$msg = ob_get_clean();
+					exit;
+				default:
+					if ( $response ) {
+						$msg = '<span class="dashicons dashicons-yes"></span>';
+					} else {
+						$msg = '<span class="dashicons dashicons-no"></span>';
+					}
 			}
 
-			if ( $do_empty && $send ) {
+			$send = (bool) $response;
 
+			if ( $do_empty && $send ) {
 				if ( 'all' === $type ) {
 
 					// Remove all user from waitlist.
@@ -231,26 +229,13 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 			}
 			// Pass param to js.
 			echo wp_json_encode( array(
-				'msg'    => $msg,
-				'remove' => $do_empty,
-				'send'   => $send,
-				'id'     => $product_id,
+				'msg'      => $msg,
+				'remove'   => (int) $do_empty,
+				'archived' => (int) $is_archived,
+				'send'     => $send,
+				'id'       => $product_id,
 			) );
 			wp_die();
-		}
-
-		/**
-		 * Adding the js file in wp admin.
-		 *
-		 * @access public
-		 */
-		public function enqueue_scripts() {
-
-			// Add wsn-metabox.js in backend.
-			wp_enqueue_script( 'wsn-waitlist-metabox', WSN_ASSEST_PATH . 'js/wsn-metabox.js', array( 'jquery' ) );
-
-			// Localize ajax script in backend.
-			wp_localize_script( 'wsn_waitlist_meta', 'wsn_waitlist_meta', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		}
 
 		/**
@@ -279,6 +264,8 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 					}
 				}
 			}
+
+			wp_die();
 		}
 
 		/**
@@ -295,10 +282,10 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 			ob_start();
 			?>
 
-			<a class="wsn_waitlist_send_mail_btn short" href="javascript:void(0);"
-			   data-type="<?php echo esc_html( $type ); ?>" data-user_email="<?php echo $email; ?>"
-			   data-product_id="<?php echo intval( $id ); ?>"
-			   title="<?php echo esc_attr__( 'Send Email', 'in-stock-notifier' ); ?>"><?php
+            <a class="wsn_waitlist_send_mail_btn short" href="javascript:void(0);"
+               data-type="<?php echo esc_html( $type ); ?>" data-user_email="<?php echo $email; ?>"
+               data-product_id="<?php echo intval( $id ); ?>"
+               title="<?php echo esc_attr__( 'Send Email', 'in-stock-notifier' ); ?>"><?php
 
 			if ( 'single' !== $type ) {
 				?><span class="dashicons dashicons-email-alt"></span>
@@ -353,6 +340,10 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 				$em = $this->button_to_send_mail( $email, $pid );
 
 				if ( wsn_register_user( $email, $pid ) ) {
+
+					// remove user from the archive list
+					wsn_remove_form_archive( $email, $pid );
+
 					wp_die( wp_json_encode( array(
 						'email'      => $email,
 						'status'     => 'success',
@@ -364,13 +355,6 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 					wp_die( wp_json_encode( array( 'status' => 'exists', ) ) );
 				}
 			}
-		}
-
-		/**
-		 * Add admin js to backend.
-		 */
-		public function add_admin_script() {
-			wp_enqueue_script( 'wsn_scripts', wsn_ASSETS_URL . '/js/wsn-admin.js' );
 		}
 
 		/**
@@ -393,23 +377,26 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 			// get the list of users
 			$waitlist = wsn_get_waitlist( $pid );
 			?>
-			<div id="wsn-users-tab" class="wsn-tabs__content wsn-tabs__content--current">
-				<div class="wsn-tab-section">
-					<div class="wsn-tab-section__header">
-						<h3>Users waitlist</h3>
+            <div id="wsn-users-tab" class="wsn-tabs__content wsn-tabs__content--current">
+                <div class="wsn-tab-section">
+                    <div class="wsn-tab-section__header">
+                        <h3><?php echo __( 'Users waitlist', 'in-stock-notifier' ); ?></h3>
+						<?php
+						echo print_r( $waitlist, true );
+						?>
 						<?php if ( ! empty( $waitlist ) ) { ?>
-							<div class="wsn-tab-section-desc">
+                            <div class="wsn-tab-section-desc">
 								<?php echo apply_filters( 'wsn_waitlist_introduction', esc_attr__( 'The following users are currently on the waiting list for this product.', 'in-stock-notifier' ) ); ?>
-							</div>
+                            </div>
 						<?php } ?>
-					</div>
-					<div class="wsn-tab-section__body" id="waitlists<?php echo intval( $pid ); ?>">
-						<div class="wsn-tab-table">
-							<div class="wsn-tab-table-header">
-								<div class="wsn-tab-table-list-col"><?php echo __( 'Email' ); ?></div>
-								<div class="wsn-tab-table-list-col"><?php echo __( 'Action' ); ?></div>
-							</div>
-							<div class="wsn-tab-table-body">
+                    </div>
+                    <div class="wsn-tab-section__body" id="waitlists<?php echo intval( $pid ); ?>">
+                        <div class="wsn-tab-table">
+                            <div class="wsn-tab-table-header">
+                                <div class="wsn-tab-table-list-col"><?php echo __( 'Email' ); ?></div>
+                                <div class="wsn-tab-table-list-col"><?php echo __( 'Action' ); ?></div>
+                            </div>
+                            <div class="wsn-tab-table-body">
 								<?php
 								$inc = 1;
 								if ( ! empty( $waitlist ) ) {
@@ -418,246 +405,300 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 
 										$total_waitlist_user = count( get_post_meta( $pid, WSN_USERS_META_KEY, true ) );
 										?>
-										<div class="wsn-tab-table-item"
-										     id="row-<?php echo intval( $inc ) . '-' . intval( $pid ); ?>">
-											<div class="wsn-tab-table-item-col">
+                                        <div class="wsn-tab-table-item"
+                                             id="row-<?php echo intval( $inc ) . '-' . intval( $pid ); ?>">
+                                            <div class="wsn-tab-table-item-col">
 												<?php echo $data; ?>
-											</div>
-											<div class="wsn-tab-table-item-col">
-												<div class="wsn-tab-table-item-col-actions">
-													<div class="wsn-tab-table-item-col-action">
+                                            </div>
+                                            <div class="wsn-tab-table-item-col">
+                                                <div class="wsn-tab-table-item-col-actions">
+                                                    <div class="wsn-tab-table-item-col-action">
 														<?php echo $this->button_to_send_mail( $data, $pid ); ?>
-													</div>
-													<div class="wsn-tab-table-item-col-action">
-														<a data-product_id="<?php echo intval( $pid ); ?>"
-														   data-wp_nonce="<?php echo wp_create_nonce( 'action_waitlist' ); ?>"
-														   data-uid="<?php echo intval( $inc ); ?>"
-														   data-total="<?php echo $total_waitlist_user; ?>"
-														   data-email="<?php echo esc_attr( $data ); ?>"
-														   data-action="leave"
-														   href="javascript:void(0);"
-														   title="<?php echo __( 'Remove User', 'wsn_waitilist' ); ?>"
-														   class="removeUser"><span
-																class="dashicons dashicons-no"></span></a>
-													</div>
-												</div>
-											</div>
-										</div>
+                                                    </div>
+                                                    <div class="wsn-tab-table-item-col-action">
+                                                        <a data-product_id="<?php echo intval( $pid ); ?>"
+                                                           data-wp_nonce="<?php echo wp_create_nonce( 'action_waitlist' ); ?>"
+                                                           data-uid="<?php echo intval( $inc ); ?>"
+                                                           data-total="<?php echo $total_waitlist_user; ?>"
+                                                           data-email="<?php echo esc_attr( $data ); ?>"
+                                                           data-action="leave"
+                                                           href="javascript:void(0);"
+                                                           title="<?php echo __( 'Remove User', 'in-stock-notifier' ); ?>"
+                                                           class="removeUser"><span
+                                                                    class="dashicons dashicons-no"></span></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 										<?php
 									}
 								}
 								?>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 			<?php
 		}
 
 		public function waitlist_box( $pid, $product ) {
-			global $post;
-
 			$new_user_nonce = wp_create_nonce( 'add_new_user_js' );
+			$waitlist       = wsn_get_waitlist( $pid );
 
-			// Get product by id.
-			$wsn_product = wc_get_product( $post->ID );
-
-			// Get the product type.
-			$product_type = $wsn_product->product_type;
-
-			// Get the parent id.
-			$parent_id = $wsn_product->get_id();
-
-			$waitlist = wsn_get_waitlist( $pid );
+			$total_waitlist_user = count( get_post_meta( $pid, WSN_USERS_META_KEY, true ) );
 
 			?>
-			<div class="wsn-wrapper" id="<?php echo intval( $pid ); ?>">
-				<div class="wsn-splash" id="<?php echo 'wsn-add-user-' . $pid; ?>">
-					<div class="wsn-splash__overlay"></div>
-					<div class="wsn-splash__inner">
-						<div class="wsn-splash__body">
-							<div class="wsn-form">
-								<h5>Add new user</h5>
-								<div class="wsn-form-field">
-									<input type="text" class="wsn-input-field"/>
-								</div>
-								<div class="wsn-form-field">
-									<button class="button button-primary button-large">Add user</button>
-									<a
-										href="javascript:void(0);"
-										id="wsn_hide_add_new_user"
-										data-nonce="<?php echo esc_attr( $new_user_nonce ); ?>"
-										data-product_id="<?php echo intval( $pid ); ?>"
-									>
+            <div class="wsn-wrapper" id="<?php echo intval( $pid ); ?>">
+                <div class="wsn-splash" id="<?php echo 'wsn-add-user-' . $pid; ?>">
+                    <div class="wsn-splash__overlay"></div>
+                    <div class="wsn-splash__inner">
+                        <div class="wsn-splash__body">
+                            <div class="wsn-form">
+                                <h5><label
+                                            for="<?php echo "user-email-field-$pid"; ?>"><?php echo __( 'Add new user' ); ?></label>
+                                </h5>
+                                <div class="wsn-form-field">
+                                    <input type="text" class="wsn-input-field"
+                                           id="<?php echo "user-email-field-$pid"; ?>"
+                                           placeholder="<?php echo __( 'Enter email address' ); ?>"/>
+                                </div>
+                                <div class="wsn-form-field">
+                                    <button id="wsn_add_btn" data-nonce="<?php echo $new_user_nonce; ?>"
+                                            data-product_id="<?php echo intval( $pid ); ?>"
+                                            data-total="<?php echo $total_waitlist_user; ?>" name="wsn_add_btn"
+                                            class="button button-primary">
+										<?php echo esc_attr__( 'Add User', 'in-stock-notifier' ); ?>
+                                    </button>
+                                    <a
+                                            href="javascript:void(0);"
+                                            id="wsn_hide_add_new_user"
+                                            data-nonce="<?php echo esc_attr( $new_user_nonce ); ?>"
+                                            data-product_id="<?php echo intval( $pid ); ?>"
+                                    >
 										<?php echo esc_attr__( 'Cancel', 'in-stock-notifier' ); ?>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="wsn-tabs" id="<?php echo 'wsn-add-tabs-' . $pid; ?>">
-					<div class="wsn-tabs__inner">
-						<div class="wsn-tabs__header">
-							<div class="wsn-tabs__menu">
-								<ul class="wsn-tabs-nav" id="<?php echo "wsn-tabs-nav-$pid";?>">
-									<li
-										class="wsn-tabs-nav-item wsn-tabs-nav-item--current"
-										data-tab="<?php echo "wsn-users-tab-$pid";?>">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wsn-tabs" id="<?php echo 'wsn-add-tabs-' . $pid; ?>">
+                    <div class="wsn-tabs__inner">
+                        <div class="wsn-tabs__header">
+                            <div class="wsn-tabs__menu">
+                                <ul class="wsn-tabs-nav" id="<?php echo "wsn-tabs-nav-$pid"; ?>">
+                                    <li
+                                            class="wsn-tabs-nav-item wsn-tabs-nav-item--current"
+                                            data-tab="<?php echo "wsn-users-tab-$pid"; ?>"
+                                            data-type="users"
+                                    >
 										<?php echo __( 'Users' ); ?>
-									</li>
-									<li
-										class="wsn-tabs-nav-item"
-										data-tab="<?php echo "wsn-archived-tab-$pid";?>">
+                                    </li>
+                                    <li
+                                            class="wsn-tabs-nav-item"
+                                            data-tab="<?php echo "wsn-archived-tab-$pid"; ?>"
+                                            data-type="archived"
+                                    >
 										<?php echo __( 'Archived users' ); ?>
-									</li>
-								</ul>
-							</div>
-							<div class="wsn-tabs__action">
-								<div class="wsn-tabs__action-item">
-									<a
-										href="javascript:void(0);"
-										id="wsn_add_new_user"
-										data-nonce="<?php echo esc_attr( $new_user_nonce ); ?>"
-										data-product_id="<?php echo intval( $pid ); ?>"
-									>
-										<i class="dashicons dashicons-admin-users"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="wsn-tabs__action">
+                                <div class="wsn-tabs__action-item">
+                                    <a
+                                            href="javascript:void(0);"
+                                            id="wsn_add_new_user"
+                                            data-nonce="<?php echo esc_attr( $new_user_nonce ); ?>"
+                                            data-product_id="<?php echo intval( $pid ); ?>"
+                                    >
+                                        <i class="dashicons dashicons-admin-users"></i>
 										<?php echo esc_attr__( 'Add new user', 'in-stock-notifier' ); ?>
-									</a>
-								</div>
-								<div class="wsn-tabs__action-item">
-									<a href="#">
-										<i class="dashicons dashicons-email-alt"></i>
+                                    </a>
+                                </div>
+                                <div class="wsn-tabs__action-item">
+                                    <a
+                                            class="wsn-send-email-all-users"
+                                            href="javascript:void(0);"
+                                            data-type="all"
+                                            data-product_id="<?php echo intval( $pid ); ?>"
+                                    >
+                                        <i class="dashicons dashicons-email-alt" aria-hidden="true"></i>
 										<?php echo __( 'Send email to all users' ); ?>
-									</a>
-								</div>
-							</div>
-						</div>
-						<div class="wsn-tabs__body">
-							<div id="<?php echo "wsn-users-tab-$pid";?>" class="wsn-tabs__content wsn-tabs__content--current">
-								<div class="wsn-tab-section">
-									<div class="wsn-tab-section__header">
-										<h5>Users waitlist</h5>
-										<?php if ( ! empty( $waitlist ) ) { ?>
-											<div class="wsn-tab-section-desc">
-												<?php echo apply_filters( 'wsn_waitlist_introduction', esc_attr__( 'The following users are currently on the waiting list for this product.', 'in-stock-notifier' ) ); ?>
-											</div>
-										<?php } ?>
-									</div>
-									<div class="wsn-tab-section__body" id="waitlists<?php echo intval( $pid ); ?>">
-										<div class="wsn-tab-table">
-											<div class="wsn-tab-table-header">
-												<div class="wsn-tab-table-list-col"><?php echo __( 'Email' ); ?></div>
-												<div class="wsn-tab-table-list-col"><?php echo __( 'Action' ); ?></div>
-											</div>
-											<div class="wsn-tab-table-body">
-												<?php
-												$inc = 1;
-												if ( ! empty( $waitlist ) ) {
-
-													foreach ( $waitlist as $data ) {
-
+                                    </a>
+                                </div>
+                                <div class="wsn-tabs__action-item">
+                                    <a
+                                            href="https://wordpress.org/support/plugin/woo-in-stock-notifier/reviews/"
+                                            target="_blank"
+                                    >
+                                        <i class="dashicons dashicons-star-half" aria-hidden="true"></i>
+										<?php echo __( 'Feedback' ); ?>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wsn-tabs__body">
+                            <div id="<?php echo "wsn-users-tab-$pid"; ?>"
+                                 class="wsn-tabs__content wsn-tabs__content--current">
+                                <div class="wsn-tab-section">
+                                    <div class="wsn-tab-section__header">
+                                        <h5><?php echo __( 'Users waitlist', 'in-stock-notifier' ); ?></h5>
+                                        <div class="wsn-tab-section-desc">
+											<?php echo apply_filters( 'wsn_waitlist_introduction', esc_attr__( 'The following users are currently on the waiting list for this product.', 'in-stock-notifier' ) ); ?>
+                                        </div>
+                                    </div>
+                                    <div
+                                            class="wsn-tab-section__body"
+                                            id="waitlists-<?php echo intval( $pid ); ?>"
+                                    >
+                                        <div class="wsn-tab-table" id="<?php echo "wsn-tab-table-$pid"; ?>">
+                                            <div class="wsn-tab-table-header">
+                                                <div
+                                                        class="wsn-tab-table-list-col"><?php echo __( 'Email' ); ?></div>
+                                                <div
+                                                        class="wsn-tab-table-list-col"><?php echo __( 'Action' ); ?></div>
+                                            </div>
+                                            <div class="wsn-tab-table-body">
+												<?php if ( ! empty( $waitlist ) ) {
+													foreach ( $waitlist as $key => $data ) {
+														// get the total user waitlist
 														$total_waitlist_user = count( get_post_meta( $pid, WSN_USERS_META_KEY, true ) );
 														?>
-														<div class="wsn-tab-table-item"
-														     id="row-<?php echo intval( $inc ) . '-' . intval( $pid ); ?>">
-															<div class="wsn-tab-table-item-col">
+                                                        <div class="wsn-tab-table-item"
+                                                             id="row-<?php echo absint( $key ) . '-' . absint( $pid ); ?>">
+                                                            <div class="wsn-tab-table-item-col">
 																<?php echo $data; ?>
-															</div>
-															<div class="wsn-tab-table-item-col">
-																<div class="wsn-tab-table-item-col-actions">
-																	<div class="wsn-tab-table-item-col-action">
+                                                            </div>
+                                                            <div class="wsn-tab-table-item-col">
+                                                                <div class="wsn-tab-table-item-col-actions">
+                                                                    <div class="wsn-tab-table-item-col-action">
 																		<?php echo $this->button_to_send_mail( $data, $pid ); ?>
-																	</div>
-																	<div class="wsn-tab-table-item-col-action">
-																		<a data-product_id="<?php echo intval( $pid ); ?>"
-																		   data-wp_nonce="<?php echo wp_create_nonce( 'action_waitlist' ); ?>"
-																		   data-uid="<?php echo intval( $inc ); ?>"
-																		   data-total="<?php echo $total_waitlist_user; ?>"
-																		   data-email="<?php echo esc_attr( $data ); ?>"
-																		   data-action="leave"
-																		   href="javascript:void(0);"
-																		   title="<?php echo __( 'Remove User', 'wsn_waitilist' ); ?>"
-																		   class="removeUser"><span
-																				class="dashicons dashicons-no"></span></a>
-																	</div>
-																</div>
-															</div>
-														</div>
+                                                                    </div>
+                                                                    <div class="wsn-tab-table-item-col-action">
+                                                                        <a data-product_id="<?php echo absint( $pid ); ?>"
+                                                                           data-wp_nonce="<?php echo wp_create_nonce( 'action_waitlist' ); ?>"
+                                                                           data-uid="<?php echo absint( $key ); ?>"
+                                                                           data-total="<?php echo $total_waitlist_user; ?>"
+                                                                           data-email="<?php echo esc_attr( $data ); ?>"
+                                                                           data-action="leave"
+                                                                           href="javascript:void(0);"
+                                                                           title="<?php echo __( 'Remove User', 'in-stock-notifier' ); ?>"
+                                                                           class="removeUser"><span
+                                                                                    class="dashicons dashicons-no"></span></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+													<?php }
+												}
+
+												$this->render_notice(
+													__( 'No users' ),
+													apply_filters( 'wsn_waitlist_no_users', __( 'Currently there are no users waiting for this product.<br/>Click on "Add new user" to add new user manually.', 'in-stock-notifier' ) ),
+													'dashicons-warning',
+													! empty( $waitlist )
+												);
+												?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="<?php echo "wsn-archived-tab-$pid"; ?>" class="wsn-tabs__content wsn-archived-list"
+                                 data-productid="<?php echo intval( $pid ); ?>">
+                                <div class="wsn-tab-section">
+                                    <div class="wsn-tab-section__header">
+                                        <h5>Archived Wait List</h5>
+                                        <div class="wsn-tab-section-desc">
+											<?php echo apply_filters( 'wsn_waitlist_introduction', esc_attr__( 'The following users are archived after sending the email.', 'in-stock-notifier' ) ); ?>
+                                        </div>
+                                    </div>
+                                    <div class="wsn-tab-section__body">
+                                        <div class="wsn-tab-table">
+                                            <div class="wsn-tab-table-header">
+                                                <div class="wsn-tab-table-list-col"><?php echo __( 'Email' ); ?></div>
+                                                <div class="wsn-tab-table-list-col"><?php echo __( 'Action' ); ?></div>
+                                            </div>
+                                            <div class="wsn-tab-table-body">
+												<?php
+												// get archived users
+												$archived_users = wsn_get_archived_users( $pid );
+
+												$inc = 1;
+												if ( ! empty( $archived_users ) ) {
+													foreach ( $archived_users as $data ) {
+														?>
+                                                        <div class="wsn-tab-table-item"
+                                                             id="row-<?php echo intval( $inc ) . '-' . intval( $pid ); ?>">
+                                                            <div class="wsn-tab-table-item-col">
+																<?php echo $data; ?>
+                                                            </div>
+                                                            <div class="wsn-tab-table-item-col">
+                                                                <div class="wsn-tab-table-item-col-actions">
+                                                                    <div class="wsn-tab-table-item-col-action">
+                                                                        <a href="javascript:void( 0 );"
+                                                                           class="restoreEmail"
+                                                                           data-uid="<?php echo $data; ?>"
+                                                                           data-pid="<?php echo intval( $pid ); ?>"><span
+                                                                                    class="dashicons dashicons-image-rotate"></span></a>
+                                                                    </div>
+                                                                    <div class="wsn-tab-table-item-col-action">
+                                                                        <a href="javascript:void( 0 );"
+                                                                           class="removeArchivedUser"
+                                                                           data-uid="<?php echo $data; ?>"
+                                                                           data-pid="<?php echo intval( $pid ); ?>"><span
+                                                                                    class="dashicons dashicons-no"></span></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 														<?php
 													}
 												}
-												?>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div id="<?php echo "wsn-archived-tab-$pid";?>" class="wsn-tabs__content">
-								<div class="wsn-tab-section">
-									<div class="wsn-tab-section__header">
-										<h5>Archived Wait List</h5>
-										<?php if ( ! empty( $waitlist ) ) { ?>
-											<div class="wsn-tab-section-desc">
-												<?php echo apply_filters( 'wsn_waitlist_introduction', esc_attr__( 'The following users are currently on the waiting list for this product.', 'in-stock-notifier' ) ); ?>
-											</div>
-										<?php } ?>
-									</div>
-									<div class="wsn-tab-section__body" id="waitlists<?php echo intval( $pid ); ?>">
-										<div class="wsn-tab-table">
-											<div class="wsn-tab-table-header">
-												<div class="wsn-tab-table-list-col"><?php echo __( 'Email' ); ?></div>
-												<div class="wsn-tab-table-list-col"><?php echo __( 'Action' ); ?></div>
-											</div>
-											<div class="wsn-tab-table-body">
-												<?php
-												$inc = 1;
-												if ( ! empty( $waitlist ) ) {
 
-													foreach ( $waitlist as $data ) {
-
-														$total_waitlist_user = count( get_post_meta( $pid, WSN_USERS_META_KEY, true ) );
-														?>
-														<div class="wsn-tab-table-item"
-														     id="row-<?php echo intval( $inc ) . '-' . intval( $pid ); ?>">
-															<div class="wsn-tab-table-item-col">
-																<?php echo $data; ?>
-															</div>
-															<div class="wsn-tab-table-item-col">
-																<div class="wsn-tab-table-item-col-actions">
-																	<div class="wsn-tab-table-item-col-action">
-																		<?php echo $this->button_to_send_mail( $data, $pid ); ?>
-																	</div>
-																	<div class="wsn-tab-table-item-col-action">
-																		<a data-product_id="<?php echo intval( $pid ); ?>"
-																		   data-wp_nonce="<?php echo wp_create_nonce( 'action_waitlist' ); ?>"
-																		   data-uid="<?php echo intval( $inc ); ?>"
-																		   data-total="<?php echo $total_waitlist_user; ?>"
-																		   data-email="<?php echo esc_attr( $data ); ?>"
-																		   data-action="leave"
-																		   href="javascript:void(0);"
-																		   title="<?php echo __( 'Remove User', 'wsn_waitilist' ); ?>"
-																		   class="removeUser">
-																			<span class="dashicons dashicons-no"></span>
-																		</a>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<?php
-													}
-												}
+												$this->render_notice(
+													__( 'No archived users' ),
+													apply_filters( 'wsn_waitlist_no_archived_users', __( 'User will be added to archived list once the email is sent. <br/> To enable this feature go to "WooCommerce > In-Stock Notifier".', 'in-stock-notifier' ) ),
+													'dashicons-warning',
+													! empty( $archived_users )
+												);
 												?>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<?php
+		}
+
+		/**
+		 * Render notice
+		 *
+		 * @param string $title Title
+		 * @param string $desc Description
+		 * @param string $icon Notice Icon
+		 * @param bool $is_hidden is hidden
+		 */
+		public function render_notice( $title = '', $desc = '', $icon = 'dashicons-warning', $is_hidden = false ) {
+			?>
+            <div class="wsn-notice<?php echo $is_hidden ? ' wsn-hidden' : ''; ?>">
+                <div class="wsn-notice__inner">
+                    <div class="wsn-notice__icon">
+                        <span><i class="dashicons <?php echo esc_attr( $icon ); ?>" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="wsn-notice__main">
+                        <h5><?php echo esc_attr( $title ); ?></h5>
+                        <div class="wsn-notice-desc">
+							<?php echo $desc; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
 			<?php
 		}
 
@@ -667,372 +708,70 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 		 * @access public
 		 */
 		public function wsn_product_tab_callback() {
-
 			global $post;
 
-			$new_user_nonce = wp_create_nonce( 'add_new_user_js' );
-
-			// Get product by id.
+			/** @var \WC_Product $wsn_product */
 			$wsn_product = wc_get_product( $post->ID );
 
 			// Get the product type.
 			$product_type = $wsn_product->product_type;
 
-			// Get the parent id.
-			$parent_id = $wsn_product->get_id();
-
 			$pid = intval( $wsn_product->get_id() );
 
-			$waitlist = wsn_get_waitlist( $pid );
+			// Product isn't live yet
+			if ( 'auto-draft' === $post->post_status ) {
+				$this->render_notice( __( 'Not published' ), __( 'Product is not published yet.' ) );
+
+				return;
+			}
 
 			switch ( $product_type ) {
 				case 'simple':
-					$this->waitlist_box( $pid, $wsn_product );
+					if ( $wsn_product->is_in_stock() ) {
+						$this->render_notice( __( 'In-stock' ), __( 'Product is already available for sale.' ), 'dashicons-smiley' );
+					} else {
+						$this->waitlist_box( $pid, $wsn_product );
+					}
 					break;
 				case 'variable';
 					// Get all variations.
 					$variations = $wsn_product->get_available_variations();
 
 					for ( $i = 0; $i < count( $variations ); $i ++ ) {
+						$pid = intval( $variations[ $i ]['variation_id'] );
 
-						$pid               = intval( $variations[ $i ]['variation_id'] );
+						/** @var \WC_Product $variation_product */
 						$variation_product = wc_get_product( $pid );
 						?>
-						<div id="wsn_callback" class="wc-metaboxes-wrapper wsn-product-variation-head">
-							<div class="woocommerce_variation wc-metabox closed">
-								<h3>
-									<div class="handlediv"
-									     title="<?php esc_attr_e( 'Click to toggle', 'woocommerce' ); ?>"></div>
-									<strong><?php echo sprintf( esc_attr__( 'Waitlist for %s', 'in-stock-notifier' ), $variation_product->get_formatted_name() ); ?> </strong>
-								</h3>
+                        <div id="wsn_callback" class="wc-metaboxes-wrapper wsn-product-variation-head">
+                            <div class="woocommerce_variation wc-metabox closed">
+                                <h3>
+                                    <div
+                                            class="handlediv"
+                                            title="<?php esc_attr_e( 'Click to toggle', 'woocommerce' ); ?>"
+                                    ></div>
+                                    <strong><?php echo sprintf( esc_attr__( 'Waitlist for %s', 'in-stock-notifier' ), $variation_product->get_formatted_name() ); ?></strong>
+                                </h3>
 
-								<div class="wc-metabox-content woocommerce_variable_attributes ">
-									<div class="wsn_product_container" id="<?php echo intval( $pid ); ?>">
-										<div class="waitlist_data" id="<?php echo intval( $pid ); ?>">
-											<?php $this->waitlist_box( $pid, $variation_product ); ?>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+                                <div class="wc-metabox-content woocommerce_variable_attributes ">
+                                    <div class="wsn_product_container" id="<?php echo intval( $pid ); ?>">
+                                        <div class="waitlist_data" id="<?php echo intval( $pid ); ?>">
+											<?php
+											if ( $variation_product->is_in_stock() ) {
+												$this->render_notice( __( 'In-stock' ), __( 'Product is already available for sale.' ), 'dashicons-smiley' );
+											} else {
+												$this->waitlist_box( $pid, $variation_product );
+											}
+											?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 						<?php
 					}
 					break;
 			}
-
-			return;
-
-			?>
-
-			<?php
-//			return;
-
-			$new_user_nonce = wp_create_nonce( 'add_new_user_js' ); ?>
-			<!---->
-			<!--			<div id="wsn_callback" class="panel wc-metaboxes-wrapper woocommerce_options_panel wsn-wrapper">-->
-			<!--			<div class="options_group"><span class="wrap">-->
-			<?php
-
-			// Get product by id.
-			$wsn_product = wc_get_product( $post->ID );
-
-			// Get the product type.
-			$product_type = $wsn_product->product_type;
-
-			// Get the parent id.
-			$parent_id = $wsn_product->get_id();
-
-			// If the product type is variable.
-			if ( 'variable' === $product_type ) {
-
-				// Get all variations.
-				$variations = $wsn_product->get_available_variations();
-
-				for ( $i = 0; $i < count( $variations ); $i ++ ) {
-
-					$pid               = intval( $variations[ $i ]['variation_id'] );
-					$variation_product = wc_get_product( $pid );
-					?>
-					<div class="woocommerce_variation wc-metabox closed">
-					<h3>
-						<div class="handlediv"
-						     title="<?php esc_attr_e( 'Click to toggle', 'woocommerce' ); ?>"></div>
-						<strong><?php echo sprintf( esc_attr__( 'Waitlist for %s', 'in-stock-notifier' ), $variation_product->get_formatted_name() ); ?> </strong>
-					</h3>
-
-					<div class="wc-metabox-content woocommerce_variable_attributes ">
-						<div class="wsn_product_container" id="<?php echo intval( $pid ); ?>">
-							<div class="data">
-								<?php
-								$waitlist = wsn_get_waitlist( $pid );
-								?>
-								<div class="waitlist_data" id="<?php echo intval( $pid ); ?>">
-									<?php
-									if ( ! $variation_product->is_in_stock() ) {
-									?>
-									<table id="waitlists<?php echo intval( $pid ); ?>" class="wsn-users-list">
-										<tr>
-											<td class="wsn-user-email-col">
-												<b><?php echo esc_attr__( 'User Email', 'in-stock-notifier' ); ?></b>
-											<td class="wsn-email-col">
-												<b><?php echo esc_attr__( 'Send Email', 'in-stock-notifier' ); ?></b>
-											</td>
-											<td class="wsn-action-col">
-												<b><?php echo esc_attr__( 'Remove', 'wsn_waitlis' ); ?></b></td>
-										</tr>
-										<?php
-										if ( ! empty( $waitlist ) ) {
-											?>
-											<div class="wsn_title">
-												<?php echo apply_filters( 'wsn_waitlist_introduction', esc_attr__( 'The following users are currently on the waiting list for this product.', 'in-stock-notifier' ) ); ?>
-											</div>
-
-											<?php
-
-											$inc = 1;
-
-											foreach ( $waitlist as $data ) {
-
-												$product_id          = $variations[ $i ]['variation_id'];
-												$total_waitlist_user = count( get_post_meta( $product_id, WSN_USERS_META_KEY, true ) );
-
-												?>
-												<tr class="old"
-												    id="row-<?php echo intval( $inc ) . '-' . intval( $pid ); ?>">
-													<td><?php echo $data; ?></td>
-													<td class="wsn-email-col">
-														<?php
-														echo $this->button_to_send_mail( $data, $product_id );
-														?>
-													</td>
-													<td class="wsn-action-col">
-														<a data-product_id="<?php echo intval( $product_id ); ?>"
-														   data-wp_nonce="<?php echo esc_attr( wp_create_nonce( 'action_waitlist' ) ); ?>"
-														   data-uid="<?php echo intval( $inc ); ?>"
-														   data-total="<?php echo esc_attr( $total_waitlist_user ); ?>"
-														   data-email="<?php echo esc_attr( $data ); ?>"
-														   data-action="leave"
-														   href="javascript:void(0);"
-														   title="<?php echo esc_attr__( 'Remove User', 'in-stock-notifier' ); ?>"
-														   class="removeUser">
-															<span class="dashicons dashicons-no"></span>
-														</a>
-													</td>
-												</tr>
-												<?php
-												$inc ++;
-											}
-										} else {
-										?>
-										<tr class="no_user" id="<?php echo intval( $pid ); ?>">
-											<td colspan="3" align="center">
-												<?php echo apply_filters( 'wsn_empty_waitlist_introduction', esc_attr__( 'No one joined wait list', 'in-stock-notifier' ) ); ?>
-											</td>
-											<?php
-											}
-											?>
-									</table>
-									<?php
-									$total_waitlist_user = count( get_post_meta( $pid, WSN_USERS_META_KEY, true ) );
-
-									?>
-									<p class="add_new_user_form" id="form<?php intval( $pid ); ?>"
-									   style="display:none;">
-										<input type="text"
-										       placeholder="<?php echo esc_attr__( 'Enter user\'s email address..', 'in-stock-notifier' ); ?>"
-										       class="usrEmail" id="<?php echo intval( $pid ); ?>"
-										       placeholder="<?php echo esc_attr__( 'Enter user\'s email...', 'in-stock-notifier' ); ?>"
-										       name="usr_email" class="short"/>
-										<button id="wsn_add_btn" data-nonce="<?php echo $new_user_nonce; ?>"
-										        data-parent_id="<?php echo intval( $parent_id ); ?>"
-										        data-product_id="<?php echo intval( $pid ); ?>"
-										        data-total="<?php echo $total_waitlist_user; ?>" name="wsn_add_btn"
-										        class="button button-primary add_user_btn">
-
-											<?php echo esc_attr( 'Add User', 'in-stock-notifier' ); ?>
-										</button>
-									</p>
-									<a href="javascript:void(0);" id="wsn_add_new_user"
-									   data-nonce="<?php echo esc_attr( $new_user_nonce ); ?>"
-									   data-product_id="<?php echo intval( $pid ); ?>"><?php echo esc_attr__( 'Add new user', 'in-stock-notifier' ); ?></a>
-									<?php
-									if ( $waitlist ) {
-										?><span><a href="javascript:void(0);">
-                                            <?php echo $this->button_to_send_mail( $data, $product_id, 'all' ); ?>
-                                    </a> &nbsp; &nbsp;</span><?php
-									}
-
-									?>
-									<a href="javascript:void(0);" id="show_archived"
-									   data-product_id="<?php echo intval( $pid ); ?>"> <span
-											class="dashicons dashicons-editor-alignleft"></span> <?php echo esc_attr__( 'View Archived Users', 'in-stock-notifier' ); ?>
-									</a></div>
-								<div class="archived_data_panel" id="<?php echo intval( $pid ); ?>">
-									<a class="close_archived" id="<?php echo intval( $pid ); ?>"
-									   href="javascript:void(0);"><span class="dashicons dashicons-dismiss"></span></a>
-									<div class="archive_container">
-										<div
-											class="archived_head_text"><?php echo esc_attr__( 'Archived Wait List', 'in-stock-notifier' ); ?></div>
-
-										<div class="archived_data" id="<?php echo intval( $pid ) ?>">
-											<table class="_archive_userlist" id="table_<?php echo intval( $pid ) ?>">
-
-											</table>
-										</div>
-									</div>
-									<?php }
-									?>
-								</div>
-							</div>
-						</div>
-					</div></div><?php
-				}
-			} elseif ( 'simple' === $product_type ) {
-
-				$pid = intval( $wsn_product->get_id() );
-
-				$this->waitlist_box( $pid, $wsn_product );
-
-				return;
-				?>
-
-				<div class="wc-metaboxes-wrapper">
-					<div class="data">
-
-						<?php if ( ! $wsn_product->is_in_stock() ) { ?>
-
-							<div class="waitlist_data" id="<?php echo intval( $pid ); ?>">
-
-								<div class=" wc-metabox wc-metabox-content">
-
-									<?php
-									$waitlist = wsn_get_waitlist( $pid );
-									if ( ! empty( $waitlist ) ) {
-										?>
-										<div class="wsn_title">
-											<?php echo apply_filters( 'wsn_waitlist_introduction', esc_attr__( 'The following users are currently on the waiting list for this product.', 'in-stock-notifier' ) ); ?>
-										</div>
-										<?php
-									}
-									?>
-									<table id="waitlists<?php echo intval( $pid ); ?>" class="wsn-users-list">
-										<tr>
-											<td class="wsn-user-email-col">
-												<b><?php echo esc_attr__( 'User Email', 'in-stock-notifier' ); ?> </b>
-											<td class="wsn-email-col">
-												<b><?php echo esc_attr__( 'Send Email', 'in-stock-notifier' ); ?></b>
-											</td>
-											<td class="wsn-action-col">
-												<b><?php echo esc_attr__( 'Remove', 'wsn_waitlis' ); ?></b>
-											</td>
-										</tr>
-										<?php
-
-										if ( ! empty( $waitlist ) ) {
-
-											$inc = 1;
-
-											foreach ( $waitlist as $data ) {
-
-												$total_waitlist_user = count( get_post_meta( $pid, WSN_USERS_META_KEY, true ) );
-
-												?>
-											<tr class="old"
-											    id="row-<?php echo intval( $inc ) . '-' . intval( $pid ); ?>">
-												<td>
-													<?php echo $data; ?>
-												</td>
-												<td class="wsn-email-col">
-													<?php echo $this->button_to_send_mail( $data, $pid ); ?>
-												</td>
-												<td class="wsn-action-col">
-													<a data-product_id="<?php echo intval( $pid ); ?>"
-													   data-wp_nonce="<?php echo wp_create_nonce( 'action_waitlist' ); ?>"
-													   data-uid="<?php echo intval( $inc ); ?>"
-													   data-total="<?php echo $total_waitlist_user; ?>"
-													   data-email="<?php echo esc_attr( $data ); ?>" data-action="leave"
-													   href="javascript:void(0);"
-													   title="<?php echo __( 'Remove User', 'wsn_waitilist' ); ?>"
-													   class="removeUser"><span
-															class="dashicons dashicons-no"></span></a>
-												</td>
-												</tr><?php
-												$inc ++;
-											}
-										} else {
-											?>
-										<tr class="no_user" id="<?php echo intval( $pid ); ?>">
-											<td colspan="3" align="center">
-											<?php echo apply_filters( 'wsn_empty_waitlist_introduction', esc_attr__( 'No one joined wait list', 'in-stock-notifier' ) ); ?>
-											</td><?php
-										}
-										?></table><?php
-									$total_waitlist_user = count( get_post_meta( $pid, WSN_USERS_META_KEY, true ) );
-									?>
-									<p class="add_new_user_form" id="form<?php echo intval( $pid ); ?>"
-									   style="display:none;">
-										<input type="text"
-										       placeholder="<?php echo esc_attr__( 'Enter user\'s email address..', 'in-stock-notifier' ); ?>"
-										       class="usrEmail" id="<?php echo intval( $pid ); ?>"
-										       placeholder="<?php echo esc_attr__( 'Enter user\'s email...', 'in-stock-notifier' ); ?> "
-										       name="usr_email" class="short"/>
-										<button id="wsn_add_btn" data-nonce="<?php echo $new_user_nonce; ?>"
-										        data-product_id="<?php echo intval( $pid ); ?>"
-										        data-total="<?php echo $total_waitlist_user; ?>" name="wsn_add_btn"
-										        class="button button-primary">
-											<?php echo esc_attr__( 'Add User', 'in-stock-notifier' ); ?>
-										</button>
-									</p>
-									<a href="javascript:void(0);" data-nonce="<?php echo $new_user_nonce; ?>"
-									   id="wsn_add_new_user" data-product_id="<?php echo intval( $pid ); ?>"><span
-											class="dashicons dashicons-admin-users"></span> <?php echo esc_attr__( 'Add new user', 'in-stock-notifier' ); ?>
-									</a>
-									<?php
-
-									if ( $waitlist ) {
-										?>
-										<span>
-                                                <a href="javascript:void(0);">
-                                                    <?php echo $this->button_to_send_mail( $data, intval( $pid ), 'all' ); ?>
-                                                </a> &nbsp; &nbsp;
-                                            </span>
-										<?php
-									}
-									?>
-									<a href="javascript:void(0);" id="show_archived"
-									   data-product_id="<?php echo intval( $pid ); ?>"><span
-											class="dashicons dashicons-editor-alignleft"></span> <?php echo esc_attr__( 'View Archived Users', 'in-stock-notifier' ); ?>
-									</a><?php
-									?>
-								</div>
-							</div>
-						<div class="archived_data_panel  wc-metabox wc-metabox-content"
-						     id="<?php echo intval( $pid ) ?>">
-							<a class="close_archived" id="<?php echo intval( $pid ) ?>" href="javascript:void(0);">
-								<span class="dashicons dashicons-no"></span>
-							</a>
-							<div class="archive_container">
-								<div
-									class="archived_head_text"><?php echo esc_attr__( 'Archived Wait List', 'in-stock-notifier' ); ?></div>
-
-								<div class="archived_data" id="<?php echo intval( $pid ) ?>">
-									<table class="_archive_userlist" id="table_<?php echo intval( $pid ) ?>">
-
-									</table>
-								</div>
-							</div></div><?php
-						} elseif ( 'auto-draft' === $post->post_status ) {
-							echo esc_attr__( 'Product is not published yet.', 'in-stock-notifier' );
-						} else {
-							echo esc_attr__( 'Product is already available for sale ', 'in-stock-notifier' );
-						}
-						?></div>
-				</div>
-			<?php }
-			?>
-			</div></div><?php
 		}
-
-
 	}
 }

@@ -38,14 +38,6 @@ module.exports = {
 							sourceMapContents: false,
 						},
 					},
-					{
-						loader: 'sass-resources-loader',
-						options: {
-							resources: [
-								'./src/helpers/colors.scss',
-							],
-						},
-					},
 				],
 			},
 			{

@@ -9,8 +9,8 @@ const webpack = require( 'webpack' );
 const webpackStream = require( 'webpack-stream' );
 
 const
-	sourceFiles = 'src/admin/',
-	sourceJsFiles = sourceFiles + '**/*.js',
+	sourceFiles = 'src/',
+	sourceJsFiles = sourceFiles + '**/**/*.js',
 	outputDir = 'build';
 
 function watchFiles() {
@@ -28,13 +28,13 @@ function watchAllFiles() {
 gulp.task( 'plugin-pot', function() {
 	return gulp.src( '**/*.php' )
 		.pipe( wpPot( {
-			domain: 'the-hub-client',
+			domain: 'in-stock-notifier',
 		} ) )
-		.pipe( gulp.dest( 'i18n/languages/the-hub-client.pot' ) );
+		.pipe( gulp.dest( 'i18n/languages/in-stock-notifier.pot' ) );
 } );
 
 gulp.task( 'plugin-zip-cleanup', function( done ) {
-	del.sync( [ 'build/the-hub-client' ] );
+	del.sync( [ 'zip/woo-in-stock-notifier' ] );
 	done();
 } );
 
@@ -47,25 +47,13 @@ gulp.task( 'plugin-zip-copy', function() {
 		'!.gitattributes',
 		'!.gitignore',
 		'!.gitmodules',
-		'!composer.json',
-		'!composer.lock',
 		'!package.json',
 		'!package-lock.json',
 		'!webpack.config.js',
-		'!webpack.config.admin.js',
 		'!gulpfile.js',
-		'!.stylelintrc',
 		'!.eslintrc.js.js',
-		'!Gulpfile.js',
 		'!README.md',
-		'!.vscode/*',
-		'!.vscode',
-		'!tests/**',
-		'!tests',
-		'!build/**',
-		'!build',
-		'!bitbucket-pipelines.yml',
-		'!phpcs.ruleset.xml',
+		'!zip/**',
 	];
 
 	return gulp.src( glob )
@@ -79,17 +67,17 @@ gulp.task( 'plugin-zip', gulp.series( 'plugin-zip-cleanup', 'plugin-zip-copy', f
 		.pipe( gulp.dest( 'zip/' ) );
 }, 'plugin-zip-cleanup' ) );
 
-gulp.task( 'set-production-env', function( done ) {
+gulp.task( 'production-env', function( done ) {
 	process.env.NODE_ENV = 'production';
 	done();
 } );
 
 gulp.task( 'watch', series( watchFiles, gulp.parallel( watchAllFiles ) ) );
-gulp.task( 'build', gulp.series( [ 'set-production-env' ], gulp.parallel( watchFiles ) ) );
+gulp.task( 'build', gulp.series( [ 'production-env' ], gulp.parallel( watchFiles ) ) );
 gulp.task( 'default', gulp.series( [ 'build' ] ) );
 
 gulp.task( 'release', gulp.series(
-	[ 'set-production-env' ],
+	[ 'production-env' ],
 	[ 'build' ],
 	[ 'plugin-pot' ],
 	[ 'plugin-zip' ],

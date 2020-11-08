@@ -128,6 +128,15 @@
 
 .wsn-tab-table-body {
   margin: 0 -15px;
+
+  &__no-result {
+    align-items: center;
+    border-top: solid 1px #eee;
+    color: #aaa;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+  }
 }
 
 .wsn-tab-table-item {
@@ -177,7 +186,7 @@
 }
 
 .wsn-splash {
-  background: #fff;
+  background: #f8f8f8;
   display: none;
 
   &__body {
@@ -201,6 +210,13 @@
     margin: 0;
   }
 
+  h5 {
+    color: #333;
+    font-size: 31px;
+    line-height: 31px;
+    margin: 0;
+  }
+
   &-field {
     align-items: center;
     display: flex;
@@ -215,7 +231,7 @@
     padding: 5px 10px;
     margin: 15px 0;
     width: 50%;
-    background: transparent;
+    background: #fff;
   }
 }
 
@@ -226,4 +242,47 @@
 
 .wsn-product-variation-head {
   border-top: solid 1px #eee;
+}
+
+.wsn-hidden {
+  display: none;
+}
+
+.wsn-notice {
+  border-top: solid 1px #eee;
+
+  &__main h5 {
+    color: #666;
+    font-size: 19px;
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  &__inner {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 50px 0;
+  }
+
+  &__icon {
+    text-align: center;
+
+    i {
+      color: #aaa;
+      font-size: 40px;
+      line-height: 40px;
+      height: 40px;
+      width: 40px;
+    }
+  }
+}
+
+.wsn-notice-desc {
+  color: #aaa;
+}
+
+.wsn-unclickable {
+  opacity: 0.5;
+  pointer-events: none;
 }

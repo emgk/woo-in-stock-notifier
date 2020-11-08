@@ -49,7 +49,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		public function __construct() {
 
 			// Add plugin setting menu in back end .
-			add_action( 'admin_menu', array( __CLASS__, 'instockalert_option_args' ) );
+			add_action( 'admin_menu', array( __CLASS__, 'in_stock_submenu' ) );
 
 			// Add the waitlist user clumn in manage product page.
 			add_filter( 'manage_edit-product_columns', array( $this, 'instockalert_add_column' ) );
@@ -309,10 +309,10 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 			wp_enqueue_script( 'jquery' );
 
 			// Add the plugin style file.
-			wp_enqueue_style( 'wsn_style', WSN_ASSEST_PATH . '/css/wsn-style.css' );
+			wp_enqueue_style( 'wsn_styles', WSN_ASSEST_PATH . 'css/front.min.css' );
 
 			// Add plugin js script.
-			wp_enqueue_script( 'wsn_scripts', WSN_ASSEST_PATH . '/js/wsn-script.js' );
+			wp_enqueue_script( 'wsn_scripts', WSN_ASSEST_PATH . 'js/front.min.js' );
 		}
 
 		/**
@@ -337,18 +337,18 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		/**
 		 * Add the waitlist setting sub menu inside the woo commerce
 		 */
-		public static function instockalert_option_args() {
+		public static function in_stock_submenu() {
 
 			// Add sub menu in woo commerce menu.
 			add_submenu_page(
 				'woocommerce',
-				'In-Stock Notifier',
-				'In-Stock Notifier',
+				__( 'In-Stock Notifier', 'in-stock-notifier' ),
+				__( 'In-Stock Notifier', 'in-stock-notifier' ),
 				'manage_options',
 				'in-stock-notifier-option',
 				array( __CLASS__, 'wsn_waitlist_option_page' ),
-				'dashicons-list-view',
-				59 );
+                59
+			);
 		}
 
 		/**
@@ -358,62 +358,62 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		 */
 		public static function wsn_waitlist_option_page() {
 			?>
-			<div class="wrap">
+            <div class="wrap">
 
-				<h2><?php echo esc_attr__( 'In-Stock Notifier', 'in-stock-notifier' ); ?></h2>
-				<hr/>
-				<form method="post" action="options.php">
+                <h2><?php echo esc_attr__( 'In-Stock Notifier', 'in-stock-notifier' ); ?></h2>
+                <hr/>
+                <form method="post" action="options.php">
 
 					<?php settings_fields( 'wsn_setting_fields' ); ?>
 
 					<?php do_settings_sections( 'wsn_setting' ); ?>
-					<table class="form-table">
-						<tr valign="top">
-							<th scope="row"><?php echo esc_attr__( 'Enable Waitlist', 'in-stock-notifier' ); ?></th>
-							<td><input type="checkbox" name="is_enabled"
-							           value="1" <?php checked( 1, get_option( 'is_enabled', true ), true ); ?> /></td>
-						</tr>
+                    <table class="form-table">
+                        <tr valign="top">
+                            <th scope="row"><?php echo esc_attr__( 'Enable Waitlist', 'in-stock-notifier' ); ?></th>
+                            <td><input type="checkbox" name="is_enabled"
+                                       value="1" <?php checked( 1, get_option( 'is_enabled', true ), true ); ?> /></td>
+                        </tr>
 
-						<tr valign="top">
-							<th scope="row"><?php echo esc_attr__( 'Join Button label', 'in-stock-notifier' ); ?></th>
-							<td><input type="text" name="join_btn_label"
-							           value="<?php echo get_option( 'join_btn_label' ) ? esc_attr( get_option( 'join_btn_label' ) ) : esc_attr__( 'Join Waitlist', 'in-stock-notifier' ); ?>"/>
-							</td>
-						</tr>
+                        <tr valign="top">
+                            <th scope="row"><?php echo esc_attr__( 'Join Button label', 'in-stock-notifier' ); ?></th>
+                            <td><input type="text" name="join_btn_label"
+                                       value="<?php echo get_option( 'join_btn_label' ) ? esc_attr( get_option( 'join_btn_label' ) ) : esc_attr__( 'Join Waitlist', 'in-stock-notifier' ); ?>"/>
+                            </td>
+                        </tr>
 
-						<tr valign="top">
-							<th scope="row"><?php echo esc_attr__( 'Leave Button label', 'in-stock-notifier' ); ?></th>
-							<td><input type="text" name="leave_btn_label"
-							           value="<?php echo get_option( 'leave_btn_label' ) ? esc_attr( get_option( 'leave_btn_label' ) ) : esc_attr__( 'Leave Waitlist', 'in-stock-notifier' ); ?>"/>
-							</td>
-						</tr>
+                        <tr valign="top">
+                            <th scope="row"><?php echo esc_attr__( 'Leave Button label', 'in-stock-notifier' ); ?></th>
+                            <td><input type="text" name="leave_btn_label"
+                                       value="<?php echo get_option( 'leave_btn_label' ) ? esc_attr( get_option( 'leave_btn_label' ) ) : esc_attr__( 'Leave Waitlist', 'in-stock-notifier' ); ?>"/>
+                            </td>
+                        </tr>
 
-						<tr valign="top">
-							<th scope="row"><?php echo esc_attr__( 'Additional Options', 'in-stock-notifier' ); ?></th>
-							<td><input type="checkbox" name="remove_after_email"
-							           value="1" <?php checked( 1, get_option( 'remove_after_email' ), true ); ?> /> <?php echo esc_attr__( 'Remove user after email sent.', 'in-stock-notifier' ); ?>
-							</td>
-						</tr>
+                        <tr valign="top">
+                            <th scope="row"><?php echo esc_attr__( 'Additional Options', 'in-stock-notifier' ); ?></th>
+                            <td><input type="checkbox" name="remove_after_email"
+                                       value="1" <?php checked( 1, get_option( 'remove_after_email' ), true ); ?> /> <?php echo esc_attr__( 'Remove user after email sent.', 'in-stock-notifier' ); ?>
+                            </td>
+                        </tr>
 
-						<tr valign="top">
-							<th scope="row"></th>
-							<td><input type="checkbox" name="unregistered_can_join"
-							           value="1" <?php checked( 1, get_option( 'unregistered_can_join', true ), true ); ?> />
+                        <tr valign="top">
+                            <th scope="row"></th>
+                            <td><input type="checkbox" name="unregistered_can_join"
+                                       value="1" <?php checked( 1, get_option( 'unregistered_can_join', true ), true ); ?> />
 								<?php echo esc_attr__( 'Allow guest to join.', 'in-stock-notifier' ); ?>
-							</td>
-						</tr>
+                            </td>
+                        </tr>
 
-						<tr valign="top">
-							<th scope="row"></th>
-							<td><input title="Archived user " type="checkbox" name="archive"
-							           value="1" <?php checked( 1, get_option( 'archive', true ), true ); ?> /> <?php echo esc_attr__( 'Archive user after email sent.', 'in-stock-notifier' ); ?>
-							</td>
-						</tr>
+                        <tr valign="top">
+                            <th scope="row"></th>
+                            <td><input title="Archived user " type="checkbox" name="archive"
+                                       value="1" <?php checked( 1, get_option( 'archive', true ), true ); ?> /> <?php echo esc_attr__( 'Archive user after email sent.', 'in-stock-notifier' ); ?>
+                            </td>
+                        </tr>
 
-					</table>
+                    </table>
 					<?php submit_button(); ?>
-				</form>
-			</div>
+                </form>
+            </div>
 			<?php
 		}
 	}

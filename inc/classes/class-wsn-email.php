@@ -95,10 +95,10 @@ if ( ! class_exists( 'WSN_Email' ) ) {
 			);
 
 			// build header
-			$header = $this->get_headers() . 'BCC: ' . implode( ',', $users ) . "\r\n";
+			$header = $this->get_headers() . "\r\n";
 
 			// send email
-			$response = $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $header, $this->get_attachments() );
+			$response = $this->send( implode( ',', $users ), $this->get_subject(), $this->get_content(), $header, $this->get_attachments() );
 
 			// Return true in wsn_email_send_response.
 			if ( $response ) {

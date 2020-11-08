@@ -7,7 +7,5 @@ Customers come and go on your online store when they found that the product they
 
 Get the plugin from the [WordPress.org](https://wordpress.org/plugins/woo-in-stock-notifier/)
 
-[Click Here](http://blog.govindkumar.me/introducing-woo-in-stock-notifier-plugin/) to know more about the plugin.
-
 ## Contribution 
 Please raise issue or sent Pull Request if you find any bugs in plugin. 

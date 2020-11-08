@@ -1,0 +1,28 @@
+.wsn-form {
+  &__content {
+    padding: 10px 0;
+  }
+
+  &__footer {
+    margin-bottom: 15px;
+  }
+}
+
+.wsn-form-field {
+  padding: 5px 0;
+}
+
+.wsn-input-field {
+  min-width: 100%;
+}
+
+.wsn-form-message-item {
+  padding: 5px 0;
+}
+
+.wsn-submit-form {
+  &--disabled {
+    pointer-events: none;
+    opacity: .2;
+  }
+}

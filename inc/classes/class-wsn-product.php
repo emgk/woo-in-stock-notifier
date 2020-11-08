@@ -60,6 +60,16 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 		private $product_type;
 
 		/**
+		 * List of allowed product type
+		 *
+		 * @var array allowed_product_types
+		 */
+		public $allowed_product_types = array(
+			'simple',
+			'variation'
+		);
+
+		/**
 		 * WSN_Product constructor.
 		 *
 		 * @since 1.0.0
@@ -82,7 +92,6 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 		 * @method get_output_form
 		 */
 		public function get_output_form() {
-
 			global $post;
 
 			$post_id = $post->ID;
@@ -123,9 +132,9 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 			}
 
 			// @Todo add front-end functionality for the variable product.
-			if ( ! is_user_logged_in() && ! get_option( 'unregistered_can_join' ) || $product->is_in_stock() || 'variation' === $product->product_type ) {
-                return $html;
-            }
+			if ( ! is_user_logged_in() && ! get_option( 'unregistered_can_join' ) || $product->is_in_stock() ) {
+				return $html;
+			}
 
 			return $this->form_data( $product, $html );
 		}
@@ -143,7 +152,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 
 			// Check if product is in stock.
 			if ( ! isset( $product ) || $product->is_in_stock() ) {
-				return;
+				return $html;
 			}
 
 			// Product type.
@@ -164,119 +173,100 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 			$url = add_query_arg( WSN_USERS_META_KEY . '-action', 'register', $url );
 			$url = add_query_arg( 'var_id', $product_id, $url );
 
+			// is used logged-in ?
+			$is_loggedin = is_user_logged_in();
+
 			ob_start();
 
-			?>
-            <div class="wsn_waitlist_form"><?php
+			do_action( 'before_wsn_form', $product, $is_loggedin );
 
-				do_action( 'before_wsn_form', $product, is_user_logged_in() );
-
-				// If user is not logged-in.
-				if ( ! is_user_logged_in() ) {
-
-					// Is this simple product?
-					if ( 'simple' === $product_type || 'variation' === $product_type ) {
-
-						// Check if guest user can join or not?
-						if ( get_option( 'unregistered_can_join', true ) ) { ?>
-
-                            <span class="warning instock_warning">
-                            <?php echo esc_html__( 'Out of Stock', 'in-stock-notifier' ); ?>
-                        </span>
-
-                            <div class="wsn_message">
-								<?php echo esc_html__( 'Provide your Email so we can email you when product comes in-stock', 'in-stock-notifier' ); ?>
+			// If user is not logged-in.
+			if ( ! is_user_logged_in() ) {
+				if ( get_option( 'unregistered_can_join', true ) && in_array( $product_type, $this->allowed_product_types, true ) ) {
+					?>
+                    <div class="wsn-form">
+                        <div class="wsn-form__inner">
+                            <div class="wsn-form__content">
+                                <div class="wsn-form-message">
+                                    <div
+                                            class="wsn-form-message-item"><?php echo apply_filters( 'wsn-out-of-stock', esc_html__( 'Out of Stock', 'in-stock-notifier' ), $is_loggedin ) ?></div>
+                                    <div
+                                            class="wsn-form-message-item"><?php echo apply_filters( 'wsn-guide-desc', esc_html__( 'Provide your Email so we can email you when product comes in-stock.', 'in-stock-notifier' ), $is_loggedin ); ?></div>
+                                </div>
+                                <div class="wsn-form-field">
+                                    <input
+                                            type="text"
+                                            placeholder="<?php echo __( 'Enter Your Email Address...', 'in-stock-notifier' ); ?>"
+                                            id="wsn_waitlist_email"
+                                            name="wsn_email"
+                                            class="wsn-input-field wsn-waitlist-email-field"
+                                    />
+                                </div>
                             </div>
-
-                            <div class="wsn_form">
-                                <form action="<?php echo esc_attr( $url ); ?>" method="post">
-                                    <input type="text" placeholder="Enter Your Email Address..."
-                                        id="wsn_waitlist_email" name="wsn_email"/>
-									<?php
-									if ( 'simple' === $product_type ) {
-										?>
-                                        <button type="submit"
-                                            class="<?php echo apply_filters( 'join_btn_classes', 'button btn alt' ); ?>">
-											<?php echo get_option( 'join_btn_label', esc_attr__( 'Join waitlist', 'in-stock-notifier' ) ); ?>
-                                        </button>
-										<?php
-									}
-									?>
-                                </form>
+                            <div class="wsn-form__footer">
+                                <a
+                                        class="<?php echo apply_filters( 'join_btn_classes', 'button btn alt wsn-submit-form wsn-submit-form--disabled', $is_loggedin ); ?>"
+                                        href="<?php echo esc_url( $url ); ?>"
+                                ><?php echo get_option( 'join_btn_label', esc_attr__( 'Join waitlist', 'in-stock-notifier' ) ); ?></a>
                             </div>
-							<?php
-						}
-					}
-				} elseif ( is_user_logged_in() ) {
-
-					// Logged user data.
-					$user = wp_get_current_user();
-
-					// Logged user email.
-					$email = $user->user_email;
-
-					// Get waitlist of product.
-					if ( $waitlist = wsn_get_waitlist( $product_id ) ) {
-
-						// Check user email if exists in waitlist.
-						if ( wsn_check_register( $email, $waitlist ) ) {
-
-							?>
-                            <span class="instock_leave_notice">
-                            <?php echo esc_html( apply_filters( 'wsn_leave_waitlist_message_text', esc_attr__( 'Click on Leave button to leave waitlist', 'in-stock-notifier' ) ) ); ?>
-                        </span>
-							<?php
-							$url = add_query_arg( WSN_USERS_META_KEY . '-action', 'leave', $url );
-							$url = add_query_arg( 'wsn_email', $email, $url );
-							?>
-                            <div>
-                                <a class="button btn alt wsn_button <?php echo esc_html( apply_filters( 'wsn_leave_waitlist_button_classes', 'wsn_leaveclass' ) ); ?>"
-                                    href="<?php echo esc_url( esc_attr( $url ) ); ?>"><?php echo get_option( 'leave_btn_label', __( 'Leave waitlist', 'in-stock-notifier' ) ); ?>
-                                </a>
-                            </div>
-							<?php
-						} else {
-							?>
-                            <span class="warning"><?php echo esc_html__( 'Out of Stock', 'in-stock-notifier' ); ?></span>
-							<?php echo esc_html__( 'Click on Join Waitlist Button to Join Waitlist', 'in-stock-notifier' ); ?>
-                            <div class="wsn_form">
-								<?php $url = add_query_arg( 'wsn_email', $email, $url ); ?>
-                                <a class="button btn alt <?php echo esc_html( apply_filters( 'wsn_join_waitlist_button_classes', 'wsn_join_btn_class' ) ); ?>"
-                                    href="<?php echo esc_url( $url ); ?>"><?php echo get_option( 'join_btn_label', esc_attr__( 'Join waitlist', 'in-stock-notifier' ) ); ?></a><Br/>
-
-                            </div>
-							<?php
-						}
-					} else {
-
-						?>
-                        <span class="warning instock_warning">
-                        <?php echo esc_html__( 'Out of Stock', 'in-stock-notifier' ); ?>
-                    </span>
-
-                        <div class="wsn_message">
-							<?php echo esc_html__( 'Click on Join Waitlist Button to Join Waitlist', 'in-stock-notifier' ); ?>
                         </div>
-
-                        <div class="wsn_form">
-							<?php
-							$url = add_query_arg( 'wsn_email', $email, $url );
-							?>
-                            <a class="button btn alt <?php echo apply_filters( 'wsn_join_waitlist_button_classes', 'wsn_join_btn_class' ); ?>"
-                                href="<?php echo esc_url( $url ); ?>"><?php echo get_option( 'join_btn_label', esc_attr__( 'Join waitlist', 'in-stock-notifier' ) ); ?></a>
-                        </div>
-						<?php
-					}
+                    </div>
+					<?php
 				}
-				do_action( 'after_wsn_form', $product, is_user_logged_in() );
-				?>
-            </div>
-			<?php
+			} else {
 
-			$html = ob_get_clean();
+				// Logged user data.
+				$user = wp_get_current_user();
+
+				// Logged user email.
+				$email = $user->user_email;
+
+				// Get waitlist of product.
+				$waitlist = wsn_get_waitlist( $product_id );
+
+				// already joined ?
+				$joined = wsn_check_register( $email, $waitlist );
+				?>
+                <div class="wsn-form">
+                    <div class="wsn-form__inner">
+                        <div class="wsn-form__content">
+                            <div class="wsn-form-message">
+                                <div class="wsn-form-message-item">
+									<?php echo esc_html__( 'Out of Stock', 'in-stock-notifier' ); ?>
+                                </div>
+                                <div class="wsn-form-message-item">
+									<?php echo $joined ?
+										esc_html( apply_filters( 'wsn_leave_waitlist_message_text', esc_attr__( 'Click on Leave button to leave waitlist', 'in-stock-notifier' ), $is_loggedin ) ) :
+										esc_html( apply_filters( 'wsn_join_waitlist_message_text', esc_attr__( 'Click on Join Waitlist Button to Join Waitlist', 'in-stock-notifier' ), $is_loggedin ) );
+									?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wsn-form__footer">
+							<?php if ( $joined ) {
+								$url = add_query_arg( WSN_USERS_META_KEY . '-action', 'leave', $url );
+								$url = add_query_arg( 'wsn_email', $email, $url );
+								?>
+                                <a class="button btn alt wsn_button <?php echo esc_html( apply_filters( 'wsn_leave_waitlist_button_classes', 'wsn_leaveclass', $is_loggedin ) ); ?>"
+                                   href="<?php echo esc_url( esc_attr( $url ) ); ?>"><?php echo get_option( 'leave_btn_label', __( 'Leave waitlist', 'in-stock-notifier' ) ); ?>
+                                </a>
+							<?php } else {
+								$url = add_query_arg( 'wsn_email', $email, $url );
+								?>
+                                <a
+                                        class="button btn alt <?php echo apply_filters( 'wsn_join_waitlist_button_classes', 'wsn_join_btn_class', $is_loggedin ); ?>"
+                                        href="<?php echo esc_url( $url ); ?>"
+                                ><?php echo get_option( 'join_btn_label', esc_attr__( 'Join waitlist', 'in-stock-notifier' ) ); ?></a>
+							<?php } ?>
+                        </div>
+                    </div>
+                </div>
+				<?php
+				do_action( 'after_wsn_form', $product, is_user_logged_in() );
+			}
 
 			// Return Generated html.
-			return $html;
+			return ob_get_clean();
 		}
 
 
@@ -291,6 +281,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 				return;
 			}
 
+
 			// Get nonce .
 			if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'action_waitlist' ) ) {
 				return;
@@ -298,6 +289,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 
 			// Operation to do.
 			$action = sanitize_text_field( wp_unslash( $_REQUEST[ WSN_USERS_META_KEY . '-action' ] ) );
+
 
 			// Start user session and set cookies.
 			if ( ! isset( $_COOKIE['woocommerce_items_in_cart'] ) ) {

@@ -1,10 +1,10 @@
 === Woo In-Stock Notifier ===
 Contributors: gk.loveweb
 Donate link: http://emgk.github.io
-Tags: woocommerce plugin, woocommerce,in-stock, out-of-stock, stock management, notify user, userlist, notify.
+Tags: woocommerce plugin, woocommerce,in-stock, out-of-stock, stock management, notify user, userlist, waitlist, notify.
 Requires at least: 3.3
-Tested up to: 4.9.*
-Stable tag: woo-instock-notifier
+Tested up to: 5.5.3
+Stable tag: woo-in-stock-notifier
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,11 @@ To disable the plugin, Go to ‘WooCommerce > In-Stock Notifier’ you will get 
 When the email is sent to the sent to the user, this plugin allows you to move that email address to archive(in case you don’t want to lose the current wait list). You can restore or remove the email address from the archive list.
 
 == Changelog ==
+= 1.0.2 =
+* Made compatible with newest version of Woocommerce
+* Re-build UI/UX
+* Added more filters/actions to allow modifications
+
 = 1.0.1 =
 * Email was not sending to the user.
 * Could not add user to the waitlist.

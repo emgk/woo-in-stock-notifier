@@ -68,7 +68,7 @@ if ( ! class_exists( 'WSN_Shortcode' ) ) {
 			$user = get_user_by( 'ID', $atts['user_id'] );
 
 			if ( ! isset( $user->ID ) ) {
-				echo esc_html__( 'Oops! In-valid user id.', 'in-stock-notifier' );
+				echo esc_html__( 'Please login to view products list.', 'in-stock-notifier' );
 
 				return false;
 			}
@@ -96,12 +96,24 @@ if ( ! class_exists( 'WSN_Shortcode' ) ) {
 
 					if ( in_array( $user->user_email, $product_waitlist_email, true ) ) {
 
-						$product = new \WC_Product( $row->post_id );
+						$product_id = $row->post_id;
+
+						if ( 'product_variation' === get_post_type( $product_id ) ) {
+							/** @var \WC_Product_Variation $variation product */
+							$variation = new \WC_Product_Variation( $product_id );
+							$product_name = $variation->get_title() . ' - ' .implode( " / ", $variation->get_variation_attributes() );
+							$product_url = $variation->get_permalink();
+					    } else {
+							/** @var \WC_Product $product product */
+							$product = new \WC_Product( $row->post_id );
+							$product_url = $product->get_permalink();
+							$product_name = $product->get_formatted_name();
+						}
 						?>
                         <tr>
                             <td class="index_col"><?php echo intval( $inc ); ?></td>
                             <td>
-                                <a href="<?php echo esc_url( $product->get_permalink() ); ?>"><?php echo esc_html( $product->get_formatted_name() ); ?></a>
+                                <a href="<?php echo esc_url( $product_url ); ?>"><?php echo esc_html( $product_name ); ?></a>
                             </td>
                         </tr>
 						<?php
