@@ -44,7 +44,7 @@ if ( ! class_exists( 'WSN_Email' ) ) {
 		public function __construct() {
 
 			$this->id             = 'instock_notifier_users_mailout';
-			$this->title          = __( 'In-Stock Notifier' );
+			$this->title          = __( 'In-Stock Notifier', 'in-stock-notifier' );
 			$this->description    = __( 'When a product is Out-of-Stock and when it comes In-Stock again, this email is sent to all users registered in the waiting list for that product.', 'in-stock-notifier' );
 			$this->heading        = __( '{product_title} now back in stock at {blogname}', 'in-stock-notifier' );
 			$this->subject        = __( 'A product you are waiting for is back in stock', 'in-stock-notifier' );

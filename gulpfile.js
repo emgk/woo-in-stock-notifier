@@ -30,7 +30,7 @@ gulp.task( 'plugin-pot', function() {
 		.pipe( wpPot( {
 			domain: 'in-stock-notifier',
 		} ) )
-		.pipe( gulp.dest( 'languages/in-stock-notifier.pot' ) );
+		.pipe( gulp.dest( 'languages/in-stock-notifier-default.pot' ) );
 } );
 
 gulp.task( 'plugin-zip-cleanup', function( done ) {

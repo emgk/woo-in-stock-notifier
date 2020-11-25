@@ -200,9 +200,9 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 				case 'all':
 					ob_start();
 					if ( $response ) {
-						$this->render_notice( __( 'Email sent!' ), __( 'Email successfully sent to all users.' ), 'dashicons-yes' );
+						$this->render_notice( __( 'Email sent!', 'in-stock-notifier' ), __( 'Email successfully sent to all users.', 'in-stock-notifier' ), 'dashicons-yes' );
 					} else {
-						$this->render_notice( __( 'Failed!' ), __( 'Failed to send email to all users.' ), 'dashicons-no' );
+						$this->render_notice( __( 'Failed!', 'in-stock-notifier' ), __( 'Failed to send email to all users.', 'in-stock-notifier' ), 'dashicons-no' );
 					}
 					$msg = ob_get_clean();
 					break;
@@ -393,8 +393,8 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                     <div class="wsn-tab-section__body" id="waitlists<?php echo intval( $pid ); ?>">
                         <div class="wsn-tab-table">
                             <div class="wsn-tab-table-header">
-                                <div class="wsn-tab-table-list-col"><?php echo __( 'Email' ); ?></div>
-                                <div class="wsn-tab-table-list-col"><?php echo __( 'Action' ); ?></div>
+                                <div class="wsn-tab-table-list-col"><?php echo __( 'Email', 'in-stock-notifier' ); ?></div>
+                                <div class="wsn-tab-table-list-col"><?php echo __( 'Action', 'in-stock-notifier' ); ?></div>
                             </div>
                             <div class="wsn-tab-table-body">
 								<?php
@@ -456,12 +456,12 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                         <div class="wsn-splash__body">
                             <div class="wsn-form">
                                 <h5><label
-                                            for="<?php echo "user-email-field-$pid"; ?>"><?php echo __( 'Add new user' ); ?></label>
+                                            for="<?php echo "user-email-field-$pid"; ?>"><?php echo __( 'Add new user', 'in-stock-notifier' ); ?></label>
                                 </h5>
                                 <div class="wsn-form-field">
                                     <input type="text" class="wsn-input-field"
                                            id="<?php echo "user-email-field-$pid"; ?>"
-                                           placeholder="<?php echo __( 'Enter email address' ); ?>"/>
+                                           placeholder="<?php echo __( 'Enter email address', 'in-stock-notifier' ); ?>"/>
                                 </div>
                                 <div class="wsn-form-field">
                                     <button id="wsn_add_btn" data-nonce="<?php echo $new_user_nonce; ?>"
@@ -493,14 +493,14 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                                             data-tab="<?php echo "wsn-users-tab-$pid"; ?>"
                                             data-type="users"
                                     >
-										<?php echo __( 'Users' ); ?>
+										<?php echo __( 'Users', 'in-stock-notifier' ); ?>
                                     </li>
                                     <li
                                             class="wsn-tabs-nav-item"
                                             data-tab="<?php echo "wsn-archived-tab-$pid"; ?>"
                                             data-type="archived"
                                     >
-										<?php echo __( 'Archived users' ); ?>
+										<?php echo __( 'Archived users', 'in-stock-notifier' ); ?>
                                     </li>
                                 </ul>
                             </div>
@@ -524,7 +524,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                                             data-product_id="<?php echo intval( $pid ); ?>"
                                     >
                                         <i class="dashicons dashicons-email-alt" aria-hidden="true"></i>
-										<?php echo __( 'Send email to all users' ); ?>
+										<?php echo __( 'Send email to all users', 'in-stock-notifier' ); ?>
                                     </a>
                                 </div>
                                 <div class="wsn-tabs__action-item">
@@ -533,7 +533,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                                             target="_blank"
                                     >
                                         <i class="dashicons dashicons-star-half" aria-hidden="true"></i>
-										<?php echo __( 'Feedback' ); ?>
+										<?php echo __( 'Feedback', 'in-stock-notifier' ); ?>
                                     </a>
                                 </div>
                             </div>
@@ -555,9 +555,9 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                                         <div class="wsn-tab-table" id="<?php echo "wsn-tab-table-$pid"; ?>">
                                             <div class="wsn-tab-table-header">
                                                 <div
-                                                        class="wsn-tab-table-list-col"><?php echo __( 'Email' ); ?></div>
+                                                        class="wsn-tab-table-list-col"><?php echo __( 'Email', 'in-stock-notifier' ); ?></div>
                                                 <div
-                                                        class="wsn-tab-table-list-col"><?php echo __( 'Action' ); ?></div>
+                                                        class="wsn-tab-table-list-col"><?php echo __( 'Action', 'in-stock-notifier' ); ?></div>
                                             </div>
                                             <div class="wsn-tab-table-body">
 												<?php if ( ! empty( $waitlist ) ) {
@@ -594,7 +594,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 												}
 
 												$this->render_notice(
-													__( 'No users' ),
+													__( 'No users', 'in-stock-notifier' ),
 													apply_filters( 'wsn_waitlist_no_users', __( 'Currently there are no users waiting for this product.<br/>Click on "Add new user" to add new user manually.', 'in-stock-notifier' ) ),
 													'dashicons-warning',
 													! empty( $waitlist )
@@ -617,8 +617,8 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                                     <div class="wsn-tab-section__body">
                                         <div class="wsn-tab-table">
                                             <div class="wsn-tab-table-header">
-                                                <div class="wsn-tab-table-list-col"><?php echo __( 'Email' ); ?></div>
-                                                <div class="wsn-tab-table-list-col"><?php echo __( 'Action' ); ?></div>
+                                                <div class="wsn-tab-table-list-col"><?php echo __( 'Email', 'in-stock-notifier' ); ?></div>
+                                                <div class="wsn-tab-table-list-col"><?php echo __( 'Action', 'in-stock-notifier' ); ?></div>
                                             </div>
                                             <div class="wsn-tab-table-body">
 												<?php
@@ -658,7 +658,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 												}
 
 												$this->render_notice(
-													__( 'No archived users' ),
+													__( 'No archived users', 'in-stock-notifier' ),
 													apply_filters( 'wsn_waitlist_no_archived_users', __( 'User will be added to archived list once the email is sent. <br/> To enable this feature go to "WooCommerce > In-Stock Notifier".', 'in-stock-notifier' ) ),
 													'dashicons-warning',
 													! empty( $archived_users )
@@ -720,7 +720,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 
 			// Product isn't live yet
 			if ( 'auto-draft' === $post->post_status ) {
-				$this->render_notice( __( 'Not published' ), __( 'Product is not published yet.' ) );
+				$this->render_notice( __( 'Not published' ), __( 'Product is not published yet.', 'in-stock-notifier' ) );
 
 				return;
 			}
@@ -728,7 +728,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 			switch ( $product_type ) {
 				case 'simple':
 					if ( $wsn_product->is_in_stock() ) {
-						$this->render_notice( __( 'In-stock' ), __( 'Product is already available for sale.' ), 'dashicons-smiley' );
+						$this->render_notice( __( 'In-stock' ), __( 'Product is already available for sale.', 'in-stock-notifier' ), 'dashicons-smiley' );
 					} else {
 						$this->waitlist_box( $pid, $wsn_product );
 					}
@@ -758,7 +758,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                                         <div class="waitlist_data" id="<?php echo intval( $pid ); ?>">
 											<?php
 											if ( $variation_product->is_in_stock() ) {
-												$this->render_notice( __( 'In-stock' ), __( 'Product is already available for sale.' ), 'dashicons-smiley' );
+												$this->render_notice( __( 'In-stock' ), __( 'Product is already available for sale.', 'in-stock-notifier' ), 'dashicons-smiley' );
 											} else {
 												$this->waitlist_box( $pid, $variation_product );
 											}
