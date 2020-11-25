@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: Woo In-Stock Notifier
- * Version: 1.0.3
- * Plugin URI: http://emgk.github.io/
+ * Version: 1.0.4
+ * Plugin URI: http://govind.js.org/
  * Author: Govind Kumar
- * Author URI:http://emgk.github.io
+ * Author URI: http://govind.js.org/
  * Description: Customers can build a waiting list of products those are out of stock. They will be notified automatically via email, when products come back in stock.
  * Text Domain:in-stock-notifier
- * Domain Path: /language/
+ * Domain Path: /languages/
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * WC requires at least: 2.5.0
@@ -56,6 +56,20 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 } else {
 	deactivate_plugins( plugin_basename( __FILE__ ) );
 	add_action( 'admin_notices', 'wsc_woo_requires' );
+}
+
+/**
+ * Translate plugins
+ *
+ * @since 1.0.4
+ */
+add_action( 'plugins_loaded', 'wsn_localization_plugin' );
+
+/**
+ * Load plugin's language file
+ */
+function wsn_localization_plugin() {
+    load_plugin_textdomain( 'in-stock-notifier', false, WSN_PATH . 'languages/' );
 }
 
 /**

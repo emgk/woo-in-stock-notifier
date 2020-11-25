@@ -40,6 +40,9 @@ When the email is sent to the sent to the user, this plugin allows you to move t
 
 == Changelog ==
 
+= 1.0.4 =
+* Make translatable
+
 = 1.0.3 =
 * Fix WC_Email issues
 * Trigger email when stock status changes.

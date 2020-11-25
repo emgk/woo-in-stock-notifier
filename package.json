@@ -1,6 +1,6 @@
 {
   "name": "woo-in-stock-notifier",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Customers can build a waiting list of products those are out of stock. They will be notified automatically via email, when products come back in stock.",
   "url": "http://emgk.github.io",
   "author": "Govind Kumar",
