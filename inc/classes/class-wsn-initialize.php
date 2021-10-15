@@ -254,7 +254,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 						// Get the all user from waitlist.
 						$waitlist = wsn_get_waitlist( $p_id );
 
-						if ( isset( $waitlist ) ) {
+						if ( empty( $waitlist ) ) {
 
 							// Load woo commerce mailer function.
 							$mailer = WC()->mailer();
