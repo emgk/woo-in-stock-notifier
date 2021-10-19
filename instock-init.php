@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Woo In-Stock Notifier
+ * Plugin Name: TMSM WooCommerce In-Stock Notifier
  * Version: 1.0.4
  * Plugin URI: http://govind.js.org/
  * Author: Govind Kumar
@@ -82,7 +82,7 @@ function wsc_woo_requires() {
 	?>
     <div class="error">
         <p>
-			<?php echo esc_htmk( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'in-stock-notifier' ); ?>
+			<?php echo esc_html( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'in-stock-notifier' ); ?>
         </p>
     </div>
 	<?php
