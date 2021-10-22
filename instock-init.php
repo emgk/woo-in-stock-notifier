@@ -1,17 +1,18 @@
 <?php
 /**
- * Plugin Name: Woo In-Stock Notifier
+ * Plugin Name: TMSM WooCommerce In-Stock Notifier
  * Version: 1.0.4
- * Plugin URI: http://govind.js.org/
- * Author: Govind Kumar
- * Author URI: http://govind.js.org/
+ * Plugin URI: https://github.com/thermesmarins/tmsm-woocommerce-stocknotifier
+ * Author: Thermes Marins de Saint-Malo
+ * Author URI: https://github.com/thermesmarins/
  * Description: Customers can build a waiting list of products those are out of stock. They will be notified automatically via email, when products come back in stock.
- * Text Domain:in-stock-notifier
+ * Text Domain:tmsm-woocommerce-stocknotifier
  * Domain Path: /languages/
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * WC requires at least: 2.5.0
- * WC tested up to: 4.6.2
+ * WC requires at least: 5.0
+ * WC tested up to: 5.6
+ * Original Author: Govind Kumar <gkprmr@gmail.com>
  **/
 
 /**
@@ -30,6 +31,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
+use InStockNotifier\WSN_Bootstrap;
 
 if ( ! function_exists( 'is_plugin_active' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
@@ -52,7 +55,7 @@ define( 'WSN_NUM_META', 'wsn_total_num_waitlist' );
 // Deactivate the plugin of woocommerce isn't activated.
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 	add_action( 'plugins_loaded', 'wsn_pre_load' );
-	load_plugin_textdomain( 'in-stock-notifier', false, dirname( plugin_basename( __FILE__ ) ) . '/language/' );
+	load_plugin_textdomain( 'tmsm-woocommerce-stocknotifier', false, dirname( plugin_basename( __FILE__ ) ) . '/language/' );
 } else {
 	deactivate_plugins( plugin_basename( __FILE__ ) );
 	add_action( 'admin_notices', 'wsc_woo_requires' );
@@ -69,7 +72,7 @@ add_action( 'plugins_loaded', 'wsn_localization_plugin' );
  * Load plugin's language file
  */
 function wsn_localization_plugin() {
-    load_plugin_textdomain( 'in-stock-notifier', false, WSN_PATH . 'languages/' );
+    load_plugin_textdomain( 'tmsm-woocommerce-stocknotifier', false, WSN_PATH . 'languages/' );
 }
 
 /**
@@ -82,7 +85,7 @@ function wsc_woo_requires() {
 	?>
     <div class="error">
         <p>
-			<?php echo esc_htmk( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'in-stock-notifier' ); ?>
+			<?php echo esc_html( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'tmsm-woocommerce-stocknotifier' ); ?>
         </p>
     </div>
 	<?php
@@ -102,6 +105,6 @@ function wsn_pre_load() {
 	include_once( WSN_INCLUDE_PATH . 'wsn-func.php' );
 
 	// Making the wsn class global.
-	$GLOBALS['instock_alert'] = new \InStockNotifier\WSN_Bootstrap();
+	$GLOBALS['instock_alert'] = new WSN_Bootstrap();
 
 }

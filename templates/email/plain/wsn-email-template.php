@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 echo esc_attr( $email_heading ) . "\n\n";
 
-echo esc_attr_x( 'Hi there,', 'Email greetings', 'in-stock-notifier' ) . "\n\n";
+echo esc_attr_x( 'Hi there,', 'Email greetings', 'tmsm-woocommerce-stocknotifier' ) . "\n\n";
 
-echo sprintf( __( '%1$s is now back in stock at %2$s.', 'in-stock-notifier' ), esc_html( $product_title ) , esc_html( get_bloginfo( 'name' ) ) );
+echo sprintf( __( '%1$s is now back in stock at %2$s.', 'tmsm-woocommerce-stocknotifier' ), esc_html( $product_title ) , esc_html( get_bloginfo( 'name' ) ) );
 
-echo __( 'You have been sent this email because your email address was registered in a waiting list for this product.', 'in-stock-notifier' ) . "\n\n";
-echo sprintf( __( 'If you want to purchase %1$s, please visit the following link: %2$s', 'in-stock-notifier' ), esc_html( $product_title ), esc_url( $product_link ) ) . "\n\n";
+echo __( 'You have been sent this email because your email address was registered in a waiting list for this product.', 'tmsm-woocommerce-stocknotifier' ) . "\n\n";
+echo sprintf( __( 'If you want to purchase %1$s, please visit the following link: %2$s', 'tmsm-woocommerce-stocknotifier' ), esc_html( $product_title ), esc_url( $product_link ) ) . "\n\n";
 
 echo esc_attr( apply_filters( 'woocommerce_email_footer_text' , get_option( 'woocommerce_email_footer_text' ) ) );

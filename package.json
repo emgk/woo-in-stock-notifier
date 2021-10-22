@@ -1,5 +1,5 @@
 {
-  "name": "woo-in-stock-notifier",
+  "name": "tmsm-woocommerce-stocknotifier",
   "version": "1.0.4",
   "description": "Customers can build a waiting list of products those are out of stock. They will be notified automatically via email, when products come back in stock.",
   "url": "http://emgk.github.io",
