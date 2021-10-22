@@ -117,7 +117,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 			$waitlist_col = array(
 				'wsn_waitlist' => sprintf(
 					'<span class="parent-tips" data-tip="%s$1"><i class="fa fa-clock-o"></i></span>',
-					__( 'Waitlist', 'in-stock-notifier' )
+					__( 'Waitlist', 'tmsm-woocommerce-stocknotifier' )
 				),
 			);
 
@@ -357,8 +357,8 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 			// Add sub menu in woo commerce menu.
 			add_submenu_page(
 				'woocommerce',
-				__( 'In-Stock Notifier', 'in-stock-notifier' ),
-				__( 'In-Stock Notifier', 'in-stock-notifier' ),
+				__( 'In-Stock Notifier', 'tmsm-woocommerce-stocknotifier' ),
+				__( 'In-Stock Notifier', 'tmsm-woocommerce-stocknotifier' ),
 				'manage_options',
 				'in-stock-notifier-option',
 				array( __CLASS__, 'wsn_waitlist_option_page' ),
@@ -375,7 +375,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 			?>
             <div class="wrap">
 
-                <h2><?php echo esc_attr__( 'In-Stock Notifier', 'in-stock-notifier' ); ?></h2>
+                <h2><?php echo esc_attr__( 'In-Stock Notifier', 'tmsm-woocommerce-stocknotifier' ); ?></h2>
                 <hr/>
                 <form method="post" action="options.php">
 
@@ -384,29 +384,29 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 					<?php do_settings_sections( 'wsn_setting' ); ?>
                     <table class="form-table">
                         <tr valign="top">
-                            <th scope="row"><?php echo esc_attr__( 'Enable Waitlist', 'in-stock-notifier' ); ?></th>
+                            <th scope="row"><?php echo esc_attr__( 'Enable Waitlist', 'tmsm-woocommerce-stocknotifier' ); ?></th>
                             <td><input type="checkbox" name="is_enabled"
                                        value="1" <?php checked( 1, get_option( 'is_enabled', true ), true ); ?> /></td>
                         </tr>
 
                         <tr valign="top">
-                            <th scope="row"><?php echo esc_attr__( 'Join Button label', 'in-stock-notifier' ); ?></th>
+                            <th scope="row"><?php echo esc_attr__( 'Join Button label', 'tmsm-woocommerce-stocknotifier' ); ?></th>
                             <td><input type="text" name="join_btn_label"
-                                       value="<?php echo get_option( 'join_btn_label' ) ? esc_attr( get_option( 'join_btn_label' ) ) : esc_attr__( 'Join Waitlist', 'in-stock-notifier' ); ?>"/>
+                                       value="<?php echo get_option( 'join_btn_label' ) ? esc_attr( get_option( 'join_btn_label' ) ) : esc_attr__( 'Join Waitlist', 'tmsm-woocommerce-stocknotifier' ); ?>"/>
                             </td>
                         </tr>
 
                         <tr valign="top">
-                            <th scope="row"><?php echo esc_attr__( 'Leave Button label', 'in-stock-notifier' ); ?></th>
+                            <th scope="row"><?php echo esc_attr__( 'Leave Button label', 'tmsm-woocommerce-stocknotifier' ); ?></th>
                             <td><input type="text" name="leave_btn_label"
-                                       value="<?php echo get_option( 'leave_btn_label' ) ? esc_attr( get_option( 'leave_btn_label' ) ) : esc_attr__( 'Leave Waitlist', 'in-stock-notifier' ); ?>"/>
+                                       value="<?php echo get_option( 'leave_btn_label' ) ? esc_attr( get_option( 'leave_btn_label' ) ) : esc_attr__( 'Leave Waitlist', 'tmsm-woocommerce-stocknotifier' ); ?>"/>
                             </td>
                         </tr>
 
                         <tr valign="top">
-                            <th scope="row"><?php echo esc_attr__( 'Additional Options', 'in-stock-notifier' ); ?></th>
+                            <th scope="row"><?php echo esc_attr__( 'Additional Options', 'tmsm-woocommerce-stocknotifier' ); ?></th>
                             <td><input type="checkbox" name="remove_after_email"
-                                       value="1" <?php checked( 1, get_option( 'remove_after_email' ), true ); ?> /> <?php echo esc_attr__( 'Remove user after email sent.', 'in-stock-notifier' ); ?>
+                                       value="1" <?php checked( 1, get_option( 'remove_after_email' ), true ); ?> /> <?php echo esc_attr__( 'Remove user after email sent.', 'tmsm-woocommerce-stocknotifier' ); ?>
                             </td>
                         </tr>
 
@@ -414,14 +414,14 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
                             <th scope="row"></th>
                             <td><input type="checkbox" name="unregistered_can_join"
                                        value="1" <?php checked( 1, get_option( 'unregistered_can_join', true ), true ); ?> />
-								<?php echo esc_attr__( 'Allow guest to join.', 'in-stock-notifier' ); ?>
+								<?php echo esc_attr__( 'Allow guest to join.', 'tmsm-woocommerce-stocknotifier' ); ?>
                             </td>
                         </tr>
 
                         <tr valign="top">
                             <th scope="row"></th>
                             <td><input title="Archived user " type="checkbox" name="archive"
-                                       value="1" <?php checked( 1, get_option( 'archive', true ), true ); ?> /> <?php echo esc_attr__( 'Archive user after email sent.', 'in-stock-notifier' ); ?>
+                                       value="1" <?php checked( 1, get_option( 'archive', true ), true ); ?> /> <?php echo esc_attr__( 'Archive user after email sent.', 'tmsm-woocommerce-stocknotifier' ); ?>
                             </td>
                         </tr>
 

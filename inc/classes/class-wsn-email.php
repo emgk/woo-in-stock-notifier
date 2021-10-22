@@ -51,10 +51,10 @@ if (!class_exists('WSN_Email')) {
         {
 
             $this->id = 'instock_notifier_users_mailout';
-            $this->title = __('In-Stock Notifier', 'in-stock-notifier');
-            $this->description = __('When a product is Out-of-Stock and when it comes In-Stock again, this email is sent to all users registered in the waiting list for that product.', 'in-stock-notifier');
-            $this->heading = __('{product_title} now back in stock at {blogname}', 'in-stock-notifier');
-            $this->subject = __('A product you are waiting for is back in stock', 'in-stock-notifier');
+            $this->title = __('In-Stock Notifier', 'tmsm-woocommerce-stocknotifier' );
+            $this->description = __('When a product is Out-of-Stock and when it comes In-Stock again, this email is sent to all users registered in the waiting list for that product.', 'tmsm-woocommerce-stocknotifier' );
+            $this->heading = __('{product_title} now back in stock at {blogname}', 'tmsm-woocommerce-stocknotifier' );
+            $this->subject = __('A product you are waiting for is back in stock', 'tmsm-woocommerce-stocknotifier' );
             $this->template_base = WSN_EMAIL_TEMPLATE_PATH;
             $this->template_html = 'wsn-email-template.php';
             $this->template_plain = 'plain/wsn-email-template.php';

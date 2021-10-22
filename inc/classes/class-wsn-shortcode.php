@@ -9,6 +9,9 @@
 
 namespace InStockNotifier;
 
+use WC_Product;
+use WC_Product_Variation;
+
 defined( 'ABSPATH' ) or die;
 
 /**
@@ -68,7 +71,7 @@ if ( ! class_exists( 'WSN_Shortcode' ) ) {
 			$user = get_user_by( 'ID', $atts['user_id'] );
 
 			if ( ! isset( $user->ID ) ) {
-				echo esc_html__( 'Please login to view products list.', 'in-stock-notifier' );
+				echo esc_html__( 'Please login to view products list.', 'tmsm-woocommerce-stocknotifier' );
 
 				return false;
 			}
@@ -77,7 +80,7 @@ if ( ! class_exists( 'WSN_Shortcode' ) ) {
 
 			if ( ! is_user_logged_in() && empty( $atts['user_id'] ) ) {
 
-				$login_text = apply_filters( 'wsn_users_must_login_message_text', __( 'You must have to login or Pass the User ID to list out the products.', 'in-stock-notifier' ) );
+				$login_text = apply_filters( 'wsn_users_must_login_message_text', __( 'You must have to login or Pass the User ID to list out the products.', 'tmsm-woocommerce-stocknotifier' ) );
 				?>
                 <li><?php echo esc_html( $login_text ); ?></li><?php
 
@@ -86,7 +89,7 @@ if ( ! class_exists( 'WSN_Shortcode' ) ) {
 				// Get the all waiting products.
 				$products = $wpdb->get_results( $wpdb->prepare( "SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='%s' ", WSN_USERS_META_KEY ) );
 
-				echo sprintf( esc_attr__( 'Hi %s, here is the product list you are waiting for.', 'in-stock-notifier' ), esc_html( $user->display_name ) );
+				echo sprintf( esc_attr__( 'Hi %s, here is the product list you are waiting for.', 'tmsm-woocommerce-stocknotifier' ), esc_html( $user->display_name ) );
 				?>
                 <table><?php
 
@@ -99,13 +102,13 @@ if ( ! class_exists( 'WSN_Shortcode' ) ) {
 						$product_id = $row->post_id;
 
 						if ( 'product_variation' === get_post_type( $product_id ) ) {
-							/** @var \WC_Product_Variation $variation product */
-							$variation = new \WC_Product_Variation( $product_id );
+							/** @var WC_Product_Variation $variation product */
+							$variation = new WC_Product_Variation( $product_id );
 							$product_name = $variation->get_title() . ' - ' .implode( " / ", $variation->get_variation_attributes() );
 							$product_url = $variation->get_permalink();
 					    } else {
-							/** @var \WC_Product $product product */
-							$product = new \WC_Product( $row->post_id );
+							/** @var WC_Product $product product */
+							$product = new WC_Product( $row->post_id );
 							$product_url = $product->get_permalink();
 							$product_name = $product->get_formatted_name();
 						}
@@ -126,7 +129,7 @@ if ( ! class_exists( 'WSN_Shortcode' ) ) {
 					?>
                     <tr>
                         <td colspan="2">
-							<?php echo esc_html__( 'There is no product.', 'in-stock-notifier' ); ?>
+							<?php echo esc_html__( 'There is no product.', 'tmsm-woocommerce-stocknotifier' ); ?>
                         </td>
                     </tr>
 					<?php
