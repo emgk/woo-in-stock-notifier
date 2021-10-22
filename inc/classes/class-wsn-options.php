@@ -168,6 +168,9 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 				$users = (array) sanitize_email( wp_unslash( $_REQUEST['email'] ) );
 			}
 
+
+
+
 			if ( ! empty( $users ) ) {
 
 				/**
