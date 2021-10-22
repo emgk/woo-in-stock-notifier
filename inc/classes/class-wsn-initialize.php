@@ -9,6 +9,10 @@
 
 namespace InStockNotifier;
 
+use WC_Product;
+use WC_Product_Variation;
+use WP_Post;
+
 defined( 'ABSPATH' ) or die;
 
 /**
@@ -231,7 +235,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 
 					$p_id = $row->post_id;
 
-					/** @var \WP_Post $post */
+					/** @var WP_Post $post */
 					$post = get_post( $p_id );
 
 					if ( empty( get_post( $p_id ) ) || ! in_array( $post->post_type, array(
@@ -242,10 +246,10 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 					}
 
 					if ( 'product_variation' === $post->post_type ) {
-						/** @var \WC_Product_Variation $variation product */
-						$product = new \WC_Product_Variation( $p_id );
+						/** @var WC_Product_Variation $variation product */
+						$product = new WC_Product_Variation( $p_id );
 					} else {
-						$product = new \WC_Product( $p_id );
+						$product = new WC_Product( $p_id );
 					}
 
 					// Check if product is in stock.
@@ -254,7 +258,7 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 						// Get the all user from waitlist.
 						$waitlist = wsn_get_waitlist( $p_id );
 
-						if ( empty( $waitlist ) ) {
+						if ( ! empty( $waitlist ) ) {
 
 							// Load woo commerce mailer function.
 							$mailer = WC()->mailer();

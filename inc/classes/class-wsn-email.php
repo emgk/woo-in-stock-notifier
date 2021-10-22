@@ -9,6 +9,8 @@
 
 namespace InStockNotifier;
 
+use WC_Email;
+
 /**
  * In-Stock Notifier - WooCommerce Plugin
  * Copyright (C) 2017 Govind Kumar <gkprmr@gmail.com>
@@ -34,7 +36,7 @@ if (!class_exists('WSN_Email')) {
      * Class Email
      * @package InStockNotifier
      */
-    class WSN_Email extends \WC_Email
+    class WSN_Email extends WC_Email
     {
 
 
@@ -79,9 +81,12 @@ if (!class_exists('WSN_Email')) {
          */
         public function trigger($users, $product_id)
         {
+			error_log('trigger');
+			error_log(print_r($users, true));
+
             // ["one@gmail.com", "two@gmail.com", "three@gmail.com"] à remplacer par $users
-            $this->users = ["jlemorvan@thalasso-saintmalo.com", "lemorvanjulien35@gmail.com", "nmollet@thalasso-saintmalo.com"];
-            //$this->users = $users;
+            //$this->users = ["nico.mollet@gmail.com", "nmollet@thalasso-saintmalo.com"];
+            $this->users = $users;
             // get the product
             $this->product = wc_get_product($product_id);
 
@@ -145,7 +150,7 @@ if (!class_exists('WSN_Email')) {
                 $this->template_html,
                 array(
                     'product_title' => $this->product->get_formatted_name(),
-                    'product_link' => get_permalink($this->product->id),
+                    'product_link' => get_permalink($this->product->get_id()),
                     'email_heading' => $this->get_heading(),
                 ),
                 false,
@@ -186,26 +191,28 @@ if (!class_exists('WSN_Email')) {
                     $header .= 'Reply-To: ' . $this->object->get_billing_first_name() . ' ' . $this->object->get_billing_last_name() . ' <' . $this->object->get_billing_email() . ">\r\n";
                 }
             } elseif ($this->get_from_address() && $this->get_from_name()) {
-                //$arrayClients = array('04@test.com', '05@test.com', '06@test.com');
+	            //$arrayClients = array('04@test.com', '05@test.com', '06@test.com');
 
-                //$clientsSeparated = implode(",",$arrayClients);
-                $header .= 'Reply-To: ' . $this->get_from_name() . ' <' . $this->get_from_address() . ">\r\n";
-                //$header .= 'cc: 01@test.com, 02@test.com , 03@test.com'."\r\n";
-                //$header.= 'cc: '.$clientsSeparated."\r\n";
-                //$header.= 'cc: '.$this->get_recipient() ."\r\n";
-                //$header.= 'cc: '.implode(",",wsn_get_waitlist)."\r\n";
-                //$header.= 'bcc: 01@test.com, 02@test.com , 03@test.com'."\r\n";
+	            //$clientsSeparated = implode(",",$arrayClients);
+	            $header .= 'Reply-To: ' . $this->get_from_name() . ' <' . $this->get_from_address() . ">\r\n";
+	            //$header .= 'cc: 01@test.com, 02@test.com , 03@test.com'."\r\n";
+	            //$header.= 'cc: '.$clientsSeparated."\r\n";
+	            //$header.= 'cc: '.$this->get_recipient() ."\r\n";
+	            //$header.= 'cc: '.implode(",",wsn_get_waitlist)."\r\n";
+	            //$header.= 'bcc: 01@test.com, 02@test.com , 03@test.com'."\r\n";
 
-                $header.= 'bcc :'.implode(",",$this->users)."\r\n";
+	            $header .= 'bcc :' . implode( ",", $this->users ) . "\r\n";
 
+            }
 
+			error_log('$header');
+	        error_log(print_r($header, true));
 
-            return apply_filters('woocommerce_email_headers', $header, $this->id, $this->object, $this);
+	        return apply_filters('woocommerce_email_headers', $header, $this->id, $this->object, $this);
         }
 
 
     }
-}
 }
 
 //end if()
