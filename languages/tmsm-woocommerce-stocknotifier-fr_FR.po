@@ -1,25 +1,20 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TMSN-woocommerce-stocknotifier\n"
+"Project-Id-Version: TMSM WooCommerce Stocknotifier\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2021-10-15 15:03+0200\n"
-"Last-Translator: Mollet <nmollet@thalasso-saintmalo.com>\n"
+"PO-Revision-Date: 2021-10-22 11:10+0200\n"
+"Last-Translator: Nicolas Mollet <nico.mollet@gmail.com>\n"
 "Language-Team: https://github.com/thermesmarins/\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SearchPath-0: ..\n"
-
-#: inc/classes/class-wsn-email.php:47 inc/classes/class-wsn-initialize.php:356 inc/classes/class-wsn-initialize.php:357
-#: inc/classes/class-wsn-initialize.php:374 inc/classes/class-wsn-options.php:76
-msgid "In-Stock Notifier"
-msgstr ""
 
 #: inc/classes/class-wsn-email.php:48
 msgid ""
@@ -28,7 +23,7 @@ msgid ""
 msgstr ""
 
 #: inc/classes/class-wsn-email.php:49
-msgid "{product_title} now back in stock at {site_title}"
+msgid "{product_title} now back in stock at {blogname}"
 msgstr "{product_title} est maintenant en stock"
 
 #: inc/classes/class-wsn-email.php:50
@@ -38,6 +33,11 @@ msgstr "Un produit que vous attendez est de retour en stock"
 #: inc/classes/class-wsn-initialize.php:116
 msgid "Waitlist"
 msgstr "Liste d’attente"
+
+#: inc/classes/class-wsn-initialize.php:356, inc/classes/class-wsn-initialize.php:357,
+#: inc/classes/class-wsn-initialize.php:374, inc/classes/class-wsn-options.php:76
+msgid "In-Stock Notifier"
+msgstr "Notification de stock"
 
 #: inc/classes/class-wsn-initialize.php:383
 msgid "Enable Waitlist"
@@ -75,22 +75,6 @@ msgstr "Autoriser les invités à rejoindre."
 msgid "Archive user after email sent."
 msgstr ""
 
-#: inc/classes/class-wsn-options.php:203
-msgid "Email sent!"
-msgstr "Email envoyé !"
-
-#: inc/classes/class-wsn-options.php:203
-msgid "Email successfully sent to all users."
-msgstr "Email envoyé aux utilisateurs."
-
-#: inc/classes/class-wsn-options.php:205
-msgid "Failed!"
-msgstr "Échec !"
-
-#: inc/classes/class-wsn-options.php:205
-msgid "Failed to send email to all users."
-msgstr "Lְ’envoi de l’email aux utilisateurs a échoué."
-
 #: inc/classes/class-wsn-options.php:288
 msgid "Send Email"
 msgstr "Envoyer l’email"
@@ -101,33 +85,17 @@ msgstr ""
 " \n"
 "Envoyer un email aux utilisateurs"
 
-#: inc/classes/class-wsn-options.php:383 inc/classes/class-wsn-options.php:546
+#: inc/classes/class-wsn-options.php:383, inc/classes/class-wsn-options.php:546
 msgid "Users waitlist"
 msgstr "Utilisateurs en liste d’attente"
 
-#: inc/classes/class-wsn-options.php:389 inc/classes/class-wsn-options.php:548
+#: inc/classes/class-wsn-options.php:389, inc/classes/class-wsn-options.php:548
 msgid "The following users are currently on the waiting list for this product."
 msgstr "Les utilisateurs suivantes sont sur la liste d’attente de ce produit."
 
-#: inc/classes/class-wsn-options.php:396 inc/classes/class-wsn-options.php:558 inc/classes/class-wsn-options.php:620
-msgid "Email"
-msgstr "Email"
-
-#: inc/classes/class-wsn-options.php:397 inc/classes/class-wsn-options.php:560 inc/classes/class-wsn-options.php:621
-msgid "Action"
-msgstr "Action"
-
-#: inc/classes/class-wsn-options.php:426 inc/classes/class-wsn-options.php:586
+#: inc/classes/class-wsn-options.php:426, inc/classes/class-wsn-options.php:586
 msgid "Remove User"
 msgstr "Retirer l’utilisateur"
-
-#: inc/classes/class-wsn-options.php:459 inc/classes/class-wsn-options.php:516
-msgid "Add new user"
-msgstr "Ajouter un utilisateur"
-
-#: inc/classes/class-wsn-options.php:464
-msgid "Enter email address"
-msgstr "Saisir l’adresse email"
 
 #: inc/classes/class-wsn-options.php:471
 msgid "Add User"
@@ -137,25 +105,9 @@ msgstr "Ajouter un utilisateur"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: inc/classes/class-wsn-options.php:496
-msgid "Users"
-msgstr "Utilisateurs"
-
-#: inc/classes/class-wsn-options.php:503
-msgid "Archived users"
-msgstr ""
-
-#: inc/classes/class-wsn-options.php:527
-msgid "Send email to all users"
-msgstr "Envoyer un email aux utilisateurs"
-
-#: inc/classes/class-wsn-options.php:536
-msgid "Feedback"
-msgstr ""
-
-#: inc/classes/class-wsn-options.php:597
-msgid "No users"
-msgstr "Aucun utilisateur"
+#: inc/classes/class-wsn-options.php:516
+msgid "Add new user"
+msgstr "Ajouter un utilisateur"
 
 #: inc/classes/class-wsn-options.php:598
 msgid "Currently there are no users waiting for this product.<br/>Click on \"Add new user\" to add new user manually."
@@ -167,56 +119,19 @@ msgstr ""
 msgid "The following users are archived after sending the email."
 msgstr ""
 
-#: inc/classes/class-wsn-options.php:661
-msgid "No archived users"
-msgstr ""
-
 #: inc/classes/class-wsn-options.php:662
 msgid ""
 "User will be added to archived list once the email is sent. <br/> To enable this feature go to \"WooCommerce > In-"
 "Stock Notifier\"."
 msgstr ""
 
-#: inc/classes/class-wsn-options.php:723
-msgid "Not published"
-msgstr ""
-
-#: inc/classes/class-wsn-options.php:723
-msgid "Product is not published yet."
-msgstr ""
-
-#: inc/classes/class-wsn-options.php:731 inc/classes/class-wsn-options.php:761
-msgid "In-stock"
-msgstr "En stock"
-
-#: inc/classes/class-wsn-options.php:731 inc/classes/class-wsn-options.php:761
-msgid "Product is already available for sale."
-msgstr ""
-
-#: inc/classes/class-wsn-options.php:751
-msgid "Click to toggle"
-msgstr "Cliquer pour déplier"
-
 #: inc/classes/class-wsn-options.php:753
-#, php-format
 msgid "Waitlist for %s"
 msgstr "Liste d’attente pour %s"
 
-#: inc/classes/class-wsn-product.php:192 inc/classes/class-wsn-product.php:235
+#: inc/classes/class-wsn-product.php:235, inc/classes/class-wsn-product.php:192
 msgid "Out of Stock"
 msgstr "En réassort, bientôt disponible"
-
-#: inc/classes/class-wsn-product.php:194
-msgid "Provide your Email so we can email you when product comes in-stock."
-msgstr "Inscrivez-vous pour être alerté lorsque ce produit sera disponible."
-
-#: inc/classes/class-wsn-product.php:199
-msgid "Enter Your Email Address..."
-msgstr "Entrez votre adresse email..."
-
-#: inc/classes/class-wsn-product.php:210 inc/classes/class-wsn-product.php:259
-msgid "Join waitlist"
-msgstr "Je veux être alerté"
 
 #: inc/classes/class-wsn-product.php:239
 msgid "We'll notify you as soon as item is back in stock."
@@ -226,36 +141,43 @@ msgstr "Nous vous notifierons par email quand le produit revient en stock."
 msgid "Join the waitlist, so we can notify you as soon as the item is back in stock."
 msgstr "Inscrivez-vous pour être alerté lorsque ce produit sera disponible."
 
+#: inc/classes/class-wsn-product.php:259, inc/classes/class-wsn-product.php:210
+msgid "Join waitlist"
+msgstr "Je veux être alerté"
+
 #: inc/classes/class-wsn-product.php:251
 msgid "Leave waitlist"
 msgstr "Je ne veux plus être alerté"
 
-#: inc/classes/class-wsn-product.php:310
-msgid "Please enter valid email address."
-msgstr "Saisissez un email valide."
+#: inc/classes/class-wsn-product.php:194
+msgid "Provide your Email so we can email you when product comes in-stock."
+msgstr "Inscrivez-vous pour être alerté lorsque ce produit sera disponible."
 
-#: inc/classes/class-wsn-product.php:316
-msgid "This email is already in the wait list for this product, please try any different email."
-msgstr "Cet email est déjà dans la liste d’attente pour ce produit, essayez un email différent."
-
-#: inc/classes/class-wsn-product.php:322
-msgid "You have successfully joined waitlist."
-msgstr "Vous avez rejoint la liste d’attente."
+#: inc/classes/class-wsn-product.php:199
+msgid "Enter Your Email Address..."
+msgstr "Saisissez votre adresse email"
 
 #: inc/classes/class-wsn-product.php:333
 msgid "You have been removed from the waiting list for this product"
 msgstr "Vous avez été retiré de la liste d’attente pour ce produit"
 
+#: inc/classes/class-wsn-product.php:322
+msgid "You have successfully joined waitlist."
+msgstr "Vous avez rejoint la liste d’attente."
+
+#: inc/classes/class-wsn-product.php:316
+msgid "This email is already in the wait list for this product, please try any different email."
+msgstr "Cet email est déjà dans la liste d’attente pour ce produit, essayez un email différent."
+
+#: inc/classes/class-wsn-product.php:310
+msgid "Please enter valid email address."
+msgstr "Saisissez un email valide."
+
 #: inc/classes/class-wsn-shortcode.php:71
 msgid "Please login to view products list."
 msgstr "Veuillez vous identifier pour voir la liste des produits."
 
-#: inc/classes/class-wsn-shortcode.php:80
-msgid "You must have to login or Pass the User ID to list out the products."
-msgstr ""
-
 #: inc/classes/class-wsn-shortcode.php:89
-#, php-format
 msgid "Hi %s, here is the product list you are waiting for."
 msgstr "Bonjour %s, voici le produit que vous attendiez."
 
@@ -263,38 +185,85 @@ msgstr "Bonjour %s, voici le produit que vous attendiez."
 msgid "There is no product."
 msgstr "Il n’y a aucun produit."
 
-#: templates/email/plain/wsn-email-template.php:15
-msgctxt "Email greetings"
-msgid "Hi there,"
-msgstr "Bonjour,"
-
-#: templates/email/plain/wsn-email-template.php:17 templates/email/wsn-email-template.php:17
-#, php-format
-msgid "%1$s is now back in stock at %2$s."
-msgstr "Nous avons le plaisir de vous confirmer que le produit %1$s de %2$s est de nouveau disponible."
-
-#: templates/email/plain/wsn-email-template.php:19
-msgid "You have been sent this email because your email address was registered in a waiting list for this product."
-msgstr "Vous recevez cet email car votre adresse est enregistrée dans la liste d’attente pour ce produit."
-
-#: templates/email/plain/wsn-email-template.php:20
-#, php-format
-msgid "If you want to purchase %1$s, please visit the following link: %2$s"
-msgstr "Si vous voulez acheter %1$s, veuillez visiter le lien suivant : %2$s"
+#: inc/classes/class-wsn-shortcode.php:80
+msgid "You must have to login or Pass the User ID to list out the products."
+msgstr ""
 
 #: templates/email/wsn-email-template.php:13
 msgctxt "Email salutation"
 msgid "Hi There,"
 msgstr "Bonjour,"
 
+#: templates/email/wsn-email-template.php:17, templates/email/plain/wsn-email-template.php:17
+msgid "%1$s is now back in stock at %2$s."
+msgstr "Nous avons le plaisir de vous confirmer que le produit %1$s de %2$s est de nouveau disponible."
+
 #: templates/email/wsn-email-template.php:18
 msgid "You have been sent this email because your email address was registered on a waiting list for this product."
 msgstr "Vous recevez cet email car votre adresse est enregistrée dans la liste d’attente pour ce produit."
 
 #: templates/email/wsn-email-template.php:22
-#, php-format
 msgid "If you would like to purchase %1$s, please visit the following <a href=\"%2$s\">link</a>"
 msgstr "Il vous attend : <a href=\"%2$s\">%1$s</a>.<br><br>À très bientôt."
+
+#: templates/email/plain/wsn-email-template.php:15
+msgctxt "Email greetings"
+msgid "Hi there,"
+msgstr "Bonjour,"
+
+#: templates/email/plain/wsn-email-template.php:19
+msgid "You have been sent this email because your email address was registered in a waiting list for this product."
+msgstr "Vous recevez cet email car votre adresse est enregistrée dans la liste d’attente pour ce produit."
+
+#: templates/email/plain/wsn-email-template.php:20
+msgid "If you want to purchase %1$s, please visit the following link: %2$s"
+msgstr "Si vous voulez acheter %1$s, veuillez visiter le lien suivant : %2$s"
+
+#~ msgid "Email sent!"
+#~ msgstr "Email envoyé !"
+
+#~ msgid "Email successfully sent to all users."
+#~ msgstr "Email envoyé aux utilisateurs."
+
+#~ msgid "Failed!"
+#~ msgstr "Échec !"
+
+#~ msgid "Failed to send email to all users."
+#~ msgstr "Lְ’envoi de l’email aux utilisateurs a échoué."
+
+#~ msgid "Email"
+#~ msgstr "Email"
+
+#~ msgid "Action"
+#~ msgstr "Action"
+
+#~ msgid "Enter email address"
+#~ msgstr "Saisir l’adresse email"
+
+#~ msgid "Users"
+#~ msgstr "Utilisateurs"
+
+#~ msgid "Send email to all users"
+#~ msgstr "Envoyer un email aux utilisateurs"
+
+#~ msgid "No users"
+#~ msgstr "Aucun utilisateur"
+
+#~ msgid "In-stock"
+#~ msgstr "En stock"
+
+#~ msgid "Click to toggle"
+#~ msgstr "Cliquer pour déplier"
+
+#, fuzzy
+#~| msgid "request"
+#~ msgid "required"
+#~ msgstr "Request"
+
+#, fuzzy
+#~| msgid "Nachname"
+#~ msgid "name"
+#~ msgstr "Last name"
 
 #, php-format
 #~ msgid "Gift wrap this order for %s?"
@@ -737,9 +706,6 @@ msgstr "Il vous attend : <a href=\"%2$s\">%1$s</a>.<br><br>À très bientôt."
 #~ msgid "Geben Sie Ihren Nachnamen ein."
 #~ msgstr "Please enter your last name."
 
-#~ msgid "Nachname"
-#~ msgstr "Last name"
-
 #~ msgid "Geben Sie Ihr Geburtsdatum ein."
 #~ msgstr "Please enter your date of birth."
 
@@ -1173,9 +1139,6 @@ msgstr "Il vous attend : <a href=\"%2$s\">%1$s</a>.<br><br>À très bientôt."
 
 #~ msgid "First come, first served …"
 #~ msgstr "First come, first served ..."
-
-#~ msgid "request"
-#~ msgstr "Request"
 
 #~ msgid "request-error"
 #~ msgstr "There was an error, please check your data."
