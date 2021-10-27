@@ -1,3 +1,4 @@
+### 1.0.6: October 27th, 2021
 * Fix translations
 
 ### 1.0.5: October 22nd, 2021
