@@ -39,6 +39,9 @@ When the email is sent to the sent to the user, this plugin allows you to move t
 
 == Changelog ==
 
+= 1.0.5 =
+* Fix issues with latest version of WP and WooCommerce
+
 = 1.0.4 =
 * Make translatable
 

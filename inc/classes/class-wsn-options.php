@@ -446,7 +446,9 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 			$new_user_nonce = wp_create_nonce( 'add_new_user_js' );
 			$waitlist       = wsn_get_waitlist( $pid );
 
-			$total_waitlist_user = count( get_post_meta( $pid, WSN_USERS_META_KEY, true ) );
+			// get users list
+			$users_list = get_post_meta( $pid, WSN_USERS_META_KEY, true ) ;
+			$total_waitlist_user = count( is_countable( $users_list ) ? $users_list : [] );
 
 			?>
             <div class="wsn-wrapper" id="<?php echo intval( $pid ); ?>">
@@ -714,7 +716,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 			$wsn_product = wc_get_product( $post->ID );
 
 			// Get the product type.
-			$product_type = $wsn_product->product_type;
+			$product_type = $wsn_product->get_type();
 
 			$pid = intval( $wsn_product->get_id() );
 
@@ -737,7 +739,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
 					// Get all variations.
 					$variations = $wsn_product->get_available_variations();
 
-					for ( $i = 0; $i < count( $variations ); $i ++ ) {
+					for ( $i = 0; $i < count( is_countable( $variations ) ? $variations : [] ); $i ++ ) {
 						$pid = intval( $variations[ $i ]['variation_id'] );
 
 						/** @var \WC_Product $variation_product */
