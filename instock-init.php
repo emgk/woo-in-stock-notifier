@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Woo In-Stock Notifier
- * Version: 1.0.4
+ * Version: 1.0.5
  * Plugin URI: http://govind.js.org/
  * Author: Govind Kumar
  * Author URI: http://govind.js.org/
@@ -11,7 +11,7 @@
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * WC requires at least: 2.5.0
- * WC tested up to: 4.6.2
+ * WC tested up to: 5.8.0
  **/
 
 /**
