@@ -1,3 +1,4 @@
+### 1.0.7: October 27th, 2021
 * Enqueue Jquery as dependency
 
 ### 1.0.6: October 27th, 2021
