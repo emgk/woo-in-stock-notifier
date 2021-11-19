@@ -320,14 +320,11 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 		 */
 		public function wsn_enqueue_assets() {
 
-			// Enqueuing built-in jquery .
-			wp_enqueue_script( 'jquery' );
-
 			// Add the plugin style file.
 			wp_enqueue_style( 'wsn_styles', WSN_ASSEST_PATH . 'css/front.min.css' );
 
 			// Add plugin js script.
-			wp_enqueue_script( 'wsn_scripts', WSN_ASSEST_PATH . 'js/front.min.js' );
+			wp_enqueue_script( 'wsn_scripts', WSN_ASSEST_PATH . 'js/front.min.js', array( 'jquery' ), false, true );
 		}
 
 		/**

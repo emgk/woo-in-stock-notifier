@@ -1,3 +1,5 @@
+* Enqueue Jquery as dependency
+
 ### 1.0.6: October 27th, 2021
 * Fix translations
 
