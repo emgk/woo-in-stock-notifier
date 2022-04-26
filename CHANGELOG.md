@@ -1,3 +1,7 @@
+### 1.0.8: april 26th, 2022
+* Fix compatibility issues with new version of WP and Woocommerce
+* WC tested up to: 5.8.0
+
 ### 1.0.7: October 27th, 2021
 * Enqueue Jquery as dependency
 

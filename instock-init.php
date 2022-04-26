@@ -1,17 +1,18 @@
 <?php
 /**
- * Plugin Name: Woo In-Stock Notifier
- * Version: 1.0.5
- * Plugin URI: http://govind.js.org/
- * Author: Govind Kumar
- * Author URI: http://govind.js.org/
+ * Plugin Name: TMSM WooCommerce In-Stock Notifier
+ * Version: 1.0.8
+ * Plugin URI: https://github.com/thermesmarins/tmsm-woocommerce-stocknotifier
+ * Author: Thermes Marins de Saint-Malo
+ * Author URI: https://github.com/thermesmarins/
  * Description: Customers can build a waiting list of products those are out of stock. They will be notified automatically via email, when products come back in stock.
- * Text Domain:in-stock-notifier
+ * Text Domain:tmsm-woocommerce-stocknotifier
  * Domain Path: /languages/
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * WC requires at least: 2.5.0
- * WC tested up to: 5.8.0
+ * WC requires at least: 5.0
+ * WC tested up to: 5.6
+ * Original Author: Govind Kumar <gkprmr@gmail.com>
  **/
 
 /**
