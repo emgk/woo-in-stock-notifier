@@ -1,4 +1,4 @@
-### 1.0.8: april 26th, 2022
+### 1.0.8: April 26th, 2022
 * Fix compatibility issues with new version of WP and Woocommerce
 * WC tested up to: 5.8.0
 

@@ -53,7 +53,7 @@ define( 'WSN_NUM_META', 'wsn_total_num_waitlist' );
 // Deactivate the plugin of woocommerce isn't activated.
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 	add_action( 'plugins_loaded', 'wsn_pre_load' );
-	load_plugin_textdomain( 'in-stock-notifier', false, dirname( plugin_basename( __FILE__ ) ) . '/language/' );
+	load_plugin_textdomain( 'tmsm-woocommerce-stocknotifier', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 } else {
 	deactivate_plugins( plugin_basename( __FILE__ ) );
 	add_action( 'admin_notices', 'wsc_woo_requires' );
@@ -70,7 +70,7 @@ add_action( 'plugins_loaded', 'wsn_localization_plugin' );
  * Load plugin's language file
  */
 function wsn_localization_plugin() {
-    load_plugin_textdomain( 'in-stock-notifier', false, WSN_PATH . 'languages/' );
+    load_plugin_textdomain( 'tmsm-woocommerce-stocknotifier', false, WSN_PATH . 'languages/' );
 }
 
 /**
@@ -83,7 +83,7 @@ function wsc_woo_requires() {
 	?>
     <div class="error">
         <p>
-			<?php echo esc_htmk( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'in-stock-notifier' ); ?>
+			<?php echo esc_html( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'in-stock-notifier' ); ?>
         </p>
     </div>
 	<?php
