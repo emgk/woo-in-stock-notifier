@@ -48,13 +48,6 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 		private $current_product;
 
 		/**
-		 * Product id of the current product.
-		 *
-		 * @var integer product_id
-		 */
-		private $product_id;
-
-		/**
 		 * Current product type
 		 *
 		 * @var string product_type;
@@ -104,7 +97,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 				$this->current_product = wc_get_product( $post_id );
 
 				// @todo Add grouped product support.
-				if ( 'grouped' === $this->current_product->product_type ) {
+				if ( 'grouped' === $this->current_product->get_type() ) {
 					return;
 				}
 
@@ -112,8 +105,8 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 				if ( get_option( 'is_enabled', true ) ) {
 
 					// Set the number of argument according to product type.
-					$args_num = ( 'variable' === $this->current_product->product_type ) ? 3 : 2;
-					add_action( 'woocommerce_stock_html', array( $this, 'output_form' ), 20, $args_num );
+					$args_num = ( 'variable' === $this->current_product->get_type() ) ? 3 : 2;
+					add_action( 'woocommerce_get_stock_html', array( $this, 'output_form' ), 20, $args_num );
 				}
 			}
 		}
@@ -145,7 +138,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 		/**
 		 * Generate the waitlist form for different product type.
 		 *
-		 * @param object $product Product Object.
+		 * @param \WC_Product $product Product Object.
 		 * @param string $html HTML content.
 		 *
 		 * @return string
@@ -158,13 +151,13 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 			}
 
 			// Product type.
-			$product_type = $product->product_type;
+			$product_type = $product->get_type();
 
 			// Product id.
-			$product_id = ( 'simple' === $product_type ) ? $product->id : $product->variation_id;
+			$product_id = $product->get_id();
 
 			// Get the product url.
-			$product_url = ( 'simple' === $product_type || 'grouped' === $product_type ) ? get_permalink( $product->id ) : get_permalink( $product->parent->id );
+			$product_url = ( 'simple' === $product_type || 'grouped' === $product_type ) ? get_permalink( $product->get_id() ) : get_permalink( $product->get_parent_id() );
 
 			$this->product_id = $product_id;
 

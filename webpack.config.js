@@ -7,7 +7,7 @@ const mode = isProd ? 'production' : 'development';
 
 module.exports = {
 	mode,
-	devtool: ! isProd ? 'source-map' : '',
+	devtool: ! isProd ? 'eval-cheap-module-source-map' : 'source-map',
 	entry: {
 		admin: [ './src/admin/main.js', './src/admin/main.scss' ],
 		front: [ './src/front/main.js', './src/front/main.scss' ],
