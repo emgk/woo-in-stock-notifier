@@ -83,7 +83,7 @@ function wsc_woo_requires() {
 	?>
     <div class="error">
         <p>
-			<?php echo esc_html( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'in-stock-notifier' ); ?>
+			<?php echo esc_html( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'tmsm-woocommerce-stocknotifier' ); ?>
         </p>
     </div>
 	<?php
