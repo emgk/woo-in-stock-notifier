@@ -576,12 +576,12 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                                                                     <div class="wsn-tab-table-item-col-action">
                                                                         <a data-product_id="<?php echo absint( $pid ); ?>"
                                                                            data-wp_nonce="<?php echo wp_create_nonce( 'action_waitlist' ); ?>"
-                                                                           data-uid="<?php echo absint( $key ); ?>"
-                                                                           data-total="<?php echo $total_waitlist_user; ?>"
+                                                                           data-uid="<?php echo esc_attr(absint( $key )); ?>"
+                                                                           data-total="<?php echo esc_attr($total_waitlist_user); ?>"
                                                                            data-email="<?php echo esc_attr( $data ); ?>"
                                                                            data-action="leave"
                                                                            href="javascript:void(0);"
-                                                                           title="<?php echo __( 'Remove User', 'tmsm-woocommerce-stocknotifier' ); ?>"
+                                                                           title="<?php esc_attr_e( 'Remove User', 'tmsm-woocommerce-stocknotifier' ); ?>"
                                                                            class="removeUser"><span
                                                                                     class="dashicons dashicons-no"></span></a>
                                                                     </div>

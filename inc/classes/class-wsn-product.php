@@ -96,7 +96,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 				// Get the Product.
 				$this->current_product = wc_get_product( $post_id );
 
-				// @todo Add grouped product support.
+				// TODO Add grouped product support.
 				if ( 'grouped' === $this->current_product->get_type() ) {
 					return;
 				}
@@ -126,7 +126,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 				$product = $this->current_product;
 			}
 
-			// @Todo add front-end functionality for the variable product.
+			// TODO add front-end functionality for the variable product.
 			if ( ! is_user_logged_in() && ! get_option( 'unregistered_can_join' ) || $product->is_in_stock() ) {
 				return $html;
 			}
@@ -138,7 +138,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 		/**
 		 * Generate the waitlist form for different product type.
 		 *
-		 * @param \WC_Product $product Product Object.
+		 * @param WC_Product $product Product Object.
 		 * @param string $html HTML content.
 		 *
 		 * @return string
