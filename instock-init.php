@@ -15,22 +15,7 @@
  * Original Author: Govind Kumar <gkprmr@gmail.com>
  **/
 
-/**
- * In-Stock Notifier - WooCommerce Plugin
- * Copyright (C) 2017 Govind Kumar <gkprmr@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as published
- * by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+use InStockNotifier\WSN_Bootstrap;
 
 if ( ! function_exists( 'is_plugin_active' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
@@ -83,7 +68,7 @@ function wsc_woo_requires() {
 	?>
     <div class="error">
         <p>
-			<?php echo esc_html( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'tmsm-woocommerce-stocknotifier' ); ?>
+			<?php echo esc_html__( 'In-Stock Notifier can\'t active because it requires WooCommerce in order to work.', 'tmsm-woocommerce-stocknotifier' ); ?>
         </p>
     </div>
 	<?php
@@ -103,6 +88,6 @@ function wsn_pre_load() {
 	include_once( WSN_INCLUDE_PATH . 'wsn-func.php' );
 
 	// Making the wsn class global.
-	$GLOBALS['instock_alert'] = new \InStockNotifier\WSN_Bootstrap();
+	$GLOBALS['instock_alert'] = new WSN_Bootstrap();
 
 }
