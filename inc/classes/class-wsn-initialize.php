@@ -165,6 +165,10 @@ if ( ! class_exists( 'WSN_Initialize' ) ) {
 			// Get the current user ID.
 			$userid = get_current_user_id();
 
+			if(empty($userid)){
+				return;
+			}
+
 			// Get the user data.
 			$user = get_userdata( $userid );
 
