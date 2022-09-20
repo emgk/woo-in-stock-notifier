@@ -1,3 +1,4 @@
+### 1.0.9: September 20th, 2022
 * Product variation title always display parent product title (no attributes shown)
 
 ### 1.0.8: May 4th, 2022
