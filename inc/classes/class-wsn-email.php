@@ -10,6 +10,7 @@
 namespace InStockNotifier;
 
 use WC_Email;
+use WC_Product;
 
 /**
  * In-Stock Notifier - WooCommerce Plugin
@@ -41,6 +42,7 @@ if (!class_exists('WSN_Email')) {
 
 
         private $users = [];
+        private WC_Product $product;
 
         /**
          * WSN_Email constructor.
@@ -87,14 +89,14 @@ if (!class_exists('WSN_Email')) {
             // get the product
             $this->product = wc_get_product($product_id);
 
-            // return
-            if (!$this->product || !$this->is_enabled()) {
-                return;
-            }
+	        // return
+	        if ( ! $this->product || ! $this->is_enabled() ) {
+		        return;
+	        }
 
             // Replace product_title in email template.
             $this->placeholders = array(
-                '{product_title}' => $this->product->get_formatted_name()
+                '{product_title}' =>  ($this->product->product_data['title'] ?? $this->product->get_title() )
             );
 
             // build header
@@ -126,7 +128,7 @@ if (!class_exists('WSN_Email')) {
             wc_get_template(
                 $this->template_html,
                 array(
-                    'product_title' => $this->product->get_formatted_name(),
+                    'product_title' =>  ($this->product->product_data['title'] ?? $this->product->get_title() ),
                     'product_link' => get_permalink($this->product->get_id()),
                     'email_heading' => $this->get_heading(),
                 ),

@@ -1,3 +1,5 @@
+* Product variation title always display parent product title (no attributes shown)
+
 ### 1.0.8: May 4th, 2022
 * Fix compatibility issues with new version of WP and Woocommerce
 * WC tested up to: 5.8.0
