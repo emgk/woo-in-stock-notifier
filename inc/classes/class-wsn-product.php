@@ -9,6 +9,8 @@
 
 namespace InStockNotifier;
 
+use WC_Product;
+
 defined( 'ABSPATH' ) or die;
 
 /**
@@ -41,7 +43,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 		/**
 		 * Current product object
 		 *
-		 * @var \WC_Product
+		 * @var WC_Product
 		 */
 		private $current_product;
 
@@ -94,7 +96,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 				// Get the Product.
 				$this->current_product = wc_get_product( $post_id );
 
-				// @todo Add grouped product support.
+				// TODO Add grouped product support.
 				if ( 'grouped' === $this->current_product->get_type() ) {
 					return;
 				}
@@ -124,7 +126,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 				$product = $this->current_product;
 			}
 
-			// @Todo add front-end functionality for the variable product.
+			// TODO add front-end functionality for the variable product.
 			if ( ! is_user_logged_in() && ! get_option( 'unregistered_can_join' ) || $product->is_in_stock() ) {
 				return $html;
 			}
@@ -136,7 +138,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 		/**
 		 * Generate the waitlist form for different product type.
 		 *
-		 * @param \WC_Product $product Product Object.
+		 * @param WC_Product $product Product Object.
 		 * @param string $html HTML content.
 		 *
 		 * @return string
@@ -182,14 +184,14 @@ if ( ! class_exists( 'WSN_Product' ) ) {
                             <div class="wsn-form__content">
                                 <div class="wsn-form-message">
                                     <div
-                                            class="wsn-form-message-item"><?php echo apply_filters( 'wsn-out-of-stock', esc_html__( 'Out of Stock', 'in-stock-notifier' ), $is_loggedin ) ?></div>
+                                            class="wsn-form-message-item"><?php echo apply_filters( 'wsn-out-of-stock', esc_html__( 'Out of Stock', 'tmsm-woocommerce-stocknotifier' ), $is_loggedin ) ?></div>
                                     <div
-                                            class="wsn-form-message-item"><?php echo apply_filters( 'wsn-guide-desc', esc_html__( 'Provide your Email so we can email you when product comes in-stock.', 'in-stock-notifier' ), $is_loggedin ); ?></div>
+                                            class="wsn-form-message-item"><?php echo apply_filters( 'wsn-guide-desc', esc_html__( 'Provide your Email so we can email you when product comes in-stock.', 'tmsm-woocommerce-stocknotifier' ), $is_loggedin ); ?></div>
                                 </div>
                                 <div class="wsn-form-field">
                                     <input
-                                            type="text"
-                                            placeholder="<?php echo __( 'Enter Your Email Address...', 'in-stock-notifier' ); ?>"
+                                            type="email"
+                                            placeholder="<?php echo __( 'Enter Your Email Address...', 'tmsm-woocommerce-stocknotifier' ); ?>"
                                             id="wsn_waitlist_email"
                                             name="wsn_email"
                                             class="wsn-input-field wsn-waitlist-email-field"
@@ -200,7 +202,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
                                 <a
                                         class="<?php echo apply_filters( 'join_btn_classes', 'button btn alt wsn-submit-form wsn-submit-form--disabled', $is_loggedin ); ?>"
                                         href="<?php echo esc_url( $url ); ?>"
-                                ><?php echo get_option( 'join_btn_label', esc_attr__( 'Join waitlist', 'in-stock-notifier' ) ); ?></a>
+                                ><?php echo get_option( 'join_btn_label', esc_attr__( 'Join waitlist', 'tmsm-woocommerce-stocknotifier' ) ); ?></a>
                             </div>
                         </div>
                     </div>
@@ -225,12 +227,12 @@ if ( ! class_exists( 'WSN_Product' ) ) {
                         <div class="wsn-form__content">
                             <div class="wsn-form-message">
                                 <div class="wsn-form-message-item">
-									<?php echo esc_html__( 'Out of Stock', 'in-stock-notifier' ); ?>
+									<?php echo esc_html__( 'Out of Stock', 'tmsm-woocommerce-stocknotifier' ); ?>
                                 </div>
                                 <div class="wsn-form-message-item">
 									<?php echo $joined ?
-										esc_html( apply_filters( 'wsn_leave_waitlist_message_text', esc_attr__( 'We\'ll notify you as soon as item is back in stock.', 'in-stock-notifier' ), $is_loggedin ) ) :
-										esc_html( apply_filters( 'wsn_join_waitlist_message_text', esc_attr__( 'Join the waitlist, so we can notify you as soon as the item is back in stock.', 'in-stock-notifier' ), $is_loggedin ) );
+										esc_html( apply_filters( 'wsn_leave_waitlist_message_text', esc_attr__( 'We\'ll notify you as soon as item is back in stock.', 'tmsm-woocommerce-stocknotifier' ), $is_loggedin ) ) :
+										esc_html( apply_filters( 'wsn_join_waitlist_message_text', esc_attr__( 'Join the waitlist, so we can notify you as soon as the item is back in stock.', 'tmsm-woocommerce-stocknotifier' ), $is_loggedin ) );
 									?>
                                 </div>
                             </div>
@@ -241,7 +243,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 								$url = add_query_arg( 'wsn_email', $email, $url );
 								?>
                                 <a class="button btn alt wsn_button <?php echo esc_html( apply_filters( 'wsn_leave_waitlist_button_classes', 'wsn_leaveclass', $is_loggedin ) ); ?>"
-                                   href="<?php echo esc_url( esc_attr( $url ) ); ?>"><?php echo get_option( 'leave_btn_label', __( 'Leave waitlist', 'in-stock-notifier' ) ); ?>
+                                   href="<?php echo esc_url( esc_attr( $url ) ); ?>"><?php echo get_option( 'leave_btn_label', __( 'Leave waitlist', 'tmsm-woocommerce-stocknotifier' ) ); ?>
                                 </a>
 							<?php } else {
 								$url = add_query_arg( 'wsn_email', $email, $url );
@@ -249,7 +251,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
                                 <a
                                         class="button btn alt <?php echo apply_filters( 'wsn_join_waitlist_button_classes', 'wsn_join_btn_class', $is_loggedin ); ?>"
                                         href="<?php echo esc_url( $url ); ?>"
-                                ><?php echo get_option( 'join_btn_label', esc_attr__( 'Join waitlist', 'in-stock-notifier' ) ); ?></a>
+                                ><?php echo get_option( 'join_btn_label', esc_attr__( 'Join waitlist', 'tmsm-woocommerce-stocknotifier' ) ); ?></a>
 							<?php } ?>
                         </div>
                     </div>
@@ -300,19 +302,19 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 
 				if ( empty( $email ) || ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
 
-					$msg      = apply_filters( 'wsn_invalid_email', __( 'Please enter valid email address.', 'in-stock-notifier' ) );
+					$msg      = apply_filters( 'wsn_invalid_email', __( 'Please enter valid email address.', 'tmsm-woocommerce-stocknotifier' ) );
 					$msg_type = 'error';
 
 				} elseif ( ! wsn_register_user( $email, $product_id ) ) {
 
 					// Assign error message.
-					$msg      = apply_filters( 'wsn_email_exists', __( 'This email is already in the wait list for this product, please try any different email.', 'in-stock-notifier' ) );
+					$msg      = apply_filters( 'wsn_email_exists', __( 'This email is already in the wait list for this product, please try any different email.', 'tmsm-woocommerce-stocknotifier' ) );
 					$msg_type = 'error';
 
 				} else {
 
 					// Success message.
-					$msg      = apply_filters( 'wsn_joined_successfully', __( 'You have successfully joined waitlist.', 'in-stock-notifier' ) );
+					$msg      = apply_filters( 'wsn_joined_successfully', __( 'You have successfully joined waitlist.', 'tmsm-woocommerce-stocknotifier' ) );
 					$msg_type = 'success';
 
 				}
@@ -323,7 +325,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
 				if ( wsn_leave_user( $email, $product_id ) ) {
 
 					// Remove message.
-					$msg      = apply_filters( 'wsn_removed_successfully', __( 'You have been removed from the waiting list for this product', 'in-stock-notifier' ) );
+					$msg      = apply_filters( 'wsn_removed_successfully', __( 'You have been removed from the waiting list for this product', 'tmsm-woocommerce-stocknotifier' ) );
 					$msg_type = 'success';
 				}
 			}

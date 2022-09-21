@@ -1,0 +1,1246 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TMSM WooCommerce Stocknotifier\n"
+"POT-Creation-Date: 2022-05-04 14:35+0200\n"
+"PO-Revision-Date: 2022-05-04 14:38+0200\n"
+"Last-Translator: Nicolas Mollet <nico.mollet@gmail.com>\n"
+"Language-Team: https://github.com/thermesmarins/\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: node_modules\n"
+
+#: inc/classes/class-wsn-email.php:54 inc/classes/class-wsn-initialize.php:357 inc/classes/class-wsn-initialize.php:358
+#: inc/classes/class-wsn-initialize.php:375 inc/classes/class-wsn-options.php:78
+msgid "In-Stock Notifier"
+msgstr "Notification de stock"
+
+#: inc/classes/class-wsn-email.php:55
+msgid ""
+"When a product is Out-of-Stock and when it comes In-Stock again, this email is sent to all users registered in the "
+"waiting list for that product."
+msgstr ""
+
+#: inc/classes/class-wsn-email.php:56
+msgid "{product_title} now back in stock at {blogname}"
+msgstr "{product_title} est maintenant en stock"
+
+#: inc/classes/class-wsn-email.php:57
+msgid "A product you are waiting for is back in stock"
+msgstr "Un produit que vous attendez est de retour en stock"
+
+#: inc/classes/class-wsn-initialize.php:120
+msgid "Waitlist"
+msgstr "Liste d’attente"
+
+#: inc/classes/class-wsn-initialize.php:384
+msgid "Enable Waitlist"
+msgstr "Activer la liste d’attente"
+
+#: inc/classes/class-wsn-initialize.php:390
+msgid "Join Button label"
+msgstr "Libellé du bouton rejoindre"
+
+#: inc/classes/class-wsn-initialize.php:392
+msgid "Join Waitlist"
+msgstr "Je veux être alerté"
+
+#: inc/classes/class-wsn-initialize.php:397
+msgid "Leave Button label"
+msgstr "Libellé du bouton quitter"
+
+#: inc/classes/class-wsn-initialize.php:399
+msgid "Leave Waitlist"
+msgstr "Je ne veux plus être alerté"
+
+#: inc/classes/class-wsn-initialize.php:404
+msgid "Additional Options"
+msgstr "Options supplémentaires"
+
+#: inc/classes/class-wsn-initialize.php:406
+msgid "Remove user after email sent."
+msgstr "Retirer l’utilisateur après avoir envoyé l’email."
+
+#: inc/classes/class-wsn-initialize.php:414
+msgid "Allow guest to join."
+msgstr "Autoriser les invités à rejoindre."
+
+#: inc/classes/class-wsn-initialize.php:421
+msgid "Archive user after email sent."
+msgstr "Archiver les utilisateurs après un e-mail envoyé."
+
+#: inc/classes/class-wsn-options.php:208
+msgid "Email sent!"
+msgstr "Email envoyé !"
+
+#: inc/classes/class-wsn-options.php:208
+msgid "Email successfully sent to all users."
+msgstr "Email envoyé aux utilisateurs."
+
+#: inc/classes/class-wsn-options.php:210
+msgid "Failed!"
+msgstr "Échec !"
+
+#: inc/classes/class-wsn-options.php:210
+msgid "Failed to send email to all users."
+msgstr "Lְ’envoi de l’email aux utilisateurs a échoué."
+
+#: inc/classes/class-wsn-options.php:293
+msgid "Send Email"
+msgstr "Envoyer l’email"
+
+#: inc/classes/class-wsn-options.php:297
+msgid " Send Email to all users"
+msgstr ""
+" \n"
+"Envoyer un email aux utilisateurs"
+
+#: inc/classes/class-wsn-options.php:388 inc/classes/class-wsn-options.php:544
+msgid "Users waitlist"
+msgstr "Utilisateurs en liste d’attente"
+
+#: inc/classes/class-wsn-options.php:394 inc/classes/class-wsn-options.php:546
+msgid "The following users are currently on the waiting list for this product."
+msgstr "Les utilisateurs suivantes sont sur la liste d’attente de ce produit."
+
+#: inc/classes/class-wsn-options.php:401 inc/classes/class-wsn-options.php:556 inc/classes/class-wsn-options.php:618
+msgid "Email"
+msgstr "Email"
+
+#: inc/classes/class-wsn-options.php:402 inc/classes/class-wsn-options.php:558 inc/classes/class-wsn-options.php:619
+msgid "Action"
+msgstr "Action"
+
+#: inc/classes/class-wsn-options.php:431 inc/classes/class-wsn-options.php:584
+msgid "Remove User"
+msgstr "Retirer l’utilisateur"
+
+#: inc/classes/class-wsn-options.php:466 inc/classes/class-wsn-options.php:523
+msgid "Add new user"
+msgstr "Ajouter un utilisateur"
+
+#: inc/classes/class-wsn-options.php:471
+msgid "Enter email address"
+msgstr "Saisir l’adresse email"
+
+#: inc/classes/class-wsn-options.php:478
+msgid "Add User"
+msgstr "Ajouter un utilisateur"
+
+#: inc/classes/class-wsn-options.php:486
+msgid "Cancel"
+msgstr "Annuler"
+
+#: inc/classes/class-wsn-options.php:503
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: inc/classes/class-wsn-options.php:510
+msgid "Archived users"
+msgstr "Utilisateurs archivés"
+
+#: inc/classes/class-wsn-options.php:534
+msgid "Send email to all users"
+msgstr "Envoyer un email aux utilisateurs"
+
+#: inc/classes/class-wsn-options.php:595
+msgid "No users"
+msgstr "Aucun utilisateur"
+
+#: inc/classes/class-wsn-options.php:596
+msgid "Currently there are no users waiting for this product.<br/>Click on \"Add new user\" to add new user manually."
+msgstr ""
+"Actuellement il n’y a aucun utilisateur en liste d’attente pour ce produit. <br/>Cliquer sur Ajouter un utilisateur "
+"pour les ajouter manuellement."
+
+#: inc/classes/class-wsn-options.php:612
+msgid "The following users are archived after sending the email."
+msgstr "Les utilisateurs suivants sont archivés après l’envoi d’un e-mail."
+
+#: inc/classes/class-wsn-options.php:659
+msgid "No archived users"
+msgstr "Aucun utilisateur archivé"
+
+#: inc/classes/class-wsn-options.php:660
+msgid ""
+"User will be added to archived list once the email is sent. <br/> To enable this feature go to \"WooCommerce > In-"
+"Stock Notifier\"."
+msgstr ""
+"Les utilisateurs seront ajoutés à la liste Archivés une fois l’e-mail envoyé. <br>Pour activer cette fonctionnalité, "
+"aller dans WooCommerce > Notifications de stock."
+
+#: inc/classes/class-wsn-options.php:721
+msgid "Not published"
+msgstr "Pas publié"
+
+#: inc/classes/class-wsn-options.php:721
+msgid "Product is not published yet."
+msgstr "Le produit n’est pas encore publié."
+
+#: inc/classes/class-wsn-options.php:729 inc/classes/class-wsn-options.php:759
+msgid "In-stock"
+msgstr "En stock"
+
+#: inc/classes/class-wsn-options.php:729 inc/classes/class-wsn-options.php:759
+msgid "Product is already available for sale."
+msgstr "Le produit est déjà disponible à la vente."
+
+#: inc/classes/class-wsn-options.php:749
+msgid "Click to toggle"
+msgstr "Cliquer pour déplier"
+
+#: inc/classes/class-wsn-options.php:751
+#, php-format
+msgid "Waitlist for %s"
+msgstr "Liste d’attente pour %s"
+
+#: inc/classes/class-wsn-product.php:187 inc/classes/class-wsn-product.php:230
+msgid "Out of Stock"
+msgstr "En réassort, bientôt disponible"
+
+#: inc/classes/class-wsn-product.php:189
+msgid "Provide your Email so we can email you when product comes in-stock."
+msgstr "Inscrivez-vous pour être alerté lorsque ce produit sera disponible."
+
+#: inc/classes/class-wsn-product.php:194
+msgid "Enter Your Email Address..."
+msgstr "Saisissez votre adresse email"
+
+#: inc/classes/class-wsn-product.php:205 inc/classes/class-wsn-product.php:254
+msgid "Join waitlist"
+msgstr "Je veux être alerté"
+
+#: inc/classes/class-wsn-product.php:234
+msgid "We'll notify you as soon as item is back in stock."
+msgstr "Nous vous notifierons par email quand le produit revient en stock."
+
+#: inc/classes/class-wsn-product.php:235
+msgid "Join the waitlist, so we can notify you as soon as the item is back in stock."
+msgstr "Inscrivez-vous pour être alerté lorsque ce produit sera disponible."
+
+#: inc/classes/class-wsn-product.php:246
+msgid "Leave waitlist"
+msgstr "Je ne veux plus être alerté"
+
+#: inc/classes/class-wsn-product.php:305
+msgid "Please enter valid email address."
+msgstr "Saisissez un email valide."
+
+#: inc/classes/class-wsn-product.php:311
+msgid "This email is already in the wait list for this product, please try any different email."
+msgstr "Cet email est déjà dans la liste d’attente pour ce produit, essayez un email différent."
+
+#: inc/classes/class-wsn-product.php:317
+msgid "You have successfully joined waitlist."
+msgstr "Vous avez rejoint la liste d’attente."
+
+#: inc/classes/class-wsn-product.php:328
+msgid "You have been removed from the waiting list for this product"
+msgstr "Vous avez été retiré de la liste d’attente pour ce produit"
+
+#: inc/classes/class-wsn-shortcode.php:74
+msgid "Please login to view products list."
+msgstr "Veuillez vous identifier pour voir la liste des produits."
+
+#: inc/classes/class-wsn-shortcode.php:83
+msgid "You must have to login or Pass the User ID to list out the products."
+msgstr ""
+
+#: inc/classes/class-wsn-shortcode.php:92
+#, php-format
+msgid "Hi %s, here is the product list you are waiting for."
+msgstr "Bonjour %s, voici le produit que vous attendiez."
+
+#: inc/classes/class-wsn-shortcode.php:132
+msgid "There is no product."
+msgstr "Il n’y a aucun produit."
+
+#: instock-init.php:71
+msgid "In-Stock Notifier can't active because it requires WooCommerce in order to work."
+msgstr ""
+
+#: templates/email/plain/wsn-email-template.php:15
+msgctxt "Email greetings"
+msgid "Hi there,"
+msgstr "Bonjour,"
+
+#: templates/email/plain/wsn-email-template.php:17 templates/email/wsn-email-template.php:17
+#, php-format
+msgid "%1$s is now back in stock at %2$s."
+msgstr "Nous avons le plaisir de vous confirmer que le produit %1$s de %2$s est de nouveau disponible."
+
+#: templates/email/plain/wsn-email-template.php:19
+msgid "You have been sent this email because your email address was registered in a waiting list for this product."
+msgstr "Vous recevez cet email car votre adresse est enregistrée dans la liste d’attente pour ce produit."
+
+#: templates/email/plain/wsn-email-template.php:20
+#, php-format
+msgid "If you want to purchase %1$s, please visit the following link: %2$s"
+msgstr "Si vous voulez acheter %1$s, veuillez visiter le lien suivant : %2$s"
+
+#: templates/email/wsn-email-template.php:13
+msgctxt "Email salutation"
+msgid "Hi There,"
+msgstr "Bonjour,"
+
+#: templates/email/wsn-email-template.php:18
+msgid "You have been sent this email because your email address was registered on a waiting list for this product."
+msgstr "Vous recevez cet email car votre adresse est enregistrée dans la liste d’attente pour ce produit."
+
+#: templates/email/wsn-email-template.php:22
+#, php-format
+msgid "If you would like to purchase %1$s, please visit the following <a href=\"%2$s\">link</a>"
+msgstr "Il vous attend : <a href=\"%2$s\">%1$s</a>.<br><br>À très bientôt."
+
+#, fuzzy
+#~| msgid "request"
+#~ msgid "required"
+#~ msgstr "Request"
+
+#, fuzzy
+#~| msgid "Nachname"
+#~ msgid "name"
+#~ msgstr "Last name"
+
+#, php-format
+#~ msgid "Gift wrap this order for %s?"
+#~ msgstr "Emballage papier-cadeau pour cette commande pour %s ?"
+
+#~ msgid "Order gift wrap cost"
+#~ msgstr "Coût de l'emballage cadeau (par commande)"
+
+#~ msgid "Gift wrap message"
+#~ msgstr "Message de l'emballage cadeau"
+
+#~ msgid "Note: <code>{price}</code> will be replaced with the gift wrap cost."
+#~ msgstr "Note : <code>{price}</code> sera remplacé par le coût de l'emballage cadeau."
+
+#~ msgid "The checkbox and label shown to the user on the frontend."
+#~ msgstr "La case à cocher et le libellé seront affichés au public."
+
+#~ msgid "Free"
+#~ msgstr "Gratuit"
+
+#~ msgid "Order gift wrap"
+#~ msgstr "Emballer la commande dans un papier-cadeau"
+
+#~ msgid "Yes"
+#~ msgstr "Oui"
+
+#~ msgid "No"
+#~ msgstr "Non"
+
+#~ msgid "Order Gift Wrap"
+#~ msgstr "Emballage papier-cadeau"
+
+#~ msgid "date_after"
+#~ msgstr " ago"
+
+#~ msgid "404-Fehler"
+#~ msgstr "404 Error"
+
+#~ msgid ""
+#~ "Der von Ihnen aufgerufene Inhalt existiert nicht, oder nicht mehr. Sie können Ihre Reise von unserer <a href="
+#~ "\"http://www.panoramahotel-oberjoch.de/\">Startseite</a> aus neu beginnen oder auf einen beliebigen "
+#~ "Navigationspunkt klicken."
+#~ msgstr ""
+#~ "The content you have requested does not exist (no longer exists). Please go to our homepage to start your journey "
+#~ "again. Alternatively you can choose any other navigation point. "
+
+#~ msgid "Weitere Informationen über unser Hotel erhalten Sie auf folgenden Seiten:"
+#~ msgstr "For more information about our hotel, please visit the following pages:"
+
+#~ msgid "FAQ-Bereich"
+#~ msgstr "FAQ area"
+
+#~ msgid "Facebook"
+#~ msgstr "Facebook"
+
+#~ msgid "Twitter"
+#~ msgstr "Twitter"
+
+#~ msgid "Google Plus"
+#~ msgstr "Google Plus"
+
+#~ msgid "Buchen Sie über unseren Sicherheitsserver"
+#~ msgstr "Book via our secure server"
+
+#~ msgid "Buchen"
+#~ msgstr "Book"
+
+#~ msgid "Stellen Sie uns eine unverbindliche Anfrage"
+#~ msgstr "Make an unbinding request"
+
+#~ msgid "Anfragen"
+#~ msgstr "Requests"
+
+#~ msgid "Panorama-Inklusivleistungen"
+#~ msgstr "Panorama inclusive services"
+
+#~ msgid "Inklusivleistungen"
+#~ msgstr "Inclusive services"
+
+#~ msgid "panoInk"
+#~ msgstr ""
+#~ "<li>Schlemmer-Fr&uuml;hst&uuml;cksbuffet</li><li>5-Gang-Wahlmen&uuml; am Abend inkl. Salatbuffet und K&auml;se vom "
+#~ "Brett</li><li>Am Freitagabend: Mottobuffet</li><li>Benutzung des Alpin Spa mit Innen- und Au&szlig;enpool, "
+#~ "Saunaland und Fitness-Studio, Verleih der Wellnesstasche inkl. Badeslipper, Bademantel und Saunat&uuml;cher</"
+#~ "li><li>Begr&uuml;&szlig;ungsgetr&auml;nk bei Anreise</li><li>1 Mineralwasser pro Zimmer</li><li>Aktiv- und "
+#~ "Wanderprogramm</li><li>WLAN und Internet-Anschluss</li><li>Sky Sport HD 1</li>"
+
+#~ msgid "Newsletter"
+#~ msgstr "Newsletter"
+
+#~ msgid "Tragen Sie sich in unseren Newsletter ein <br /> um Neuigkeiten direkt per Mail zu erhalten."
+#~ msgstr "Sign up for our newsletter <br /> to receive news directly via email."
+
+#~ msgid "Fragen?"
+#~ msgstr "Questions?"
+
+#~ msgid ""
+#~ "Gerne beraten wir Sie persönlich zu<br />Ihrem Aufenthalt bei uns. Rufen Sie an:<br /><br /><a style=\"color: #fff; "
+#~ "font-weight: bold;\" href=\"tel:+49832493330\">Tel. +49 (0) 8324 933 30</a>"
+#~ msgstr ""
+#~ "We are happy to advise you <br />personally about your stay with us. <br />Please call us: <br /><br /><a style="
+#~ "\"color: #fff; font-weight: bold;\" href=\"tel:+49832493330\">Tel. +49 (0) 8324 933 30</a>"
+
+#~ msgid "Gutschein?"
+#~ msgstr "Voucher?"
+
+#~ msgid ""
+#~ "Sie brauchen noch eine gute Geschenkidee?<br />Wie wäre es mit einem Gutschein für Ihre Liebsten.<br /><br /><a "
+#~ "style=\"color: #fff; font-weight: bold;\" href=\"\">Jetzt Gutschein erstellen</a>"
+#~ msgstr ""
+#~ "Are you still looking for a nice gift idea? What do you think about a voucher for your loved ones? Create voucher "
+#~ "now."
+
+#~ msgid "Nächte ab"
+#~ msgstr "Nights from"
+
+#~ msgid "Zu den Downloads"
+#~ msgstr "Download area"
+
+#~ msgid "Broschüren"
+#~ msgstr "Brochures"
+
+#~ msgid "Sie können selbstverständlich auch<br />unsere Broschüren herunterladen."
+#~ msgstr "Of course you can also <br /> download our brochures."
+
+#~ msgid "Startseite"
+#~ msgstr "Homepage"
+
+#~ msgid "analyticsUA"
+#~ msgstr "UA-24542034-2"
+
+#~ msgid "Wir beraten Sie bei Buchungen und anderen Anliegen. Rufen Sie uns an! +49 (0) 8324 933 30"
+#~ msgstr "We are happy to advise you<br />about your concerns:<br />tel. +49 (0) 8324 933 30."
+
+#~ msgid "Day Spa"
+#~ msgstr "Day spa"
+
+#~ msgid "Auch als externer Gast können Sie Innen- und Außenpool, Fitnessstudio und Saunalandschaft nutzen."
+#~ msgstr "External guests can also make use of indoor and outdoor pool, fitness studio, and sauna landscape."
+
+#~ msgid "Gut zu Wissen"
+#~ msgstr "Good to know"
+
+#~ msgid "Viele häufig gestellte Fragen werden von uns in unserem FAQ-Bereich beantwortet."
+#~ msgstr "Many frequently asked questions are answered in our interesting facts area."
+
+#~ msgid "Bei einem Aufenthalt  erhalten Sie angenehme Extras, die schon im Preis enthalten sind."
+#~ msgstr "If you stay overnight you will receive many pleasant extras, which are already included in the price."
+
+#~ msgid "Interessiert?"
+#~ msgstr "Interested?"
+
+#~ msgid "Gerne erstellen wir ein individuelles Angebot für Ihre Feier - Rufen Sie uns an!  +49 (0) 8324 9333 420"
+#~ msgstr "We are happy to prepare an individual offer for your party. Please call us:<br />tel. +49 (0) 8324 9333 420."
+
+#~ msgid "Besuchen Sie uns auf Facebook"
+#~ msgstr "Visit us on Facebook"
+
+#~ msgid "Besuchen Sie uns auf Twitter"
+#~ msgstr "Visit us on Twitter"
+
+#~ msgid "Besuchen Sie uns auf Google Plus"
+#~ msgstr "Visit us on Google Plus"
+
+#~ msgid "switchlangtitle"
+#~ msgstr "Go to the German website"
+
+#~ msgid "switchlangurl"
+#~ msgstr "http://www.panoramahotel-oberjoch.de/"
+
+#~ msgid "switchlang"
+#~ msgstr "EN"
+
+#~ msgid "Zur Startseite"
+#~ msgstr "Go to the homepage"
+
+#~ msgid "Leistungen"
+#~ msgstr "Services"
+
+#~ msgid "Wellness"
+#~ msgstr "Wellness"
+
+#~ msgid "Angebot & Termine"
+#~ msgstr "Offer & Dates"
+
+#~ msgid "Preis p. P. im DZ"
+#~ msgstr "Price p. p. in DBL"
+
+#~ msgid "seekdalangcode"
+#~ msgstr "EN"
+
+#~ msgid "Geben Sie Ihre Nachricht ein, oder kontaktieren <br />Sie uns direkt über"
+#~ msgstr "Enter your message or contact us <br />directly via"
+
+#~ msgid "<span class=\"formSuccess\">Ihre Nachricht wurde versandt. Vielen Dank.</span>"
+#~ msgstr "<span class=\"contact-success\">Your message has been sent. Thank your very much.</span>"
+
+#~ msgid "Es gab einen Fehler. Bitte überprüfen Sie Ihre Eingaben."
+#~ msgstr "An error occurred. Please check your inputs."
+
+#~ msgid "Name"
+#~ msgstr "Name"
+
+#~ msgid "Mail-Adresse"
+#~ msgstr "Email address"
+
+#~ msgid "Betreff"
+#~ msgstr "Subject"
+
+#~ msgid "Nachricht"
+#~ msgstr "Message"
+
+#~ msgid "Senden"
+#~ msgstr "Send"
+
+#~ msgid "Geben Sie einen Namen ein!"
+#~ msgstr "Enter your name!"
+
+#~ msgid "Geben Sie eine Adresse ein!"
+#~ msgstr "Enter your email address!"
+
+#~ msgid "Diese Mail ist nicht korrekt!"
+#~ msgstr "This email address is not correct!"
+
+#~ msgid "Geben Sie eine Nachricht ein!"
+#~ msgstr "Enter a message!"
+
+#~ msgid "Kontakt"
+#~ msgstr "Contact"
+
+#~ msgid "Allgemeiner Kontakt"
+#~ msgstr "General contact"
+
+#~ msgid "Frage zum Aufenthalt"
+#~ msgstr "Question concerning your stay"
+
+#~ msgid "Fehler auf der Webseite"
+#~ msgstr "Error on the website"
+
+#~ msgid "Kritik oder Verbesserungsvorschlag"
+#~ msgstr "Criticism or suggestions"
+
+#~ msgid ""
+#~ "<strong>Panoramahotel Oberjoch</strong>Paßstraße 41<br />87541 Bad Hindelang-Oberjoch<br /><br />Telefon: +49 (0) "
+#~ "8324 9333-0<br />Telefax: +49 (0) 8324 9333-499<br />info@panoramahotel-oberjoch.de "
+#~ msgstr ""
+#~ "<strong>Panoramahotel Oberjoch</strong>Paßstraße 41<br />87541 Bad Hindelang-Oberjoch<br /><br />Telephone: +49 (0) "
+#~ "8324 9333-0<br />Telefax: +49 (0) 8324 9333-499<br />info@panoramahotel-oberjoch.de "
+
+#~ msgid "Vielen Dank für Ihre Anfrage"
+#~ msgstr "Thank you for your request"
+
+#~ msgid ""
+#~ "Ihre Mail wurde erfolgreich an uns versandt. Einer unserer Mitarbeiter wird sich schnellstmöglich bei Ihnen melden."
+#~ msgstr "Your email has been send successfully. One of our representatives will get back to you as soon as possible."
+
+#~ msgid "Sehen Sie sich auch folgende Seiten an, um weitere Fragen zu klären:"
+#~ msgstr "Please have a look at the following pages in order to clarify any further questions:"
+
+#~ msgid "'Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'"
+#~ msgstr "'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'"
+
+#~ msgid "'So','Mo','Di','Mi','Do','Fr','Sa'"
+#~ msgstr "'Su','Mo','Tu','We','Th','Fr','Sa'"
+
+#~ msgid "'Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'"
+#~ msgstr "'January','February','March','April','May','June','July','August','September','October','November','December'"
+
+#~ msgid "Kalender öffnen"
+#~ msgstr "Open calendar"
+
+#~ msgid "Zu den Angeboten"
+#~ msgstr "To our offers"
+
+#~ msgid "Anreise"
+#~ msgstr "Arrival"
+
+#~ msgid "Abreise"
+#~ msgstr "Departure"
+
+#~ msgid "Unverbindlich Anfragen"
+#~ msgstr "Non-binding requests"
+
+#~ msgid "Nächste Events"
+#~ msgstr "Upcoming events"
+
+#~ msgid "Heute"
+#~ msgstr "Today"
+
+#~ msgid "Uhr"
+#~ msgstr "Was ist damit gemeint? Uhrzeit? = time"
+
+#~ msgid "Empfohlene Angebote"
+#~ msgstr "Recommended offers"
+
+#~ msgid "Herunterladen"
+#~ msgstr "Download"
+
+#~ msgid "Keine Kinder"
+#~ msgstr "No Children"
+
+#~ msgid "Ein Kind"
+#~ msgstr "One child"
+
+#~ msgid "Kinder"
+#~ msgstr "Children"
+
+#~ msgid "Ein Erwachsener"
+#~ msgstr "One Adult"
+
+#~ msgid "Erwachsene"
+#~ msgstr "Adults"
+
+#~ msgid "Eine Nacht"
+#~ msgstr "One Night"
+
+#~ msgid "Nächte"
+#~ msgstr "Nights"
+
+#~ msgid "Deutschland"
+#~ msgstr "Germany"
+
+#~ msgid "Schweiz"
+#~ msgstr "Switzerland"
+
+#~ msgid "Östereich"
+#~ msgstr "Austria"
+
+#~ msgid "Polen"
+#~ msgstr "Poland"
+
+#~ msgid "Tschechische Republik"
+#~ msgstr "Czech Repuplic"
+
+#~ msgid "Italien"
+#~ msgstr "Italy"
+
+#~ msgid "Frankreich"
+#~ msgstr "France"
+
+#~ msgid "Liechtenstein"
+#~ msgstr "Liechtenstein"
+
+#~ msgid "Belgien"
+#~ msgstr "Belgium"
+
+#~ msgid "Luxemburg"
+#~ msgstr "Luxembourg"
+
+#~ msgid "Niederlande"
+#~ msgstr "The Netherlands"
+
+#~ msgid "Panoramahotel Buchungsanfrage"
+#~ msgstr "Panoramahotel booking request"
+
+#~ msgid "Guten Tag"
+#~ msgstr "Dear"
+
+#~ msgid "vielen Dank für Ihre Anfrage. Nachstehend finden Sie nochmals Ihre Anfragedaten zur Übersicht:"
+#~ msgstr "Thank you very much for your request. Below you find an overview of your request:"
+
+#~ msgid "Angebot:"
+#~ msgstr "Offer:"
+
+#~ msgid "Erwachsene:"
+#~ msgstr "Adults:"
+
+#~ msgid "Kinder:"
+#~ msgstr "Children:"
+
+#~ msgid "Termin:"
+#~ msgstr "Date:"
+
+#~ msgid "Zimmerkategorie:"
+#~ msgstr "Room category:"
+
+#~ msgid ""
+#~ "Es wird sich schnellstmöglich einer unserer Mitarbeiter bei Ihnen melden. Sollten Sie Fragen haben können Sie "
+#~ "direkt auf diese Mail antworten."
+#~ msgstr ""
+#~ "One of our employees will contact you as soon as possible. In case you have any questions, simply reply to this "
+#~ "mail."
+
+#~ msgid "Mit freundlichen Grüßen<br />Das Panoramahotel Oberjoch Team"
+#~ msgstr "Yours sincerely,<br />Panoramahotel Oberjoch Team"
+
+#~ msgid ""
+#~ "Der Anreisetag ist noch unverändert. Sie können diesen in Schritt 2 im Kalender anpassen. Wollen Sie fortfahren?"
+#~ msgstr ""
+#~ "The arrival day is still unchanged. You can adjust this using the calendar in step 2. Do you want to continue?"
+
+#~ msgid "Angebote"
+#~ msgstr "Offers"
+
+#~ msgid "Reisedaten"
+#~ msgstr "Journey dates"
+
+#~ msgid "Zimmer"
+#~ msgstr "Room"
+
+#~ msgid "Hier können Sie ein Angebot für Ihren Aufenthalt auswählen."
+#~ msgstr "Here you can select an offer for your stay."
+
+#~ msgid "Übernachtung"
+#~ msgstr "Overnight stay"
+
+#~ msgid "Wenn Sie eine Übernachtungsanfrage ohne Paket vornehmen wollen klicken Sie hier."
+#~ msgstr "If you like to make a request without choosing one of our package offers, please click here."
+
+#~ msgid "Geben Sie hier Personenzahl, Reisedauer und Anreisetag an."
+#~ msgstr "Please specify the number of persons, duration of stay, and arrival day here. "
+
+#~ msgid "Weiter"
+#~ msgstr "Next"
+
+#~ msgid "Wählen Sie die Zimmerkategorie in der Sie wohnen möchten."
+#~ msgstr "Please select the room category you wish to stay in."
+
+#~ msgid "ab"
+#~ msgstr "from"
+
+#~ msgid "Es gab einen Fehler. Prüfen Sie Ihre Eingaben."
+#~ msgstr "An error has occurred. Please check your inputs."
+
+#~ msgid "Geben Sie Ihre Kontaktdaten ein."
+#~ msgstr "Please enter your contact details."
+
+#~ msgid "Geben Sie Ihren Vornamen ein."
+#~ msgstr "Please enter your first name."
+
+#~ msgid "Anrede & Vorname"
+#~ msgstr "Title & first name"
+
+#~ msgid "Herr"
+#~ msgstr "Mr."
+
+#~ msgid "Frau"
+#~ msgstr "Mrs."
+
+#~ msgid "Geben Sie Ihren Nachnamen ein."
+#~ msgstr "Please enter your last name."
+
+#~ msgid "Geben Sie Ihr Geburtsdatum ein."
+#~ msgstr "Please enter your date of birth."
+
+#~ msgid "Geburtsdatum"
+#~ msgstr "Date of birth"
+
+#~ msgid "Geben Sie ein Land an."
+#~ msgstr "Please enter your country."
+
+#~ msgid "Land"
+#~ msgstr "Country"
+
+#~ msgid "Andere"
+#~ msgstr "Other"
+
+#~ msgid "Tippen Sie das Land ein"
+#~ msgstr "Please enter your country"
+
+#~ msgid "Geben Sie eine Straße ein."
+#~ msgstr "Please enter your street."
+
+#~ msgid "Straße"
+#~ msgstr "Street"
+
+#~ msgid "Geben Sie eine Hausnummer ein."
+#~ msgstr "Please enter your house number."
+
+#~ msgid "Hausnummer"
+#~ msgstr "House number"
+
+#~ msgid "Geben Sie eine PLZ ein."
+#~ msgstr "Please enter your zip code."
+
+#~ msgid "PLZ"
+#~ msgstr "ZIP code"
+
+#~ msgid "Geben Sie einen Ort ein."
+#~ msgstr "Please enter your city."
+
+#~ msgid "Ort"
+#~ msgstr "City"
+
+#~ msgid "Geben Sie eine Mail-Adresse ein."
+#~ msgstr "Please enter your email address."
+
+#~ msgid "Geben Sie eine Telefon-Nummer an."
+#~ msgstr "Please enter your telephone number."
+
+#~ msgid "Telefon-Nummer"
+#~ msgstr "Telephone number"
+
+#~ msgid ""
+#~ "Es wurde eine E-Mail mit einer Zusammenfassung Ihrer Anfrage an Sie versendet. Einer unserer Mitarbeiter wird sich "
+#~ "schnellstmöglich bei Ihnen melden."
+#~ msgstr ""
+#~ "A summary of your request has been sent to your email address. One of our representatives will get back to you as "
+#~ "soon as possible."
+
+#~ msgid ""
+#~ "Sollten Sie Fragen zu Ihrem Aufenthalt haben kontaktieren Sie uns, oder erhalten Sie auf folgenden Seiten weitere "
+#~ "Informationen:"
+#~ msgstr ""
+#~ "If you have any questions about your stay, please contact us or visit the following sites for more information:"
+
+#~ msgid "Ausflugstipps"
+#~ msgstr "Excursion tips"
+
+#~ msgid ""
+#~ "Das Panoramahotel liegt mitten im Allgäu und bietet so einige interessante Orte in dessen Umgebung. Die Zugspitze, "
+#~ "die Königsschlösser Neuschwanstein und Hohenschwangau und viele mehr..."
+#~ msgstr ""
+#~ "The Panoramahotel is located in the Allgäu and offers many interesting places in its surroundings.  The Zugspitze, "
+#~ "the royal castles Neuschwanstein and Hohenschwangau, and lots more ..."
+
+#~ msgid ""
+#~ "Tipp: Im unteren Bereich der Webseite können Sie sich in unseren Newsletter einschreiben. In diesem erscheinen "
+#~ "Regelmäßig neue Ausflugstipps passend zur Saison."
+#~ msgstr " "
+
+#~ msgid "Ausflugstipp anzeigen"
+#~ msgstr "Show excursions tips"
+
+#~ msgid "Geben Sie ein Stichwort ein"
+#~ msgstr "Enter a keyword"
+
+#~ msgid "Als eigene Seite anzeigen:"
+#~ msgstr "Show as own page:"
+
+#~ msgid "Antwort nicht gefunden?"
+#~ msgstr "Answer not found?"
+
+#~ msgid ""
+#~ "Wenn Sie die Antwort auf Ihre Frage nicht gefunden haben, können Sie uns natürlich auch <a href=\"./?"
+#~ "page_id=561&type=question\">Ihre eigene Frage</a> stellen."
+#~ msgstr ""
+#~ "If you have not found the answer to your question, please send us your individual question <a href=\"./?"
+#~ "page_id=561&type=question\"></ a>."
+
+#~ msgid "Rezepte"
+#~ msgstr "Recipes"
+
+#~ msgid ""
+#~ "Kochen wie die Profis ... mit unseren Rezept-Tipps können Sie sich ein Stück Panoramahotel nach Hause holen. "
+#~ "Entweder um die Vorfreude zu steigern, in Erinnerungen zu schwelgen oder einfach zum genießen."
+#~ msgstr " "
+
+#~ msgid ""
+#~ "Tipp: Im unteren Bereich der Webseite können Sie sich in unseren Newsletter einschreiben. In diesem erscheinen "
+#~ "Regelmäßig neue Rezepte zum nachkochen."
+#~ msgstr ""
+#~ "siehe oben!Tip: At the bottom of the page you can subscribe to our newsletter. In our Newsletter appearing "
+#~ "regularly new Recipes for you."
+
+#~ msgid "Rezept anzeigen"
+#~ msgstr "Show recipe"
+
+#~ msgid "Saison A"
+#~ msgstr "Season A"
+
+#~ msgid "Saison C"
+#~ msgstr "Season C"
+
+#~ msgid "Saison E"
+#~ msgstr "Season E"
+
+#~ msgid "Grundriss ansehen"
+#~ msgstr "Show layout"
+
+#~ msgid "Preis p. P."
+#~ msgstr "Price p. p."
+
+#~ msgid ""
+#~ "Neu seit 2014: 15 % Frühbucherrabatt: bei Buchung bis 8 Wochen im Voraus und sofortiger Vorkasse der "
+#~ "Übernachtungskosten. Alle Preise pro Person und Nacht. Einzelzimmerzuschlag € 30,00 pro Nacht. "
+#~ "Mindestaufenthaltsdauer 2 Nächte, über Silvester 7 Nächte. Zuschlag für einen Aufenthalt von einer Nacht € 20,00 "
+#~ "pro Person. Der Kurbeitrag ist in den genannten Preisen nicht enthalten und wird pro Tag und Person separat erhoben."
+#~ msgstr ""
+#~ "15 % early bird discount. If you book at least 8 weeks in advance and prepay your accommodation expenses you "
+#~ "receive an early bird discount of 15%. All prices per person and per night. Surcharge for single occupancy € 30.00 "
+#~ "per night. Minimum number of overnight stays: 2 nights; New Year's: 7 nights. Surcharge if you only stay for one "
+#~ "night € 20.00 per person. All prices are exclusive of visitors’ tax which is charged additionally per person per "
+#~ "day."
+
+#~ msgid "Tschechien"
+#~ msgstr "Czech Republic"
+
+#~ msgid "Gehen Sie zur Englischen Webseite"
+#~ msgstr "Go to the German Website"
+
+#~ msgid "DE"
+#~ msgstr "EN"
+
+#~ msgid "Weihwasser"
+#~ msgstr "Weihwasser"
+
+#~ msgid "Im alten Kontorhaus<br />Schäftlarnstraße 10<br />81371 München"
+#~ msgstr "Im alten Kontorhaus<br />Schäftlarnstraße 10<br />81371 München"
+
+#~ msgid "Impressum"
+#~ msgstr "Imprint"
+
+#~ msgid "AGB"
+#~ msgstr "TOS"
+
+#~ msgid "FAQ"
+#~ msgstr "FAQ"
+
+#~ msgid "Presse"
+#~ msgstr "Press"
+
+#~ msgid "Karriere"
+#~ msgstr "Jobs"
+
+#~ msgid "Händler"
+#~ msgstr "Trade"
+
+#~ msgid "Finde uns"
+#~ msgstr "Find us"
+
+#~ msgid "Besuche uns im Netz"
+#~ msgstr "Visit us in the Web"
+
+#~ msgid "Abonieren Sie unseren Newsletter<br />und erhalten Sie interessante News."
+#~ msgstr "Subscribe to our Newsletter<br />and get interresting News"
+
+#~ msgid "Januar"
+#~ msgstr "January"
+
+#~ msgid "Februar"
+#~ msgstr "February"
+
+#~ msgid "März"
+#~ msgstr "March"
+
+#~ msgid "April"
+#~ msgstr "April"
+
+#~ msgid "Mai"
+#~ msgstr "May"
+
+#~ msgid "Juni"
+#~ msgstr "June"
+
+#~ msgid "Juli"
+#~ msgstr "July"
+
+#~ msgid "August"
+#~ msgstr "August"
+
+#~ msgid "September"
+#~ msgstr "September"
+
+#~ msgid "Oktober"
+#~ msgstr "October"
+
+#~ msgid "November"
+#~ msgstr "November"
+
+#~ msgid "Dezember"
+#~ msgstr "December"
+
+#~ msgid "dateBefore-Future"
+#~ msgstr "(In"
+
+#~ msgid "dateAfter-Future"
+#~ msgstr ")"
+
+#~ msgid "Jahr"
+#~ msgstr "Year"
+
+#~ msgid "Jahren"
+#~ msgstr "Years"
+
+#~ msgid "Monat"
+#~ msgstr "Month"
+
+#~ msgid "Monaten"
+#~ msgstr "Months"
+
+#~ msgid "Woche"
+#~ msgstr "Week"
+
+#~ msgid "Gestern"
+#~ msgstr "(Yesterday)"
+
+#~ msgid "Tag"
+#~ msgstr "Day"
+
+#~ msgid "Morgen"
+#~ msgstr "(Tomorrow)"
+
+#~ msgid "Nach weihwasser suchen (PLZ)"
+#~ msgstr "Search for Weihwasser (ZIP)"
+
+#~ msgid "Aktuelles"
+#~ msgstr "News"
+
+#~ msgid "Produkte"
+#~ msgstr "Products"
+
+#~ msgid "Drinks"
+#~ msgstr "Drinks"
+
+#~ msgid "Geschichte"
+#~ msgstr "History"
+
+#~ msgid "Shop"
+#~ msgstr "Shop"
+
+#~ msgid ""
+#~ "Bitte senden Sie Ihre Bewerbung <br />per Mail an:<br />Bruder Georg<br />karriere@weihwasser.info<br /><br /><br /"
+#~ ">oder per Post an:<br />Bruder Georg<br />Im alten Kontorhaus<br />Schäftlarnstraße 10<br />81371 München"
+#~ msgstr ""
+#~ "Please send your application by mail to <br /> <br /> brother George <br /> karriere@weihwasser.info <br /> <br /> "
+#~ "<br /> or by post to: <br /> brother George <br /> In the old office building <br /> <br /> Schäftlarnstraße 10 "
+#~ "81371 München"
+
+#, fuzzy
+#~ msgid "<strong>Weihwasser GmbH</strong><br />Im alten Kontorhaus<br />Schäftlarnstraße 10<br />81371 München"
+#~ msgstr "Im alten Kontorhaus<br />Schäftlarnstraße 10<br />81371 München"
+
+#~ msgid "Jetzt<br />kaufen"
+#~ msgstr "Buy<br />now"
+
+#, fuzzy
+#~ msgid "Weihwasser Spritz"
+#~ msgstr "Weihwasser"
+
+#~ msgid "Handel"
+#~ msgstr "trade"
+
+#~ msgid "Gastronomie"
+#~ msgstr "catering"
+
+#~ msgid "Zitronen"
+#~ msgstr "Lemons"
+
+#~ msgid "Limetten"
+#~ msgstr "Limes"
+
+#~ msgid "Wacholderbeeren"
+#~ msgstr "Juniper berries"
+
+#, fuzzy
+#~ msgid "Lavendel"
+#~ msgstr "trade"
+
+#~ msgid "Minze"
+#~ msgstr "Mint"
+
+#~ msgid "Holunder"
+#~ msgstr "Elderberry"
+
+#~ msgid "Guarana"
+#~ msgstr "Guarana"
+
+#~ msgid "Coffein"
+#~ msgstr "Coffein"
+
+#~ msgid "catpressto"
+#~ msgstr "Press release"
+
+#~ msgid "catpressfrom"
+#~ msgstr "Press report"
+
+#~ msgid "catnews"
+#~ msgstr "News"
+
+#~ msgid "catevent"
+#~ msgstr "Event"
+
+#~ msgid "Ihre Mail-Adresse"
+#~ msgstr "Your Mail-Adress"
+
+#~ msgid "Bistümer"
+#~ msgstr "Dioceses"
+
+#~ msgid "Inhalte"
+#~ msgstr "Incredients"
+
+#~ msgid "Medien"
+#~ msgstr "Media"
+
+#~ msgid "In"
+#~ msgstr "In"
+
+#~ msgid "Vor"
+#~ msgstr "Ago"
+
+#~ msgid "Stellen"
+#~ msgstr "Jobs"
+
+#~ msgid "Konvent"
+#~ msgstr "Konvent"
+
+#~ msgid "top"
+#~ msgstr "Top"
+
+#~ msgid "imprint"
+#~ msgstr "Imprint"
+
+#~ msgid "vacancies"
+#~ msgstr "Vacancies"
+
+#~ msgid "Website by"
+#~ msgstr "Website by"
+
+#, fuzzy
+#~ msgid "start"
+#~ msgstr ""
+#~ "The good things are what makes STEINBUCK, but we do not understand well at the best but the most correct.Therefore "
+#~ "our little STEINBUCK is exactly as it should be, not too fancy and not too common. It occurs due to the succession "
+#~ "of the vine to receive old and new guests."
+
+#~ msgid "sleep"
+#~ msgstr "stay"
+
+#~ msgid "A difficult decision"
+#~ msgstr "A <span class=\"bigger\">difficult</span> decision"
+
+#~ msgid "Download Menu"
+#~ msgstr "Download Menu"
+
+#~ msgid "card"
+#~ msgstr "menu"
+
+#~ msgid "noentries"
+#~ msgstr "No Entries in this language"
+
+#~ msgid "Find your favorite restaurant"
+#~ msgstr "Find your<br />favorite restaurant"
+
+#~ msgid "Subscribe to our Newsletter"
+#~ msgstr "Subscribe to our Newsletter"
+
+#~ msgid "Contact & Directions"
+#~ msgstr "Contact <span class=\"sprite sprite-greyamp\"></span> Directions"
+
+#~ msgid "contact-done"
+#~ msgstr "Your email has been sent"
+
+#~ msgid "Enter your Contact-Information"
+#~ msgstr "Enter your contact details"
+
+#~ msgid "Message"
+#~ msgstr "Message"
+
+#~ msgid "If eating turn into enjoying"
+#~ msgstr "If eating turn into enjoying"
+
+#~ msgid "Kitchen and Cooks"
+#~ msgstr "Kitchen <span class=\"sprite sprite-sunamp\"></span> Cooks"
+
+#~ msgid "Because it tastes best at home"
+#~ msgstr "Because it tastes <span class=\"bigger\">best</span> at home"
+
+#~ msgid "text-home"
+#~ msgstr ""
+#~ "For most people it goes like this: it simply tastes like home best. Hence, we use mostly carefully selected "
+#~ "ingredients from local producers for our meals, and you can taste it."
+
+#~ msgid "Whats new"
+#~ msgstr "Whats new"
+
+#~ msgid "Attention! The newsletter is published only in German."
+#~ msgstr "Attention! The newsletter is published only in German."
+
+#, fuzzy
+#~ msgid "text-imprint"
+#~ msgstr "Imprint"
+
+#~ msgid "First come, first served …"
+#~ msgstr "First come, first served ..."
+
+#~ msgid "request-error"
+#~ msgstr "There was an error, please check your data."
+
+#~ msgid "request-instruction"
+#~ msgstr "You can send us a request for accommodation, please enter your details below."
+
+#~ msgid "Mrs."
+#~ msgstr "Mrs."
+
+#~ msgid "Mr."
+#~ msgstr "Mr."
+
+#~ msgid "star-msg"
+#~ msgstr "Fields marked with an star are not necessarily required."
+
+#~ msgid "first come, first served"
+#~ msgstr "First come, first served"
+
+#~ msgid "In the event that there is times longer"
+#~ msgstr "In the event that there is times longer"
+
+#~ msgid "Just as it should be"
+#~ msgstr "Just as it <span class=\"bigger\">Should</span> be"
+
+#~ msgid "About Values <span class=\"sprite sprite-sunamp\"></span> Wine"
+#~ msgstr "About Values <span class=\"sprite sprite-sunamp\"></span> Wine"
+
+#~ msgid "text-start"
+#~ msgstr ""
+#~ "The good things are what makes STEINBUCK, but we do not understand well at the best but the most correct.Therefore "
+#~ "our little STEINBUCK is exactly as it should be, not too fancy and not too common. It occurs due to the succession "
+#~ "of the vine to receive old and new guests."
+
+#~ msgid "home"
+#~ msgstr "region"
+
+#, fuzzy
+#~ msgid "text-food"
+#~ msgstr ""
+#~ "For most people it goes like this: it simply tastes like home best. Hence, we use mostly carefully selected "
+#~ "ingredients from local producers for our meals, and you can taste it."
+
+#, fuzzy
+#~ msgid "text-sleep"
+#~ msgstr "stay"
+
+#~ msgid "contact-error"
+#~ msgstr "There was an error"
+
+#~ msgid "error-noname"
+#~ msgstr "Enter a Name"
+
+#~ msgid "error-nomail"
+#~ msgstr "Enter a Mail"
+
+#~ msgid "error-wrongmail"
+#~ msgstr "Your Mail seem to be wrong"
+
+#~ msgid "error-nomessage"
+#~ msgstr "Enter a Message"

@@ -64,10 +64,13 @@ if ( ! class_exists( 'WSN_Bootstrap' ) ) {
 		 */
 		function __construct() {
 
-			new WSN_Product();
-			new WSN_Initialize();
-			new WSN_Options();
-			new WSN_ShortCode();
+			if(class_exists('WC_Product')){
+				new WSN_Product();
+				new WSN_Initialize();
+				new WSN_Options();
+				new WSN_ShortCode();
+			}
+
 		}
 
 	}

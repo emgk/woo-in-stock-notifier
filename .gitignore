@@ -29,8 +29,6 @@ coverage
 # node-waf configuration
 .lock-wscript
 
-# Compiled JS directory
-assets
 
 # Optional JetBrains IDE directory
 *.iml

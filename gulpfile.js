@@ -30,11 +30,11 @@ gulp.task( 'plugin-pot', function() {
 		.pipe( wpPot( {
 			domain: 'in-stock-notifier',
 		} ) )
-		.pipe( gulp.dest( 'languages/in-stock-notifier-default.pot' ) );
+		.pipe( gulp.dest( 'languages/tmsm-woocommerce-stocknotifier.pot' ) );
 } );
 
 gulp.task( 'plugin-zip-cleanup', function( done ) {
-	del.sync( [ 'zip/woo-in-stock-notifier' ] );
+	del.sync( [ 'zip/tmsm-woocommerce-stocknotifier' ] );
 	done();
 } );
 
@@ -57,13 +57,13 @@ gulp.task( 'plugin-zip-copy', function() {
 	];
 
 	return gulp.src( glob )
-		.pipe( gulp.dest( 'zip/woo-in-stock-notifier/' ) );
+		.pipe( gulp.dest( 'zip/tmsm-woocommerce-stocknotifier/' ) );
 } );
 
 gulp.task( 'plugin-zip', gulp.series( 'plugin-zip-cleanup', 'plugin-zip-copy', function() {
 	const pkgInfo = JSON.parse( fs.readFileSync( './package.json' ) );
-	return gulp.src( [ 'zip/woo-in-stock-notifier/**' ], { base: 'zip/' } )
-		.pipe( zip( 'woo-in-stock-notifier-' + pkgInfo.version + '.zip' ) )
+	return gulp.src( [ 'zip/tmsm-woocommerce-stocknotifier/**' ], { base: 'zip/' } )
+		.pipe( zip( 'tmsm-woocommerce-stocknotifier-' + pkgInfo.version + '.zip' ) )
 		.pipe( gulp.dest( 'zip/' ) );
 }, 'plugin-zip-cleanup' ) );
 
