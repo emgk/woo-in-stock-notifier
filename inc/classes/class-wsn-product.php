@@ -190,7 +190,7 @@ if ( ! class_exists( 'WSN_Product' ) ) {
                                 </div>
                                 <div class="wsn-form-field">
                                     <input
-                                            type="text"
+                                            type="email"
                                             placeholder="<?php echo __( 'Enter Your Email Address...', 'tmsm-woocommerce-stocknotifier' ); ?>"
                                             id="wsn_waitlist_email"
                                             name="wsn_email"

@@ -466,7 +466,7 @@ if ( ! class_exists( 'WSN_Options' ) ) {
                                             for="<?php echo "user-email-field-$pid"; ?>"><?php echo __( 'Add new user', 'tmsm-woocommerce-stocknotifier' ); ?></label>
                                 </h5>
                                 <div class="wsn-form-field">
-                                    <input type="text" class="wsn-input-field"
+                                    <input type="email" class="wsn-input-field"
                                            id="<?php echo "user-email-field-$pid"; ?>"
                                            placeholder="<?php echo __( 'Enter email address', 'tmsm-woocommerce-stocknotifier' ); ?>"/>
                                 </div>
